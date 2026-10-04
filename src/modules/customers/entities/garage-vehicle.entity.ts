@@ -1,0 +1,65 @@
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { VehicleType } from '../../../common/enums/vehicle-type.enum';
+import { CustomerProfile } from './customer-profile.entity';
+
+@Entity('garage_vehicles')
+export class GarageVehicle {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ name: 'customer_profile_id', type: 'uuid' })
+  customerProfileId: string;
+
+  @ManyToOne(() => CustomerProfile, (profile) => profile.garageVehicles, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'customer_profile_id' })
+  customerProfile: CustomerProfile;
+
+  @Column({
+    name: 'vehicle_type',
+    type: 'enum',
+    enum: VehicleType,
+    default: VehicleType.TWO_WHEELER,
+  })
+  vehicleType: VehicleType;
+
+  @Column({ type: 'varchar', length: 128 })
+  make: string;
+
+  @Column({ type: 'varchar', length: 128 })
+  model: string;
+
+  @Column({ type: 'integer', nullable: true })
+  year: number | null;
+
+  @Column({ name: 'registration_number', type: 'varchar', length: 32 })
+  registrationNumber: string;
+
+  @Column({ type: 'varchar', length: 64, nullable: true })
+  color: string | null;
+
+  @Column({ type: 'varchar', length: 32, nullable: true })
+  fuel: string | null;
+
+  @Column({ type: 'varchar', length: 32, nullable: true })
+  transmission: string | null;
+
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamptz', nullable: true })
+  deletedAt: Date | null;
+}

@@ -1,98 +1,145 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Autoflex Backend (Phase 0)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+NestJS **resource server** for Autoflex. Staff authenticate via **Frevels IAM**; this API verifies RS256 JWTs via JWKS, maps `domainId` → `ServiceCenter` and `sub` → `StaffProfile`, and exposes tenant-scoped business APIs.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Autoflex does **not** issue identity JWTs, handle OTP login, or define RBAC — see [ADR — Frevels IAM Auth](../development-documents/architecture/adr-2026-07-11-frevels-iam-auth.md).
 
-## Description
+## Prerequisites
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Node.js 18+
+- Docker (for local PostgreSQL)
+- Frevels IAM running locally (for real JWTs) **or** `LOCAL_JWKS_JSON` for offline/tests
 
-## Project setup
+## Quick start
 
 ```bash
-$ npm install
+# 1. Start PostgreSQL
+docker compose up -d
+
+# 2. Configure environment
+cp .env.example .env
+
+# 3. Install dependencies
+npm install
+
+# 4. Run migrations
+npm run migration:run
+
+# 5. Seed demo tenant mapping (ServiceCenter + StaffProfile)
+npm run seed:dev
+
+# 6. Start API
+npm run start:dev
 ```
 
-## Compile and run the project
+API: `http://localhost:3001`  
+Swagger: `http://localhost:3001/docs`  
+Health: `http://localhost:3001/health`
+
+## Auth flow (verify-only)
+
+```mermaid
+sequenceDiagram
+  participant SCApp as service-center-app
+  participant IAM as Frevels IAM
+  participant API as autoflex-backend
+
+  SCApp->>IAM: OTP login
+  IAM-->>SCApp: RS256 access JWT
+  SCApp->>API: Authorization: Bearer JWT
+  API->>IAM: GET /.well-known/jwks.json (cached)
+  API->>API: Verify JWT + map domainId/sub
+  API-->>SCApp: Tenant-scoped response
+```
+
+### JWT claims used
+
+| IAM claim | Autoflex mapping |
+|-----------|------------------|
+| `domainId` | `ServiceCenter.iamDomainId` (1:1 Phase 0) |
+| `sub` | `StaffProfile.iamUserId` |
+| `domainApplicationId` | Client app registration in IAM |
+| `roles` / `permissions` | Enforced by guards on routes |
+
+Missing or inactive tenant mapping returns **404** (no cross-tenant leakage).
+
+## Environment variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PORT` | No | HTTP port (default `3001`) |
+| `DATABASE_HOST` | Yes | Postgres host |
+| `DATABASE_PORT` | Yes | Postgres port |
+| `DATABASE_USER` | Yes | Postgres user |
+| `DATABASE_PASSWORD` | Yes | Postgres password |
+| `DATABASE_NAME` | Yes | Postgres database |
+| `IAM_JWKS_URL` | Yes* | IAM JWKS endpoint |
+| `JWKS_CACHE_TTL_MS` | No | JWKS cache TTL (default 5m) |
+| `IAM_JWT_ISSUER` | No | Optional issuer validation |
+| `IAM_JWT_AUDIENCE` | No | Optional audience validation |
+| `LOCAL_JWKS_JSON` | No | Inline JWKS for tests/offline only |
+| `DATABASE_NAME_TEST` | No | DB name for e2e (default `autoflex_test`) |
+
+\* Not required when `LOCAL_JWKS_JSON` is set (tests/offline).
+
+## Project structure
+
+```
+src/
+  common/           # Shared enums, DTOs
+  database/         # TypeORM data source, migrations, seed
+  modules/
+    auth/           # JWKS verify, JWT guard, roles/permissions guards
+    tenancy/        # ServiceCenter, StaffProfile, domain resolution
+    customers/      # Customer, Vehicle entities
+    jobs/           # ServiceJob CRUD + status transitions
+    events/         # ServiceJobEvent, AuditLog
+  test-utils/       # JWT test helpers
+test/               # E2E specs + DB helpers
+```
+
+## API (Phase 0)
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| `GET` | `/health` | Public | Health check |
+| `POST` | `/v1/jobs` | Bearer + `jobs:create` | Create job (generates `publicToken`) |
+| `GET` | `/v1/jobs` | Bearer + `jobs:read` | List/filter/paginate jobs |
+| `GET` | `/v1/jobs/:id` | Bearer + `jobs:read` | Job detail |
+| `PATCH` | `/v1/jobs/:id` | Bearer + `jobs:update` | Update job fields |
+| `PATCH` | `/v1/jobs/:id/status` | Bearer + `jobs:update` | Workflow status transition |
+| `DELETE` | `/v1/jobs/:id` | Bearer + `jobs:delete` | Soft-delete job |
+
+Job statuses: `CHECKED_IN`, `INSPECTION`, `AWAITING_APPROVAL`, `IN_PROGRESS`, `QUALITY_CHECK`, `READY_FOR_PICKUP`, `COMPLETED`, `ON_HOLD`, `CANCELLED`.
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run start:dev` | Dev server with watch |
+| `npm run build` | Compile TypeScript |
+| `npm run lint` | ESLint |
+| `npm test` | Unit tests |
+| `npm run test:e2e` | E2E tests (requires Postgres) |
+| `npm run migration:run` | Apply migrations |
+| `npm run migration:revert` | Revert last migration |
+| `npm run seed:dev` | Seed demo ServiceCenter + StaffProfile |
+
+## Testing
+
+E2E tests use **pg-mem** (in-memory Postgres) — no Docker required for `npm run test:e2e`. For local dev and migration verification, use Docker Postgres:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+docker compose up -d
+createdb -h localhost -U autoflex autoflex_test   # optional, only if using a separate test DB against real Postgres
+npm test
+npm run test:e2e
 ```
 
-## Run tests
+E2E tests use a local RSA keypair (`LOCAL_JWKS_JSON`) — no IAM instance required.
 
-```bash
-# unit tests
-$ npm run test
+## Related docs
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- [Technical Architecture](../development-documents/architecture/technical-architecture.md)
+- [Phase 0 Repository Plan](../development-documents/architecture/phase-0-repository-plan.md)
+- [ADR — Frevels IAM](../development-documents/architecture/adr-2026-07-11-frevels-iam-auth.md)
