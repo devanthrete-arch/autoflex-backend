@@ -36,6 +36,14 @@ API: `http://localhost:3001`
 Swagger: `http://localhost:3001/docs`  
 Health: `http://localhost:3001/health`
 
+### Local memory runtime (no Docker)
+
+```bash
+PORT=3001 npm run start:memory
+```
+
+Uses pg-mem, seeds Apex / Speedline / Koramangala plus Priya's garage, and exposes `POST /v1/dev/session` for staff personas (`manager`, `advisor`, `technician`, `technician2`) and customer phones. Swagger is at `/docs`. Boot takes about a minute.
+
 ## Auth flow (verify-only)
 
 ```mermaid

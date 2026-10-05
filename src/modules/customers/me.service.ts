@@ -22,6 +22,15 @@ export function toIndiaE164(raw: string): string {
   return `+91${local}`;
 }
 
+/** Like `toIndiaE164`, but returns the input unchanged when it is not an Indian mobile. */
+export function tryIndiaE164(raw: string): string {
+  try {
+    return toIndiaE164(raw);
+  } catch {
+    return raw;
+  }
+}
+
 @Injectable()
 export class MeService {
   constructor(
@@ -49,7 +58,7 @@ export class MeService {
     if (!profile) {
       profile = this.profileRepository.create({
         iamUserId: auth.userId,
-        phone: auth.phone ?? null,
+        phone: auth.phone ? tryIndiaE164(auth.phone) : null,
       });
     }
     if (dto.displayName !== undefined) profile.displayName = dto.displayName;
@@ -61,13 +70,40 @@ export class MeService {
     }
     if (dto.lastLat !== undefined) profile.lastLat = dto.lastLat;
     if (dto.lastLng !== undefined) profile.lastLng = dto.lastLng;
+    if (dto.email !== undefined) profile.email = dto.email.toLowerCase();
+    if (dto.city !== undefined) profile.city = dto.city;
+    if (dto.state !== undefined) profile.state = dto.state;
+    if (dto.postalCode !== undefined) profile.postalCode = dto.postalCode;
+    if (dto.preferredChannel !== undefined) {
+      profile.preferredChannel = dto.preferredChannel;
+    }
+    if (dto.whatsappConsent !== undefined) {
+      profile.whatsappConsent = dto.whatsappConsent;
+    }
+    if (dto.emailConsent !== undefined) profile.emailConsent = dto.emailConsent;
+    if (dto.serviceUpdates !== undefined) {
+      profile.serviceUpdates = dto.serviceUpdates;
+    }
+    if (dto.maintenanceReminders !== undefined) {
+      profile.maintenanceReminders = dto.maintenanceReminders;
+    }
+    if (dto.documentReminders !== undefined) {
+      profile.documentReminders = dto.documentReminders;
+    }
     if (!profile.phone && auth.phone) {
-      try {
-        profile.phone = toIndiaE164(auth.phone);
-      } catch {
-        profile.phone = auth.phone;
-      }
+      profile.phone = tryIndiaE164(auth.phone);
     }
     return this.profileRepository.save(profile);
+  }
+
+  /** Returns the caller's profile, creating an empty one on first use. */
+  async ensureProfile(auth: AuthContext): Promise<CustomerProfile> {
+    if (auth.customerProfileId) {
+      const profile = await this.profileRepository.findOne({
+        where: { id: auth.customerProfileId },
+      });
+      if (profile) return profile;
+    }
+    return this.upsertProfile(auth, {});
   }
 }

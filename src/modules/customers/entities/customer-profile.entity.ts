@@ -8,6 +8,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CommunicationChannel } from '../../../common/enums/communication-channel.enum';
+import { CustomerAddress } from './customer-address.entity';
 import { GarageVehicle } from './garage-vehicle.entity';
 
 @Entity('customer_profiles')
@@ -58,6 +60,41 @@ export class CustomerProfile {
   })
   lastLng: number | null;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  email: string | null;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  city: string | null;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  state: string | null;
+
+  @Column({ name: 'postal_code', type: 'varchar', length: 10, nullable: true })
+  postalCode: string | null;
+
+  @Column({
+    name: 'preferred_channel',
+    type: 'enum',
+    enum: CommunicationChannel,
+    default: CommunicationChannel.WHATSAPP,
+  })
+  preferredChannel: CommunicationChannel;
+
+  @Column({ name: 'whatsapp_consent', type: 'boolean', default: false })
+  whatsappConsent: boolean;
+
+  @Column({ name: 'email_consent', type: 'boolean', default: false })
+  emailConsent: boolean;
+
+  @Column({ name: 'service_updates', type: 'boolean', default: true })
+  serviceUpdates: boolean;
+
+  @Column({ name: 'maintenance_reminders', type: 'boolean', default: true })
+  maintenanceReminders: boolean;
+
+  @Column({ name: 'document_reminders', type: 'boolean', default: true })
+  documentReminders: boolean;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
@@ -69,4 +106,7 @@ export class CustomerProfile {
 
   @OneToMany(() => GarageVehicle, (vehicle) => vehicle.customerProfile)
   garageVehicles: GarageVehicle[];
+
+  @OneToMany(() => CustomerAddress, (address) => address.customerProfile)
+  addresses: CustomerAddress[];
 }

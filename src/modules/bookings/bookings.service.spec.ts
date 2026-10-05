@@ -1,19 +1,37 @@
-import { BadRequestException, ForbiddenException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { BookingMode } from '../../common/enums/booking-mode.enum';
 import { BookingStatus } from '../../common/enums/booking-status.enum';
 import { PaymentMode } from '../../common/enums/payment-mode.enum';
 import { ServiceCenterStatus } from '../../common/enums/service-center-status.enum';
+import { VehicleType } from '../../common/enums/vehicle-type.enum';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { GarageService } from '../customers/garage.service';
 import { MeService } from '../customers/me.service';
+import { OfferingsService } from '../offerings/offerings.service';
 import { ServiceCenter } from '../tenancy/entities/service-center.entity';
+import { TenancyService } from '../tenancy/tenancy.service';
+import { generateBookingNumber } from './booking-view';
 import { BookingsService } from './bookings.service';
+import { BookingAttachment } from './entities/booking-attachment.entity';
 import { Booking } from './entities/booking.entity';
 
 describe('BookingsService', () => {
   let service: BookingsService;
+  let bookingRepo: {
+    find: jest.Mock;
+    findOne: jest.Mock;
+    findOneOrFail: jest.Mock;
+    count: jest.Mock;
+    save: jest.Mock;
+  };
+  let saved: Partial<Booking> | null;
 
   const auth: AuthContext = {
     actorType: 'customer',
@@ -33,43 +51,81 @@ describe('BookingsService', () => {
     status: ServiceCenterStatus.ACTIVE,
     bookingEnabled: true,
     autoAccept: true,
+    slotCapacity: 1,
+    supportedVehicleTypes: [VehicleType.TWO_WHEELER],
     hoursStart: '09:00',
     hoursEnd: '17:00',
   };
 
+  const futureSlot = {
+    slotStart: '2027-06-15T03:30:00.000Z',
+    slotEnd: '2027-06-15T04:30:00.000Z',
+  };
+
   beforeEach(async () => {
+    saved = null;
+    bookingRepo = {
+      find: jest.fn().mockResolvedValue([]),
+      findOne: jest.fn().mockResolvedValue(null),
+      findOneOrFail: jest.fn(async () => ({ ...saved, items: [] })),
+      count: jest.fn().mockResolvedValue(0),
+      save: jest.fn(async (entity: Booking) => entity),
+    };
+    const manager = {
+      getRepository: () => ({
+        create: (entity: Partial<Booking>) => entity,
+        findOne: jest.fn().mockResolvedValue(null),
+        save: jest.fn(async (entity: Partial<Booking>) => {
+          saved = { ...entity, id: 'booking-1' };
+          return saved;
+        }),
+      }),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         BookingsService,
-        {
-          provide: getRepositoryToken(Booking),
-          useValue: {
-            find: jest.fn().mockResolvedValue([]),
-            findOne: jest.fn().mockResolvedValue(null),
-            create: jest.fn((entity: Booking) => entity),
-            save: jest.fn(async (entity: Booking) => ({
-              ...entity,
-              id: 'booking-1',
-            })),
-          },
-        },
+        { provide: getRepositoryToken(Booking), useValue: bookingRepo },
         {
           provide: getRepositoryToken(ServiceCenter),
-          useValue: {
-            findOne: jest.fn().mockResolvedValue(center),
-          },
+          useValue: { findOne: jest.fn().mockResolvedValue(center) },
         },
+        { provide: getRepositoryToken(BookingAttachment), useValue: {} },
         {
           provide: GarageService,
           useValue: {
-            getOwned: jest.fn().mockResolvedValue({ id: 'vehicle-1' }),
+            getOwned: jest.fn().mockResolvedValue({
+              id: 'vehicle-1',
+              vehicleType: VehicleType.TWO_WHEELER,
+            }),
           },
         },
         {
           provide: MeService,
           useValue: {
-            upsertProfile: jest.fn(),
-            getProfile: jest.fn(),
+            ensureProfile: jest.fn().mockResolvedValue({ id: 'profile-1' }),
+          },
+        },
+        {
+          provide: TenancyService,
+          useValue: {
+            getHoursForDate: jest.fn().mockResolvedValue({
+              dayOfWeek: 2,
+              openTime: '09:00',
+              closeTime: '17:00',
+              isClosed: false,
+            }),
+          },
+        },
+        {
+          provide: OfferingsService,
+          useValue: { requireBookable: jest.fn() },
+        },
+        {
+          provide: DataSource,
+          useValue: {
+            transaction: (work: (m: typeof manager) => unknown) =>
+              work(manager),
           },
         },
       ],
@@ -83,14 +139,15 @@ describe('BookingsService', () => {
       serviceCenterId: 'center-1',
       vehicleId: 'vehicle-1',
       mode: BookingMode.SELF_CHECKIN,
-      slotStart: '2027-06-15T03:30:00.000Z',
-      slotEnd: '2027-06-15T04:30:00.000Z',
+      ...futureSlot,
     });
 
     expect(booking.status).toBe(BookingStatus.AWAITING_ARRIVAL);
     expect(booking.mode).toBe(BookingMode.SELF_CHECKIN);
     expect(booking.paymentMode).toBe(PaymentMode.PAY_AT_CENTER);
-    expect(booking.estimateInr).toBe('2499');
+    expect(booking.estimateInr).toBe('2499.00');
+    expect(booking.bookingNumber).toMatch(/^AF-\d{8}-[A-Z2-9]{4}$/);
+    expect(booking.confirmedAt).toBeInstanceOf(Date);
   });
 
   it('rejects non-SELF_CHECKIN modes', async () => {
@@ -99,31 +156,40 @@ describe('BookingsService', () => {
         serviceCenterId: 'center-1',
         vehicleId: 'vehicle-1',
         mode: 'PICKUP' as BookingMode,
-        slotStart: '2027-06-15T03:30:00.000Z',
-        slotEnd: '2027-06-15T04:30:00.000Z',
+        ...futureSlot,
       }),
     ).rejects.toThrow(BadRequestException);
   });
 
+  it('rejects a full slot', async () => {
+    bookingRepo.count.mockResolvedValueOnce(1);
+    await expect(
+      service.create(auth, {
+        serviceCenterId: 'center-1',
+        vehicleId: 'vehicle-1',
+        mode: BookingMode.SELF_CHECKIN,
+        ...futureSlot,
+      }),
+    ).rejects.toThrow('Slot is no longer available');
+  });
+
   it('lists the customer bookings newest first', async () => {
-    const bookingRepo = (
-      service as unknown as {
-        bookingRepository: { find: jest.Mock };
-      }
-    ).bookingRepository;
     bookingRepo.find.mockResolvedValueOnce([
       {
         id: 'booking-1',
+        bookingNumber: 'AF-20270615-K7Q2',
         status: BookingStatus.AWAITING_ARRIVAL,
         mode: BookingMode.SELF_CHECKIN,
-        estimateInr: '2499',
-        slotStart: new Date('2027-06-15T03:30:00.000Z'),
-        slotEnd: new Date('2027-06-15T04:30:00.000Z'),
+        estimateInr: '2499.00',
+        slotStart: new Date(futureSlot.slotStart),
+        slotEnd: new Date(futureSlot.slotEnd),
         paymentMode: PaymentMode.PAY_AT_CENTER,
         issueDescription: 'Noise',
         vehicleId: 'vehicle-1',
         serviceCenterId: 'center-1',
         customerProfileId: 'profile-1',
+        items: [],
+        attachments: [],
         vehicle: {
           make: 'Honda',
           model: 'Activa',
@@ -146,11 +212,6 @@ describe('BookingsService', () => {
   });
 
   it('forbids reading another customer booking', async () => {
-    const bookingRepo = (
-      service as unknown as {
-        bookingRepository: { findOne: jest.Mock };
-      }
-    ).bookingRepository;
     bookingRepo.findOne.mockResolvedValue({
       id: 'booking-1',
       customerProfileId: 'someone-else',
@@ -159,5 +220,25 @@ describe('BookingsService', () => {
     await expect(service.getOne(auth, 'booking-1')).rejects.toThrow(
       ForbiddenException,
     );
+  });
+
+  it('refuses to cancel a checked-in booking', async () => {
+    bookingRepo.findOne.mockResolvedValue({
+      id: 'booking-1',
+      customerProfileId: 'profile-1',
+      status: BookingStatus.CHECKED_IN,
+      slotStart: new Date(futureSlot.slotStart),
+    });
+
+    await expect(service.cancel(auth, 'booking-1', {})).rejects.toThrow(
+      ConflictException,
+    );
+  });
+});
+
+describe('generateBookingNumber', () => {
+  it('dates the number in IST', () => {
+    const lateEvening = new Date('2027-06-14T20:00:00.000Z');
+    expect(generateBookingNumber(lateEvening)).toMatch(/^AF-20270615-/);
   });
 });

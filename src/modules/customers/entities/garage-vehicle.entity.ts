@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { GarageVehicleStatus } from '../../../common/enums/garage-vehicle-status.enum';
 import { VehicleType } from '../../../common/enums/vehicle-type.enum';
 import { CustomerProfile } from './customer-profile.entity';
 
@@ -53,6 +54,38 @@ export class GarageVehicle {
 
   @Column({ type: 'varchar', length: 32, nullable: true })
   transmission: string | null;
+
+  @Column({ type: 'varchar', length: 128, nullable: true })
+  variant: string | null;
+
+  @Column({
+    name: 'chassis_number',
+    type: 'varchar',
+    length: 64,
+    nullable: true,
+  })
+  chassisNumber: string | null;
+
+  @Column({
+    name: 'engine_number',
+    type: 'varchar',
+    length: 64,
+    nullable: true,
+  })
+  engineNumber: string | null;
+
+  @Column({ name: 'current_odometer_km', type: 'integer', nullable: true })
+  currentOdometerKm: number | null;
+
+  @Column({ name: 'purchase_date', type: 'date', nullable: true })
+  purchaseDate: string | null;
+
+  @Column({
+    type: 'enum',
+    enum: GarageVehicleStatus,
+    default: GarageVehicleStatus.ACTIVE,
+  })
+  status: GarageVehicleStatus;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;

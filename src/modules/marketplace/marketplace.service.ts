@@ -9,6 +9,7 @@ import { PromotionScope } from '../../common/enums/promotion-scope.enum';
 import { ServiceCenterStatus } from '../../common/enums/service-center-status.enum';
 import { VehicleType } from '../../common/enums/vehicle-type.enum';
 import { ServiceCenter } from '../tenancy/entities/service-center.entity';
+import { TenancyService } from '../tenancy/tenancy.service';
 import { ListCentersQueryDto } from './dto/list-centers-query.dto';
 import { Promotion } from './entities/promotion.entity';
 import {
@@ -43,6 +44,7 @@ export class MarketplaceService {
     private readonly centerRepository: Repository<ServiceCenter>,
     @InjectRepository(ServiceCenterCategory)
     private readonly centerCategoryRepository: Repository<ServiceCenterCategory>,
+    private readonly tenancyService: TenancyService,
   ) {}
 
   async listCategories(vehicleType?: string) {
@@ -156,12 +158,25 @@ export class MarketplaceService {
       ratingCount: center.ratingCount,
       hoursStart: center.hoursStart,
       hoursEnd: center.hoursEnd,
+      weeklyHours: await this.tenancyService.getWeeklyHours(center),
+      address: {
+        line1: center.addressLine1,
+        line2: center.addressLine2,
+        city: center.city,
+        state: center.state,
+        postalCode: center.postalCode,
+      },
+      publicPhone: center.publicPhone,
+      supportedVehicleTypes: center.supportedVehicleTypes,
+      pickupDropEnabled: center.pickupDropEnabled,
       bookingEnabled: center.bookingEnabled,
       categories: links.map((l) => ({
         id: l.category.id,
         name: l.category.name,
       })),
-      about: `${center.displayName ?? center.name} — trusted 2W service.`,
+      about: `${center.displayName ?? center.name} — trusted ${center.supportedVehicleTypes
+        .map((type) => (type === VehicleType.TWO_WHEELER ? '2W' : '4W'))
+        .join(' & ')} service.`,
     };
   }
 }

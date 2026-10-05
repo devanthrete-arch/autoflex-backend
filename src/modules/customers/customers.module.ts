@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AddressesController } from './addresses.controller';
+import { AddressesService } from './addresses.service';
 import { CustomerProfilesService } from './customer-profiles.service';
 import { Customer } from './entities/customer.entity';
+import { CustomerAddress } from './entities/customer-address.entity';
 import { CustomerProfile } from './entities/customer-profile.entity';
 import { GarageVehicle } from './entities/garage-vehicle.entity';
 import { Vehicle } from './entities/vehicle.entity';
@@ -17,10 +20,22 @@ import { MeService } from './me.service';
       Vehicle,
       CustomerProfile,
       GarageVehicle,
+      CustomerAddress,
     ]),
   ],
-  controllers: [MeController, GarageController],
-  providers: [CustomerProfilesService, MeService, GarageService],
-  exports: [TypeOrmModule, CustomerProfilesService, MeService, GarageService],
+  controllers: [MeController, GarageController, AddressesController],
+  providers: [
+    CustomerProfilesService,
+    MeService,
+    GarageService,
+    AddressesService,
+  ],
+  exports: [
+    TypeOrmModule,
+    CustomerProfilesService,
+    MeService,
+    GarageService,
+    AddressesService,
+  ],
 })
 export class CustomersModule {}

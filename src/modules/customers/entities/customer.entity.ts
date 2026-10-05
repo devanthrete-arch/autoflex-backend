@@ -11,6 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ServiceCenter } from '../../tenancy/entities/service-center.entity';
+import { CustomerProfile } from './customer-profile.entity';
 import { Vehicle } from './vehicle.entity';
 
 @Entity('customers')
@@ -48,6 +49,14 @@ export class Customer {
 
   @Column({ name: 'consent_recorded_at', type: 'timestamptz', nullable: true })
   consentRecordedAt: Date | null;
+
+  /** Set at check-in when the visit belongs to a signed-in owner. */
+  @Column({ name: 'customer_profile_id', type: 'uuid', nullable: true })
+  customerProfileId: string | null;
+
+  @ManyToOne(() => CustomerProfile, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'customer_profile_id' })
+  customerProfile: CustomerProfile | null;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;

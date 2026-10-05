@@ -1,6 +1,7 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+  IsBoolean,
   IsEnum,
   IsInt,
   IsNumber,
@@ -65,4 +66,23 @@ export class UpdateJobDto {
   @IsOptional()
   @IsUUID()
   assignedTechnicianId?: string | null;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  customerRequest?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  waitingOnSite?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'Counter note while waiting at pickup, e.g. a dispute',
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(1000)
+  pickupNote?: string;
 }

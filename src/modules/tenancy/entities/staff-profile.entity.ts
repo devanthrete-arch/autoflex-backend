@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { StaffDesignation } from '../../../common/enums/staff-designation.enum';
 import { ServiceCenter } from './service-center.entity';
 
 @Entity('staff_profiles')
@@ -38,6 +39,27 @@ export class StaffProfile {
 
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean;
+
+  @Column({
+    type: 'enum',
+    enum: StaffDesignation,
+    nullable: true,
+  })
+  designation: StaffDesignation | null;
+
+  @Column({
+    name: 'employee_code',
+    type: 'varchar',
+    length: 30,
+    nullable: true,
+  })
+  employeeCode: string | null;
+
+  @Column({ type: 'jsonb', nullable: true })
+  specializations: string[] | null;
+
+  @Column({ name: 'joined_at', type: 'date', nullable: true })
+  joinedAt: string | null;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;

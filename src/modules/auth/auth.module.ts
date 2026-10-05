@@ -6,6 +6,7 @@ import { CustomerActorGuard } from './guards/customer-actor.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { PermissionsGuard } from './guards/permissions.guard';
 import { RolesGuard } from './guards/roles.guard';
+import { StaffActorGuard } from './guards/staff-actor.guard';
 import { JwtAuthService, JwksService } from './services/jwt-auth.service';
 
 @Global()
@@ -21,6 +22,10 @@ import { JwtAuthService, JwksService } from './services/jwt-auth.service';
     {
       provide: APP_GUARD,
       useClass: CustomerActorGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: StaffActorGuard,
     },
     {
       provide: APP_GUARD,

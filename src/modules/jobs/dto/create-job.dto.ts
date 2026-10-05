@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+  IsBoolean,
   IsEnum,
   IsInt,
   IsNotEmpty,
@@ -96,4 +97,31 @@ export class CreateJobDto {
   @IsOptional()
   @IsUUID()
   assignedTechnicianId?: string;
+
+  @ApiPropertyOptional({ example: 'Rattling noise from the front at speed' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  customerRequest?: string;
+
+  @ApiPropertyOptional({ default: false })
+  @IsOptional()
+  @IsBoolean()
+  waitingOnSite?: boolean;
+
+  @ApiPropertyOptional({ description: 'The earlier job this visit returns to' })
+  @IsOptional()
+  @IsUUID()
+  comebackOfJobId?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(1000)
+  comebackReason?: string;
+
+  @ApiPropertyOptional({ default: false })
+  @IsOptional()
+  @IsBoolean()
+  warrantyIntent?: boolean;
 }

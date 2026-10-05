@@ -38,6 +38,21 @@ export class AuditLog {
   @Column({ type: 'jsonb', nullable: true })
   metadata: Record<string, unknown> | null;
 
+  /** Changed fields only, before and after the change. */
+  @Column({ type: 'jsonb', nullable: true })
+  before: Record<string, unknown> | null;
+
+  @Column({ type: 'jsonb', nullable: true })
+  after: Record<string, unknown> | null;
+
+  @Column({
+    name: 'correlation_id',
+    type: 'varchar',
+    length: 64,
+    nullable: true,
+  })
+  correlationId: string | null;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 }

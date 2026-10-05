@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Customer } from './customer.entity';
+import { GarageVehicle } from './garage-vehicle.entity';
 import { ServiceCenter } from '../../tenancy/entities/service-center.entity';
 
 @Entity('vehicles')
@@ -42,6 +43,42 @@ export class Vehicle {
 
   @Column({ name: 'make_model', type: 'varchar', length: 255, nullable: true })
   makeModel: string | null;
+
+  @Column({ type: 'varchar', length: 128, nullable: true })
+  make: string | null;
+
+  @Column({ type: 'varchar', length: 128, nullable: true })
+  model: string | null;
+
+  @Column({ type: 'varchar', length: 128, nullable: true })
+  variant: string | null;
+
+  @Column({ type: 'varchar', length: 64, nullable: true })
+  nickname: string | null;
+
+  @Column({
+    name: 'chassis_number',
+    type: 'varchar',
+    length: 64,
+    nullable: true,
+  })
+  chassisNumber: string | null;
+
+  @Column({
+    name: 'engine_number',
+    type: 'varchar',
+    length: 64,
+    nullable: true,
+  })
+  engineNumber: string | null;
+
+  /** Set at check-in when the vehicle comes from the owner's garage. */
+  @Column({ name: 'garage_vehicle_id', type: 'uuid', nullable: true })
+  garageVehicleId: string | null;
+
+  @ManyToOne(() => GarageVehicle, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'garage_vehicle_id' })
+  garageVehicle: GarageVehicle | null;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;

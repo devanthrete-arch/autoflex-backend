@@ -1,11 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { OperatingHour } from './entities/operating-hour.entity';
 import { ServiceCenter } from './entities/service-center.entity';
 import { StaffProfile } from './entities/staff-profile.entity';
 import { TenancyService } from './tenancy.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ServiceCenter, StaffProfile])],
+  imports: [
+    TypeOrmModule.forFeature([ServiceCenter, StaffProfile, OperatingHour]),
+  ],
   providers: [TenancyService],
   exports: [TenancyService, TypeOrmModule],
 })
