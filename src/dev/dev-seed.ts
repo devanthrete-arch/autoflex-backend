@@ -1,22 +1,15 @@
 import { DataSource } from 'typeorm';
-import { PromotionScope } from '../common/enums/promotion-scope.enum';
 import { ServiceCenterStatus } from '../common/enums/service-center-status.enum';
 import { VehicleType } from '../common/enums/vehicle-type.enum';
 import { addDays, istInstant, istToday } from '../common/time/ist';
-import { Promotion } from '../modules/marketplace/entities/promotion.entity';
 import {
   ServiceCategory,
   ServiceCenterCategory,
 } from '../modules/marketplace/entities/service-category.entity';
 import { ServiceOffering } from '../modules/offerings/entities/service-offering.entity';
-import { OperatingHour } from '../modules/tenancy/entities/operating-hour.entity';
 import { ServiceCenter } from '../modules/tenancy/entities/service-center.entity';
-import { StaffProfile } from '../modules/tenancy/entities/staff-profile.entity';
-import {
-  DEV_CENTER_DOMAINS,
-  DEV_CUSTOMER,
-  STAFF_PERSONAS,
-} from './dev-personas';
+import { DEV_CENTER_DOMAINS, DEV_CUSTOMER } from './dev-personas';
+import { bootstrapWorkshop } from './workshop-bootstrap';
 
 const TWO = VehicleType.TWO_WHEELER;
 const FOUR = VehicleType.FOUR_WHEELER;
@@ -42,146 +35,78 @@ export interface SeedSummary {
   jobs: Record<string, string>;
 }
 
-/** Catalog and tenancy rows that have no public API; written directly. */
-async function seedStatic(dataSource: DataSource): Promise<ServiceCenter> {
+/**
+ * Extra centers for the throwaway memory runtime. Apex itself comes from
+ * `bootstrapWorkshop`, which is also the durable workshop.
+ */
+async function seedMemoryNeighborCenters(
+  dataSource: DataSource,
+): Promise<void> {
   const centers = dataSource.getRepository(ServiceCenter);
   const categoryRepo = dataSource.getRepository(ServiceCategory);
   const links = dataSource.getRepository(ServiceCenterCategory);
   const offerings = dataSource.getRepository(ServiceOffering);
-  const hours = dataSource.getRepository(OperatingHour);
-
-  const categorySpecs = [
-    {
-      slug: 'periodic-service',
-      name: 'Periodic service',
-      iconKey: 'wrench',
-      vehicleType: TWO,
-    },
-    {
-      slug: 'oil-change',
-      name: 'Oil change',
-      iconKey: 'oil',
-      vehicleType: TWO,
-    },
-    { slug: 'brakes', name: 'Brakes', iconKey: 'brake', vehicleType: null },
-    { slug: 'tyre', name: 'Tyres', iconKey: 'tyre', vehicleType: null },
-    {
-      slug: 'car-service',
-      name: 'Car service',
-      iconKey: 'car',
-      vehicleType: FOUR,
-    },
-    {
-      slug: 'wash',
-      name: 'Wash and detailing',
-      iconKey: 'wash',
-      vehicleType: null,
-    },
-  ];
-  const categories = new Map<string, ServiceCategory>();
-  for (const [index, spec] of categorySpecs.entries()) {
-    categories.set(
-      spec.slug,
-      await categoryRepo.save(
-        categoryRepo.create({ ...spec, sortOrder: index + 1 }),
-      ),
-    );
-  }
-
-  const apex = await centers.save(
-    centers.create({
-      iamDomainId: DEV_CENTER_DOMAINS.apex,
-      name: 'Apex Auto Garage',
-      displayName: 'Apex Auto Garage',
-      slug: 'apex-auto-garage',
-      status: ServiceCenterStatus.ACTIVE,
-      publicPhone: '+918041234567',
-      gstin: '29ABCDE1234F1Z5',
-      addressLine1: '12 MG Road',
-      addressLine2: 'Near Trinity Metro',
-      city: 'Bengaluru',
-      state: 'Karnataka',
-      postalCode: '560001',
-      formattedAddress: '12 MG Road, Bengaluru, KA 560001',
-      latitude: 12.9716,
-      longitude: 77.5946,
-      ratingAvg: '4.80',
-      ratingCount: 212,
-      supportedVehicleTypes: [TWO, FOUR],
-      pickupDropEnabled: true,
-      autoAccept: false,
-      bookingEnabled: true,
-      slotCapacity: 3,
-      hoursStart: '09:00',
-      hoursEnd: '19:00',
-      upiVpa: 'apexauto@okhdfcbank',
-      expressSkipEnabled: true,
-      onboardedAt: new Date(),
-    }),
-  );
-  const speedline = await centers.save(
-    centers.create({
-      iamDomainId: DEV_CENTER_DOMAINS.speedline,
-      name: 'Speedline Two-Wheeler Care',
-      displayName: 'Speedline Two-Wheeler Care',
-      slug: 'speedline-indiranagar',
-      status: ServiceCenterStatus.ACTIVE,
-      publicPhone: '+918041239876',
-      addressLine1: '100 Feet Road, HAL 2nd Stage',
-      city: 'Bengaluru',
-      state: 'Karnataka',
-      postalCode: '560038',
-      formattedAddress: '100 Feet Road, Indiranagar, Bengaluru, KA 560038',
-      latitude: 12.9784,
-      longitude: 77.6408,
-      ratingAvg: '4.60',
-      ratingCount: 87,
-      supportedVehicleTypes: [TWO],
-      autoAccept: true,
-      bookingEnabled: true,
-      slotCapacity: 2,
-      hoursStart: '08:30',
-      hoursEnd: '20:00',
-      upiVpa: 'speedline@okicici',
-    }),
-  );
-  const clinic = await centers.save(
-    centers.create({
-      iamDomainId: DEV_CENTER_DOMAINS.clinic,
-      name: 'Koramangala Car Clinic',
-      displayName: 'Koramangala Car Clinic',
-      slug: 'koramangala-car-clinic',
-      status: ServiceCenterStatus.ACTIVE,
-      publicPhone: '+918041235555',
-      addressLine1: '80 Feet Road, 4th Block',
-      city: 'Bengaluru',
-      state: 'Karnataka',
-      postalCode: '560034',
-      formattedAddress: '80 Feet Road, Koramangala, Bengaluru, KA 560034',
-      latitude: 12.9352,
-      longitude: 77.6245,
-      ratingAvg: '4.70',
-      ratingCount: 143,
-      supportedVehicleTypes: [FOUR],
-      autoAccept: true,
-      bookingEnabled: true,
-      slotCapacity: 2,
-      hoursStart: '09:30',
-      hoursEnd: '18:30',
-    }),
+  const categories = new Map(
+    (await categoryRepo.find()).map((category) => [category.slug, category]),
   );
 
-  for (let day = 0; day < 7; day++) {
-    await hours.save(
-      hours.create({
-        serviceCenterId: apex.id,
-        dayOfWeek: day,
-        isClosed: false,
-        openTime: day === 0 ? '10:00' : '09:00',
-        closeTime: day === 0 ? '16:00' : '19:00',
+  const ensureCenter = async (
+    iamDomainId: string,
+    values: Partial<ServiceCenter>,
+  ) => {
+    const existing = await centers.findOne({ where: { iamDomainId } });
+    if (existing) return existing;
+    return centers.save(
+      centers.create({
+        iamDomainId,
+        status: ServiceCenterStatus.ACTIVE,
+        bookingEnabled: true,
+        ...values,
       }),
     );
-  }
+  };
+
+  const speedline = await ensureCenter(DEV_CENTER_DOMAINS.speedline, {
+    name: 'Speedline Two-Wheeler Care',
+    displayName: 'Speedline Two-Wheeler Care',
+    slug: 'speedline-indiranagar',
+    publicPhone: '+918041239876',
+    addressLine1: '100 Feet Road, HAL 2nd Stage',
+    city: 'Bengaluru',
+    state: 'Karnataka',
+    postalCode: '560038',
+    formattedAddress: '100 Feet Road, Indiranagar, Bengaluru, KA 560038',
+    latitude: 12.9784,
+    longitude: 77.6408,
+    ratingAvg: '4.60',
+    ratingCount: 87,
+    supportedVehicleTypes: [TWO],
+    autoAccept: true,
+    slotCapacity: 2,
+    hoursStart: '08:30',
+    hoursEnd: '20:00',
+    upiVpa: 'speedline@okicici',
+  });
+  const clinic = await ensureCenter(DEV_CENTER_DOMAINS.clinic, {
+    name: 'Koramangala Car Clinic',
+    displayName: 'Koramangala Car Clinic',
+    slug: 'koramangala-car-clinic',
+    publicPhone: '+918041235555',
+    addressLine1: '80 Feet Road, 4th Block',
+    city: 'Bengaluru',
+    state: 'Karnataka',
+    postalCode: '560034',
+    formattedAddress: '80 Feet Road, Koramangala, Bengaluru, KA 560034',
+    latitude: 12.9352,
+    longitude: 77.6245,
+    ratingAvg: '4.70',
+    ratingCount: 143,
+    supportedVehicleTypes: [FOUR],
+    autoAccept: true,
+    slotCapacity: 2,
+    hoursStart: '09:30',
+    hoursEnd: '18:30',
+  });
 
   const menus: [
     ServiceCenter,
@@ -192,12 +117,6 @@ async function seedStatic(dataSource: DataSource): Promise<ServiceCenter> {
     number,
     boolean?,
   ][] = [
-    [apex, 'periodic-service', 'Periodic service', TWO, 1499, 90],
-    [apex, 'oil-change', 'Engine oil change', TWO, 699, 30],
-    [apex, 'brakes', 'Brake inspection and adjustment', null, 499, 45],
-    [apex, 'car-service', 'Car general service', FOUR, 3999, 180],
-    [apex, 'wash', 'Foam wash and polish', null, 399, 40],
-    [apex, 'tyre', 'Wheel alignment and balancing', FOUR, 899, 60],
     [speedline, 'periodic-service', 'Standard service', TWO, 1199, 90],
     [speedline, 'oil-change', 'Oil change', TWO, 599, 30],
     [speedline, 'tyre', 'Puncture repair', TWO, 149, 20, true],
@@ -209,20 +128,28 @@ async function seedStatic(dataSource: DataSource): Promise<ServiceCenter> {
     index,
     [center, slug, name, vehicleType, price, minutes, starting],
   ] of menus.entries()) {
-    const category = categories.get(slug)!;
-    await offerings.save(
-      offerings.create({
-        serviceCenterId: center.id,
-        categoryId: category.id,
-        name,
-        vehicleType,
-        priceInr: price.toFixed(2),
-        priceIsStarting: starting ?? false,
-        durationMinutes: minutes,
-        isActive: true,
-        sortOrder: index,
-      }),
-    );
+    const category = categories.get(slug);
+    if (!category) {
+      throw new Error(`Missing workshop category ${slug}`);
+    }
+    const existing = await offerings.findOne({
+      where: { serviceCenterId: center.id, name },
+    });
+    if (!existing) {
+      await offerings.save(
+        offerings.create({
+          serviceCenterId: center.id,
+          categoryId: category.id,
+          name,
+          vehicleType,
+          priceInr: price.toFixed(2),
+          priceIsStarting: starting ?? false,
+          durationMinutes: minutes,
+          isActive: true,
+          sortOrder: index,
+        }),
+      );
+    }
     const linked = await links.findOne({
       where: { serviceCenterId: center.id, categoryId: category.id },
     });
@@ -232,44 +159,6 @@ async function seedStatic(dataSource: DataSource): Promise<ServiceCenter> {
       );
     }
   }
-
-  const staff = dataSource.getRepository(StaffProfile);
-  for (const [index, persona] of STAFF_PERSONAS.entries()) {
-    await staff.save(
-      staff.create({
-        serviceCenterId: apex.id,
-        iamUserId: persona.iamUserId,
-        displayName: persona.displayName,
-        designation: persona.designation,
-        employeeCode: `APX-${String(index + 1).padStart(3, '0')}`,
-        specializations:
-          persona.role === 'technician' ? ['Two-wheelers', 'Brakes'] : null,
-        isActive: true,
-      }),
-    );
-  }
-
-  const promos = dataSource.getRepository(Promotion);
-  await promos.save([
-    promos.create({
-      scope: PromotionScope.PLATFORM,
-      kicker: "Today's exclusive deals",
-      title: 'Enjoy extra off up to 30%',
-      percentOff: 30,
-      ctaLabel: 'Claim now',
-      isActive: true,
-    }),
-    promos.create({
-      scope: PromotionScope.CENTER,
-      serviceCenterId: apex.id,
-      kicker: 'Apex Auto Garage',
-      title: 'Free wash with every periodic service',
-      ctaLabel: 'Book now',
-      isActive: true,
-    }),
-  ]);
-
-  return apex;
 }
 
 function slot(date: string, hour: number) {
@@ -288,7 +177,8 @@ export async function seedDevData(
   baseUrl: string,
   tokens: SeedTokens,
 ): Promise<SeedSummary> {
-  const apex = await seedStatic(dataSource);
+  const apex = await bootstrapWorkshop(dataSource);
+  await seedMemoryNeighborCenters(dataSource);
 
   const client =
     (token: string): Api =>
@@ -354,37 +244,23 @@ export async function seedDevData(
     maintenanceReminders: true,
     documentReminders: true,
   });
-  await customer('POST', '/v1/me/addresses', {
-    label: 'Home',
-    line1: '42, 5th Cross, HAL 3rd Stage',
-    landmark: 'Opposite Indiranagar Club',
-    city: 'Bengaluru',
-    state: 'Karnataka',
-    postalCode: '560008',
-    isDefault: true,
-  });
-  const activa = await customer('POST', '/v1/me/vehicles', {
-    vehicleType: TWO,
-    make: 'Honda',
-    model: 'Activa 6G',
-    year: 2022,
-    color: 'Pearl Blue',
-    fuel: 'Petrol',
-    registrationNumber: 'KA01AB1234',
-    currentOdometerKm: 8200,
-  });
-  const i20 = await customer('POST', '/v1/me/vehicles', {
-    vehicleType: FOUR,
-    make: 'Hyundai',
-    model: 'i20',
-    variant: 'Asta',
-    year: 2021,
-    color: 'Polar White',
-    fuel: 'Petrol',
-    transmission: 'Manual',
-    registrationNumber: 'KA03MN4567',
-    currentOdometerKm: 32100,
-  });
+  const garage = (await customer('GET', '/v1/me/vehicles')) as unknown as {
+    id: string;
+    registrationNumber: string;
+  }[];
+  const plate = (registrationNumber: string) => {
+    const vehicle = garage.find(
+      (item) => item.registrationNumber === registrationNumber,
+    );
+    if (!vehicle) {
+      throw new Error(
+        `Workshop bootstrap did not create garage vehicle ${registrationNumber}`,
+      );
+    }
+    return vehicle;
+  };
+  const activa = plate('KA01AB1234');
+  const i20 = plate('KA03MN4567');
 
   const today = istToday();
   const tomorrow = addDays(today, 1);

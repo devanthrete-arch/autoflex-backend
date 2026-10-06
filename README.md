@@ -10,31 +10,40 @@ Autoflex does **not** issue identity JWTs, handle OTP login, or define RBAC — 
 - Docker (for local PostgreSQL)
 - Frevels IAM running locally (for real JWTs) **or** `LOCAL_JWKS_JSON` for offline/tests
 
-## Quick start
+## Durable test workshop
+
+This is the path for the three apps. Postgres keeps the center, the roster, the customers, and every booking across API restarts. `POST /v1/dev/session` still stands in for Frevels IAM.
 
 ```bash
-# 1. Start PostgreSQL
 docker compose up -d
-
-# 2. Configure environment
 cp .env.example .env
-
-# 3. Install dependencies
 npm install
-
-# 4. Run migrations
 npm run migration:run
-
-# 5. Seed demo tenant mapping (ServiceCenter + StaffProfile)
-npm run seed:dev
-
-# 6. Start API
-npm run start:dev
+npm run start:workshop
 ```
 
 API: `http://localhost:3001`  
 Swagger: `http://localhost:3001/docs`  
 Health: `http://localhost:3001/health`
+
+`start:workshop` upserts the roster on boot. `npm run workshop:bootstrap` does the same upsert without starting the API. Rerunning restores the center card, menu, staff, and customer garages. It does not delete bookings, jobs, or documents. A vehicle's odometer is kept once it has been set.
+
+The first start writes `.workshop/dev-signing-key.json` (gitignored). Dev tokens keep working after a restart until that file is deleted.
+
+Sign in with `POST /v1/dev/session`:
+
+| Who | How |
+|-----|-----|
+| Apex Auto Garage | The only workshop center (Bengaluru, UPI `apexauto@okhdfcbank`) |
+| Meera Iyer, manager | `{"persona":"manager"}` · 9845000001 |
+| Arjun Rao, advisor | `{"persona":"advisor"}` · 9845000002 |
+| Ravi Kumar, technician | `{"persona":"technician"}` · 9845000003 |
+| Sana Sheikh, technician | `{"persona":"technician2"}` · 9845000004 |
+| Priya Sharma | `{"phone":"9876543210"}` · Activa `KA01AB1234`, i20 `KA03MN4567` |
+| Nikhil Menon | `{"phone":"9845123450"}` · Classic 350 `KA05RE2201` |
+| Aisha Khan | `{"phone":"9900887766"}` · Swift `KA02SW4410` |
+
+`npm run start:dev` is the API without the dev-session stand-in, for when Frevels IAM is issuing real tokens. `npm run seed:dev` only maps one IAM domain id and user id; it is not the workshop roster.
 
 ### Local memory runtime (no Docker)
 
@@ -42,7 +51,7 @@ Health: `http://localhost:3001/health`
 PORT=3001 npm run start:memory
 ```
 
-Uses pg-mem, seeds Apex / Speedline / Koramangala plus Priya's garage, and exposes `POST /v1/dev/session` for staff personas (`manager`, `advisor`, `technician`, `technician2`) and customer phones. Swagger is at `/docs`. Boot takes about a minute.
+Uses pg-mem. It loads the same Apex roster, then adds Speedline, Koramangala, and a scripted morning of jobs. Every restart wipes that database. Boot takes about a minute. Prefer `start:workshop` when bookings should survive.
 
 ## Auth flow (verify-only)
 
@@ -124,14 +133,17 @@ Job statuses: `CHECKED_IN`, `INSPECTION`, `AWAITING_APPROVAL`, `IN_PROGRESS`, `Q
 
 | Command | Description |
 |---------|-------------|
-| `npm run start:dev` | Dev server with watch |
+| `npm run start:dev` | Dev server with watch (real IAM; no dev session) |
+| `npm run start:workshop` | Durable Postgres workshop and `POST /v1/dev/session` |
+| `npm run workshop:bootstrap` | Upsert the workshop roster without starting the API |
+| `npm run start:memory` | Throwaway pg-mem runtime (resets on exit) |
 | `npm run build` | Compile TypeScript |
 | `npm run lint` | ESLint |
 | `npm test` | Unit tests |
 | `npm run test:e2e` | E2E tests (requires Postgres) |
 | `npm run migration:run` | Apply migrations |
 | `npm run migration:revert` | Revert last migration |
-| `npm run seed:dev` | Seed demo ServiceCenter + StaffProfile |
+| `npm run seed:dev` | Map one IAM domain and user (not the workshop roster) |
 
 ## Testing
 

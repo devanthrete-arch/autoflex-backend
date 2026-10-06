@@ -18,8 +18,9 @@ import { seedDevData } from './dev-seed';
 
 /**
  * Local runtime with no Docker and no IAM: in-memory Postgres with every
- * migration, seeded data, and `/v1/dev/session` for sign-in. Data resets on
- * restart. Production starts from `main.ts`, which never loads this module.
+ * migration, the workshop roster, a scripted morning of jobs, and
+ * `/v1/dev/session`. Data resets on restart. The durable workshop is
+ * `npm run start:workshop`. Production starts from `main.ts`.
  */
 async function bootstrap() {
   const logger = new Logger('DevRuntime');

@@ -22,6 +22,9 @@ import {
   DEV_CUSTOMER_DOMAIN_ID,
   DEV_STAFF_APP_ID,
   STAFF_PERSONAS,
+  WORKSHOP_CENTER,
+  WORKSHOP_CUSTOMERS,
+  workshopCustomerByPhone,
 } from './dev-personas';
 
 export const DEV_SIGNER = Symbol('DEV_SIGNER');
@@ -66,12 +69,21 @@ export class DevController {
   @ApiOperation({ summary: 'Seeded people you can sign in as' })
   personas() {
     return {
+      center: {
+        name: WORKSHOP_CENTER.name,
+        slug: WORKSHOP_CENTER.slug,
+      },
       customer: DEV_CUSTOMER,
+      customers: WORKSHOP_CUSTOMERS.map((customer) => ({
+        name: customer.name,
+        phone: customer.phone,
+      })),
       staff: STAFF_PERSONAS.map((p) => ({
         key: p.key,
         displayName: p.displayName,
         role: p.role,
         designation: p.designation,
+        phone: p.mobile,
       })),
     };
   }
@@ -107,6 +119,7 @@ export class DevController {
       };
     }
     const phone = (dto.phone ?? DEV_CUSTOMER.phone).slice(-10);
+    const known = workshopCustomerByPhone(phone);
     const userId = customerIdForPhone(phone);
     const accessToken = await this.signer.signAccessToken(
       {
@@ -124,7 +137,7 @@ export class DevController {
       expiresIn: SESSION_TTL,
       actor: 'customer',
       userId,
-      displayName: phone === DEV_CUSTOMER.phone ? DEV_CUSTOMER.name : null,
+      displayName: known?.name ?? null,
       role: 'customer',
       phone: `+91${phone}`,
     };

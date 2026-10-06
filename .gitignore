@@ -35,6 +35,9 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Local workshop signing key (dev stand-in for IAM; generated on first start)
+/.workshop
+
 # dotenv environment variable files
 .env
 .env.development.local
