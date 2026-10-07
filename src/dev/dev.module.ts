@@ -9,6 +9,7 @@ import {
   Inject,
   Module,
   Post,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { IsIn, IsOptional, Matches } from 'class-validator';
@@ -24,6 +25,7 @@ import {
   STAFF_PERSONAS,
   WORKSHOP_CENTER,
   WORKSHOP_CUSTOMERS,
+  staffByPhone,
   workshopCustomerByPhone,
 } from './dev-personas';
 
@@ -43,6 +45,11 @@ class DevSessionDto {
   @IsOptional()
   @Matches(/^(?:\+91)?[6-9]\d{9}$/)
   phone?: string;
+
+  /** `staff` looks the phone up on the workshop roster. Default is a customer. */
+  @IsOptional()
+  @IsIn(['customer', 'staff'])
+  actor?: 'customer' | 'staff';
 }
 
 export interface DevSession {
@@ -95,28 +102,21 @@ export class DevController {
     if (dto.persona && dto.phone) {
       throw new BadRequestException('Send persona or phone, not both');
     }
+    if (dto.actor === 'staff') {
+      if (!dto.phone) {
+        throw new BadRequestException('A mobile number is required');
+      }
+      const persona = staffByPhone(dto.phone);
+      if (!persona) {
+        throw new UnauthorizedException(
+          'No staff account uses this mobile number',
+        );
+      }
+      return this.staffSession(persona);
+    }
     if (dto.persona) {
       const persona = STAFF_PERSONAS.find((p) => p.key === dto.persona)!;
-      const accessToken = await this.signer.signAccessToken(
-        {
-          sub: persona.iamUserId,
-          domainId: DEV_CENTER_DOMAINS.apex,
-          domainApplicationId: DEV_STAFF_APP_ID,
-          roles: [persona.role],
-          permissions: persona.permissions,
-          mobile: persona.mobile,
-        },
-        { expiresIn: SESSION_TTL },
-      );
-      return {
-        accessToken,
-        expiresIn: SESSION_TTL,
-        actor: 'staff',
-        userId: persona.iamUserId,
-        displayName: persona.displayName,
-        role: persona.role,
-        phone: `+91${persona.mobile}`,
-      };
+      return this.staffSession(persona);
     }
     const phone = (dto.phone ?? DEV_CUSTOMER.phone).slice(-10);
     const known = workshopCustomerByPhone(phone);
@@ -140,6 +140,31 @@ export class DevController {
       displayName: known?.name ?? null,
       role: 'customer',
       phone: `+91${phone}`,
+    };
+  }
+
+  private async staffSession(
+    persona: (typeof STAFF_PERSONAS)[number],
+  ): Promise<DevSession> {
+    const accessToken = await this.signer.signAccessToken(
+      {
+        sub: persona.iamUserId,
+        domainId: DEV_CENTER_DOMAINS.apex,
+        domainApplicationId: DEV_STAFF_APP_ID,
+        roles: [persona.role],
+        permissions: persona.permissions,
+        mobile: persona.mobile,
+      },
+      { expiresIn: SESSION_TTL },
+    );
+    return {
+      accessToken,
+      expiresIn: SESSION_TTL,
+      actor: 'staff',
+      userId: persona.iamUserId,
+      displayName: persona.displayName,
+      role: persona.role,
+      phone: `+91${persona.mobile}`,
     };
   }
 }
