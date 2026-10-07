@@ -103,6 +103,27 @@ describe('People, places and centers (e2e)', () => {
         .send({ postalCode: '012345' })
         .expect(400);
     });
+
+    it('stores a date of birth and rejects one in the future', async () => {
+      const saved = await http()
+        .put('/v1/me/profile')
+        .set('Authorization', `Bearer ${customer}`)
+        .send({ dateOfBirth: '1994-03-12' })
+        .expect(200);
+      expect(saved.body.dateOfBirth).toBe('1994-03-12');
+      expect(saved.body.ageYears).toBeGreaterThan(20);
+
+      await http()
+        .put('/v1/me/profile')
+        .set('Authorization', `Bearer ${customer}`)
+        .send({ dateOfBirth: '2999-01-01' })
+        .expect(400);
+      await http()
+        .put('/v1/me/profile')
+        .set('Authorization', `Bearer ${customer}`)
+        .send({ dateOfBirth: '1899-12-31' })
+        .expect(400);
+    });
   });
 
   describe('customer addresses', () => {

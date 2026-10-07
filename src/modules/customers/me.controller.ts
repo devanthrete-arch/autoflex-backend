@@ -4,8 +4,7 @@ import { CurrentAuth } from '../auth/decorators/current-auth.decorator';
 import { RequireCustomer } from '../auth/decorators/require-customer.decorator';
 import type { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { UpsertProfileDto } from './dto/customer-me.dto';
-import { MeService } from './me.service';
-import { CustomerProfile } from './entities/customer-profile.entity';
+import { MeService, type ProfileView } from './me.service';
 
 @ApiTags('me')
 @ApiBearerAuth()
@@ -16,7 +15,7 @@ export class MeController {
 
   @Get('profile')
   @ApiOperation({ summary: 'Get customer profile' })
-  getProfile(@CurrentAuth() auth: AuthContext): Promise<CustomerProfile> {
+  getProfile(@CurrentAuth() auth: AuthContext): Promise<ProfileView> {
     return this.meService.getProfile(auth);
   }
 
@@ -25,7 +24,7 @@ export class MeController {
   upsertProfile(
     @CurrentAuth() auth: AuthContext,
     @Body() dto: UpsertProfileDto,
-  ): Promise<CustomerProfile> {
+  ): Promise<ProfileView> {
     return this.meService.upsertProfile(auth, dto);
   }
 }

@@ -99,6 +99,11 @@ export class UpsertProfileDto {
   @IsOptional()
   @IsBoolean()
   documentReminders?: boolean;
+
+  /** Calendar date `YYYY-MM-DD`. Not in the future, and not before 1900-01-01. */
+  @IsOptional()
+  @Matches(/^\d{4}-\d{2}-\d{2}$/)
+  dateOfBirth?: string;
 }
 
 export class CreateGarageVehicleDto {

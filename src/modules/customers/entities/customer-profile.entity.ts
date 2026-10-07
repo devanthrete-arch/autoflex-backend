@@ -72,6 +72,10 @@ export class CustomerProfile {
   @Column({ name: 'postal_code', type: 'varchar', length: 10, nullable: true })
   postalCode: string | null;
 
+  /** Calendar date `YYYY-MM-DD`. Age is derived, never stored. */
+  @Column({ name: 'date_of_birth', type: 'date', nullable: true })
+  dateOfBirth: string | null;
+
   @Column({
     name: 'preferred_channel',
     type: 'enum',

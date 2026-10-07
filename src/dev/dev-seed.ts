@@ -238,6 +238,7 @@ export async function seedDevData(
     state: 'Karnataka',
     postalCode: '560008',
     selectedPlaceLabel: 'Indiranagar, Bengaluru',
+    dateOfBirth: '1994-03-12',
     preferredChannel: 'WHATSAPP',
     whatsappConsent: true,
     serviceUpdates: true,

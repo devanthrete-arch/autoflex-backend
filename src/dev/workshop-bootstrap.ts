@@ -368,6 +368,7 @@ async function upsertCustomer(
     state: customer.state,
     postalCode: customer.postalCode,
     selectedPlaceLabel: customer.selectedPlaceLabel,
+    dateOfBirth: customer.dateOfBirth,
     lastLat: customer.lastLat,
     lastLng: customer.lastLng,
     preferredChannel: CommunicationChannel.WHATSAPP,

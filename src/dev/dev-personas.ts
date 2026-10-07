@@ -105,6 +105,7 @@ export interface WorkshopCustomer {
   state: string;
   postalCode: string;
   selectedPlaceLabel: string;
+  dateOfBirth: string;
   lastLat: number;
   lastLng: number;
   address: {
@@ -130,6 +131,7 @@ export const WORKSHOP_CUSTOMERS: WorkshopCustomer[] = [
     city: 'Bengaluru',
     state: 'Karnataka',
     postalCode: '560008',
+    dateOfBirth: '1994-03-12',
     selectedPlaceLabel: 'Indiranagar, Bengaluru',
     lastLat: 12.9784,
     lastLng: 77.6408,
@@ -175,6 +177,7 @@ export const WORKSHOP_CUSTOMERS: WorkshopCustomer[] = [
     city: 'Bengaluru',
     state: 'Karnataka',
     postalCode: '560034',
+    dateOfBirth: '1988-11-02',
     selectedPlaceLabel: 'Koramangala, Bengaluru',
     lastLat: 12.9352,
     lastLng: 77.6245,
@@ -208,6 +211,7 @@ export const WORKSHOP_CUSTOMERS: WorkshopCustomer[] = [
     city: 'Bengaluru',
     state: 'Karnataka',
     postalCode: '560041',
+    dateOfBirth: '1997-07-21',
     selectedPlaceLabel: 'Jayanagar, Bengaluru',
     lastLat: 12.9308,
     lastLng: 77.5838,
@@ -241,6 +245,11 @@ export const DEV_CUSTOMER = {
   phone: WORKSHOP_CUSTOMERS[0].phone,
   name: WORKSHOP_CUSTOMERS[0].name,
 };
+
+export function staffByPhone(phone: string): StaffPersona | undefined {
+  const digits = phone.replace(/\D/g, '').slice(-10);
+  return STAFF_PERSONAS.find((persona) => persona.mobile === digits);
+}
 
 export function workshopCustomerByPhone(
   phone: string,
