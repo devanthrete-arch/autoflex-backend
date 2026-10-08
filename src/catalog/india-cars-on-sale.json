@@ -1,0 +1,6746 @@
+{
+  "meta": {
+    "market": "IN",
+    "vehicleType": "FOUR_WHEELER",
+    "asOf": "2026-10-07",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "attribution": "Data: VariantWise, https://variantwise.com",
+    "source": "https://variantwise.com/data/catalogue.json",
+    "changes": "Reduced to make, model, variant, fuel and transmission for vehicle onboarding. Prices, dimensions and feature text were removed. Gearboxes other than a manual are stored as Automatic.",
+    "limits": "Cars on sale in India on the as-of date. Discontinued models, model years and paint colours are not in the source. Two-wheelers are not in this file."
+  },
+  "makes": [
+    {
+      "name": "BYD",
+      "models": [
+        {
+          "name": "ATTO 3",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Dynamic",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Premium",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Superior",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "eMAX 7",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "Comfort",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Superior",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "SEAL",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "Dynamic",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Premium",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Performance",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "SEALION 7",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Dynamic",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Premium",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Performance",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Citroen",
+      "models": [
+        {
+          "name": "AircrossX",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "You 1.2L PureTech 82",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Plus",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "You 1.2L PureTech 110 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Turbo Plus",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Max",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Turbo Max",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Turbo Max 7-Seater",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Turbo Max",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Turbo Max 7-Seater",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "BasaltX",
+          "bodyStyle": "coupe-suv",
+          "options": [
+            {
+              "variant": "You 1.2L PureTech 82",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "You Comfort Edition",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "You 1.2L PureTech 110 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Plus",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Turbo Plus",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Max",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Turbo Plus",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Max NA",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Max",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "C3X",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "Live",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Live (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Feel",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Feel (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Turbo Feel",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Shine",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Turbo Shine",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Turbo Shine",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "C5 Aircross",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Shine",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "eC3X",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "Live",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Live (O)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Shine",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Honda",
+      "models": [
+        {
+          "name": "Amaze",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VX",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZX",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VX",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZX",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Amaze - 2nd Gen",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "City",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "SV",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZX",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZX",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZX+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZX+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZX+ e:HEV",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Elevate",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "SV",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VX",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VX",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZX",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZX",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "ZR-V",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "e:HEV",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hyundai",
+      "models": [
+        {
+          "name": "Alcazar",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Executive",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Prestige",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Prestige",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Platinum",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Platinum",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Signature",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Executive",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Prestige (Diesel)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Corporate",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Corporate",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Platinum (Diesel)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Platinum (Diesel)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Signature (Diesel)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Aura",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "E",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S Corporate",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "E",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SX",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S Corporate",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "SX(O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "SX+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SX",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Creta",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "E",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "EX",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "EX(O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "EX(O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "S(O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S(O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SX",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "SX Premium",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "SX Premium",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "King",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "King 1.5L MPi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "King 1.5L Turbo GDi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "E",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "EX",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "EX(O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "EX(O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "S(O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S(O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SX Premium",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "King",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "King",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "King Lounge Edition",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "King Lounge Edition",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Creta Electric",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Executive",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Executive Tech",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Executive (O) LR",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Premium",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart (O) LR",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Excellence 42 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Excellence Knight 42 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Excellence 51.4 kWh Long Range Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Excellence Knight 51.4 kWh Long Range Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Excellence Lounge Edition",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Creta N Line",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "N10",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N10",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Exter",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "HX 2",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 3",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 3",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 2",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 4",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 3",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 6",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 4+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 4",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 8",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 6",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 6",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 8",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 8",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 10",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Grand i10 Nios",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "Era",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Magna",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Corporate",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Magna",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Sportz",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sportz(O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Corporate",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Magna",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sportz",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Asta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sportz(O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Sportz",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Asta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "i20",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "Era",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Magna Executive",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Magna",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sportz",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sportz(O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Asta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sportz",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Asta(O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sportz(O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Asta(O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "i20 N Line",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "N6",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N8",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N8",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "IONIQ 5",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Long Range RWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Venue",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "HX 2 1.2L Kappa MPi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 4",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 5 1.2L Kappa MPi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 5+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 6",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 6T",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 2 1.0L Kappa Turbo GDi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 5 1.0L Kappa Turbo GDi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 6",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 8",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 8",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 10",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 2",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 5",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 5",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 7",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 8",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 10",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Venue N Line",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "N6",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N6",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "N10",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Verna",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "HX 2",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 4",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 6",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 6",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 6+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 6+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 8",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 8",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 10 1.5L MPi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 8 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HX 8 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HX 10 1.5L Turbo GDi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Jeep",
+      "models": [
+        {
+          "name": "Compass",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Sport",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Longitude (O2)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Limited (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Longitude (O2)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Model S (O2)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Model S (O2) 2.0 Multijet II (4x2)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Model S (O2) 2.0 Multijet II (4x4)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Grand Cherokee",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Limited (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Meridian",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Longitude",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Longitude Plus",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Longitude",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Longitude Plus",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Limited (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Limited (O) 2.0L Multijet II (4x2)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Limited (O) 2.0L Multijet II (4x4)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Overland 2.0L Multijet II (4x2)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Overland 2.0L Multijet II (4x4)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Wrangler",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Unlimited",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Rubicon",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kia",
+      "models": [
+        {
+          "name": "Carens",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "Premium (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Premium (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Premium (O)",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Carens Clavis",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "HTE",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (O) 1.5L Smartstream",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (EX) 1.5L Smartstream",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (O) 1.5L T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (EX) 1.5L T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+ (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK+ (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX 1.5L T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTX+ 1.5L T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTX (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX (O) A",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX+ DCT",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTE",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (EX)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+ (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX (Diesel)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (O)",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Carens Clavis EV",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "HTK+",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX E 42 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX 42 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX E 51.4 kWh Electric (Extended Range)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX 51.4 kWh Electric (Extended Range)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX+",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX+",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Carnival",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "Limousine Plus",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "EV6",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "GT-Line AWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "EV9",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "GT-Line AWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Seltos",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "HTE",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE(O) Smartstream G1.5",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE(O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK Smartstream G1.5",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK(O) Smartstream G1.5",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK(O) Smartstream G1.5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTX Smartstream G1.5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX(A)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTX(A) Smartstream G1.5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX Smartstream G1.5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line Smartstream G1.5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX(A) Smartstream G1.5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line(A) Smartstream G1.5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTE(O) Smartstream G1.5 T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK Smartstream G1.5 T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK(O) Smartstream G1.5 T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK(O) Smartstream G1.5 T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX Smartstream G1.5 T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX(A) Smartstream G1.5 T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX Smartstream G1.5 T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line Smartstream G1.5 T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX(A) Smartstream G1.5 T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line(A) Smartstream G1.5 T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX(O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line(O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTE",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE(O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE(O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK(O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK(O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTX",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX(A)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTX(A)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX(A)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line(A)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX(O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line(O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Sonet",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "HTE",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK (O) 1.2L Smartstream",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+ (O) 1.2L Smartstream",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK (O) 1.0L Smartstream T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK+ (O) 1.0L Smartstream T-GDi Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+ (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTE (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+ (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTX",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK (O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK+ (O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GTX+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Sorento",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "HTE",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTE",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK 6-seat",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK(A)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK(A) 6-seat",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK 6-seat",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX(A)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Syros",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "HTE",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK (EX)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTE (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK (EX)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK+ (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK+ (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "HTK+ (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK+ (O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX (O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Syros EV",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "HTK",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK+ Syros EV 42 kWh",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX Syros EV 42 kWh",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTK+ Syros EV 51.4 kWh Extended Range",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX Syros EV 51.4 kWh Extended Range",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "HTX+",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "X-Line",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mahindra",
+      "models": [
+        {
+          "name": "BE 6",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Pack One",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack One Above",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Two 59 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Two 79 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Formula E Edition FE2",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Formula E Edition FE3",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Three Select",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Three",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Batman Edition",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SPORTEQ ONE",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SPORTEQ TWO",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SPORTEQ THREE 59 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SPORTEQ THREE 70 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SPORTEQ THREE+ 70 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SPORTEQ THREE+ 79 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SPORTEQ FE",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SPORTEQ FOUR",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SPORTEQ Launch Edition",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "SPORTEQ FE FOUR",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Bolero",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "B4",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "B6",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "B6 Opt",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "B8",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Bolero Neo",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "N4",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N8",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N10 (R)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N11",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N10 Opt",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Bolero Neo Plus",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "P4",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "P10",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Scorpio Classic",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "S",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S11",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Scorpio-N",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Z2",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z4",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z4",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z8S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z8S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z8T",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z8T",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z8L",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z8L",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z2",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z4 2.2L mHawk (132 PS)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z4",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z6",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z6",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z8S",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z8S",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z8",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z8",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z8T 2.2L mHawk (175 PS)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z8T 2.2L mHawk (175 PS)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z8L 2.2L mHawk (175 PS)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z8L 2.2L mHawk (175 PS)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z4 2.2L mHawk (175 PS) 4XPLOR 4WD",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z8T 2.2L mHawk (175 PS) 4XPLOR 4WD",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z8T 2.2L mHawk (175 PS) 4XPLOR 4WD",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Z8L 2.2L mHawk (175 PS) 4XPLOR 4WD",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Z8L 2.2L mHawk (175 PS) 4XPLOR 4WD",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Thar OG",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "AXT",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "LXT 1.5L D117 CRDe",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXT 1.5L D117 CRDe",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "LXT 2.2L D22 mHawk (RWD)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXT 2.2L D22 mHawk (RWD)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "LXT 2.2L D22 mHawk (4WD)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXT 2.2L D22 mHawk (4WD)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "LXT 2.2L D22 mHawk (4WD)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXT 2.2L D22 mHawk (4WD)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "LXT 2.0L G20 TGDi mStallion (RWD)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXT 2.0L G20 TGDi mStallion (RWD)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "LXT",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXT",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "LXT 2.0L G20 TGDi mStallion (4WD)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXT 2.0L G20 TGDi mStallion (4WD)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Thar Roxx",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "MX1",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX3",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "MX5",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7L",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "MX1",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX3",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX3",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX3L",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX5 2.2L mHawk (RWD)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX5",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX5L 2.2L mHawk (RWD)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7L 2.2L mHawk (RWD)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX7L 2.2L mHawk (RWD)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "MX5 2.2L mHawk (4WD)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX5L 2.2L mHawk (4WD)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7L 2.2L mHawk (4WD)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX7L 2.2L mHawk (4WD)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "XEV 9e",
+          "bodyStyle": "coupe-suv",
+          "options": [
+            {
+              "variant": "Pack One",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Two 59 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Two 79 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Three Select",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Cineluxe Edition",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Three",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "XEV 9S",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Pack One Above 59 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack One Above 79 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Two Above 70 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Two Above 79 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Two Above (6-seat) 70 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Two Above (6-seat) 79 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Three",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Three (6-seat)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Three Above",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pack Three Above (6-seat)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "XUV 3XO",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "MX1",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX2 Pro",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX3",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX3",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "REVX EDGE",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "REVX EDGE",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "MX3 Pro",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "REVX EDGE (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "REVX EDGE (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX5",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX5 L",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX5 L",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX7",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7 L",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX7 L",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "MX2",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX2 Pro",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX3",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX3",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "REVX EDGE",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "MX3 Pro",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "REVX EDGE (O)",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "REVX EDGE (O)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX5",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX5",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX7",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7 L",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "XUV 3XO EV",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "AX5",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7 L",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "XUV 7XO",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "AX",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX3",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX3",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX5",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX5",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX7",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7T",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7T 6-seat",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7L",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7L 6-seat",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX3",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX3",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX5",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX5",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX7",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7T",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX7T 6-seat",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX7T 2.2L mHawk Turbo",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7T 6-seat",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7L",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "AX7L 2.2L mHawk Turbo",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7L 6-seat",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7T 2.2L mHawk Turbo AWD",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "AX7L 2.2L mHawk Turbo AWD",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Maruti Suzuki",
+      "models": [
+        {
+          "name": "Alto K10",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "STD",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "LXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VXi+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "LXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Baleno",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "Sigma",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Delta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Delta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Delta",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Alpha",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Alpha (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Alpha",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Alpha (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Delta",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Brezza",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "LXi 1.0L Boosterjet Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "LXi 1.5L K15C Smart Hybrid",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi 1.0L Boosterjet Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi 1.5L K15C Smart Hybrid",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "LXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi 1.0L Boosterjet Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi 1.5L K15C Smart Hybrid",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Celerio",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "LXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Dzire",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "LXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "e Vitara",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Delta",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Alpha",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Eeco",
+          "bodyStyle": "van",
+          "options": [
+            {
+              "variant": "5 Seater STD",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "5 Seater AC",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "5 Seater AC",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Ertiga",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "LXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Fronx",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Sigma",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Delta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sigma",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Delta+ 1.2L DualJet",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Delta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Delta+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Delta",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Delta+ 1.0L Boosterjet Turbo Smart Hybrid",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Alpha",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Alpha",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Grand Vitara",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Sigma",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Delta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Delta",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Delta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Alpha",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Alpha 1.5L K15C Smart Hybrid",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Alpha 1.5L K15C AllGrip AWD",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Delta+ (Strong Hybrid)",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Zeta+ (Strong Hybrid)",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Alpha+ (Strong Hybrid)",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Invicto",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "Zeta+ 7S",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Zeta+ 8S",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Alpha+ 7S",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Jimny",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Zeta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Alpha",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Alpha",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "S-Presso",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "STD (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "LXi (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "LXi (O)",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VXi+ (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi (O)",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi+ (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Swift",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "LXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VXi (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi (O)",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VXi (O)",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Victoris",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "LXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "LXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi (O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi+ (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi+ 1.5L K15C Smart Hybrid",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+ (O) 1.5L K15C Smart Hybrid",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+ 1.5L K15C AllGrip AWD",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+ (O) 1.5L K15C AllGrip AWD",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VXi (Strong Hybrid)",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi (Strong Hybrid)",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi (O) (Strong Hybrid)",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+ (Strong Hybrid)",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+ (O) (Strong Hybrid)",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Wagon R",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "LXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZXi",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZXi+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "LXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VXi",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "XL6",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "Zeta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Alpha",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Zeta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Alpha+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Alpha",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Alpha+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MG",
+      "models": [
+        {
+          "name": "Astor",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Sprint",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Shine",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Select",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Select",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Sharp Pro",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sharp Pro",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Savvy Pro",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Comet EV",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "Executive",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Excite 17.3 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Excite 17.4 kWh Electric Fast Charge",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Exclusive 17.3 kWh Electric",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Exclusive 17.4 kWh Electric Fast Charge",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Cyberster",
+          "bodyStyle": "convertible",
+          "options": [
+            {
+              "variant": "GT",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Hector",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Style",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Select Pro",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Smart Pro",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Smart Pro",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Sharp Pro",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sharp Pro",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Savvy Pro",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Hector Plus",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Sharp Pro",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sharp Pro",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Savvy Pro",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Hector Tomahawk EV",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Excite",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Exclusive",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Essence (5-seater)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Essence (7-seater)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Hector Tomahawk PHEV",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Exclusive",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Essence",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "M9",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "Presidential Limo",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Majestor",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Savvy 2.0L Twin-Turbo",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Savvy 2.0L Twin-Turbo Select 4x4",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Windsor EV",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Excite",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Exclusive",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Essence",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Exclusive Pro",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Essence Pro",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "ZS EV",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Executive",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Excite Pro",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Exclusive Plus",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Essence",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nissan",
+      "models": [
+        {
+          "name": "Gravite",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "Visia",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Acenta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N-Connecta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Tekna",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N-Connecta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Tekna",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Magnite",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Visia",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Visia+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Acenta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N-Connecta 1.0L B4D",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Tekna 1.0L B4D",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Tekna+ 1.0L B4D",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Visia",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Acenta 1.0L B4D",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "N-Connecta 1.0L B4D",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Tekna 1.0L B4D",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Tekna+ 1.0L B4D",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "N-Connecta 1.0L HRA0 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Tekna 1.0L HRA0 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Tekna+ 1.0L HRA0 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Acenta 1.0L HRA0 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "N-Connecta 1.0L HRA0 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Tekna 1.0L HRA0 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Tekna+ 1.0L HRA0 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Tekton",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Visia",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Visia+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Acenta",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N-Connecta T160 1.0L Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Tekna T160 1.0L Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Tekna+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "N-Connecta T280 1.3L Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Tekna T280 1.3L Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Acenta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "N-Connecta",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Tekna",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Tekna+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Renault",
+      "models": [
+        {
+          "name": "Duster",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Authentic",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Evolution 1.0L Turbo TCe 100",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Techno 1.0L Turbo TCe 100",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Evolution 1.3L Turbo TCe 160",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Techno 1.3L Turbo TCe 160",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Evolution",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Techno+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Techno",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Techno+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Iconic",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Iconic",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Kiger",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Authentic",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Evolution",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Evolution",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Evolution+ 1.0L Energy",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Evolution+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Techno 1.0L Energy",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Evolution+ 1.0L Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Techno 1.0L Energy",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Emotion 1.0L Energy",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Techno 1.0L Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Emotion 1.0L Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Techno 1.0L Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Emotion",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Kwid",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "Evolution",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Evolution",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Climber",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Climber",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Triber",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "Authentic",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Evolution 1.0L Energy",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Techno 1.0L Energy",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Emotion 1.0L Energy",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Emotion",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Evolution 1.0L Turbo TCe",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Techno 1.0L Turbo TCe",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Emotion 1.0L Turbo TCe",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Skoda",
+      "models": [
+        {
+          "name": "Kodiaq",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Lounge",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Sportline",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Selection L&K",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Kushaq",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Classic+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Classic+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Signature",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Signature",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Sportline",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sportline",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Prestige",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Prestige 1.0 TSI",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Prestige 1.5 TSI",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Monte Carlo 1.0 TSI",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Monte Carlo 1.5 TSI",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Kylaq",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Classic",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Classic+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Classic+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Signature",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Signature",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Signature+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Signature+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Sportline",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Sportline",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Prestige",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Prestige",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Prestige+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Prestige+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Slavia",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "Classic",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Signature",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Signature",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Prestige",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Prestige 1.0L TSI",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Prestige 1.5L TSI",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tata",
+      "models": [
+        {
+          "name": "Aeris",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "Smart",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Altroz",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "Smart",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative S 1.2 Revotron",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished Plus S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative S",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished S",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Smart",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure S",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative S",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished S",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure S",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative S",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished S",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Curvv",
+          "bodyStyle": "coupe-suv",
+          "options": [
+            {
+              "variant": "Smart",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished 1.2L Revotron Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished 1.2L Hyperion T-GDI",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Curvv EV",
+          "bodyStyle": "coupe-suv",
+          "options": [
+            {
+              "variant": "Accomplished X",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered X",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered X Dark",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Harrier",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Smart",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure X",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure X",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure X",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure X+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Fearless X",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Fearless X+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Smart",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure X",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure X",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Fearless Ultra",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Harrier EV",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Adventure",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure S",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Fearless+ Harrier EV 65 RWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Fearless+ Harrier EV 75 RWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Fearless+ Harrier EV 75 QWD (dual-motor AWD)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered Harrier EV 75 RWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered Harrier EV 75 QWD (dual-motor AWD)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Nexon",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Smart",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Smart+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Smart+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative 1.2L Revotron Turbo",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Fearless+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Fearless+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Fearless+ PS",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Fearless+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Fearless+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Smart+",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Nexon EV",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Creative Nexon EV 30 (Medium Range)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Fearless Nexon EV 30 (Medium Range)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative Nexon EV 45 (Long Range)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Fearless Nexon EV 45 (Long Range)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered+",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Punch",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Smart",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure 1.2 Revotron",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished Plus S 1.2 Revotron",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure Plus S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished Plus S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus S",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure S",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure S",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished Plus S",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure 1.2 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished Plus S 1.2 Turbo",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Punch EV",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Smart",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart Plus Standard Range 30 kWh",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart Plus Long Range 40 kWh",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered Plus S",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Safari",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Smart",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure X",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure X",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure X+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure X+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished X",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished Ultra",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure X",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure X",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure X+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure X+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished X+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished Ultra",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Sierra",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Smart+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Accomplished+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Accomplished+",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart+ L",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Smart+ L",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure L",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure L (O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure+ L",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Adventure+ L",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure+ L",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure+ L",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+ L",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure+ L",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Sierra EV",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Pure",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure S",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure Sierra EV 63 RWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Adventure Sierra EV 75 RWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered Sierra EV 63 RWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered Sierra EV 75 RWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered A Sierra EV 75 RWD",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Empowered A Sierra EV 75 AWD (Tata QWD, dual-motor)",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Tiago",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "Smart",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus A",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative Plus",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure Plus A",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative Plus",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Smart",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure Plus A",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Pure",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure Plus",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure Plus A",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative",
+              "fuel": "CNG",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Tiago EV",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "Smart",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure Plus Medium Range 19.2 kWh",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Pure Plus Long Range 24 kWh",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Creative Plus",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Tigor EV",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "XE",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "XT",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "XZ Plus",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "XZ Plus Lux",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tesla",
+      "models": [
+        {
+          "name": "Model Y",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Premium",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Model Y L",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Premium",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Toyota",
+      "models": [
+        {
+          "name": "Camry",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "Elegant",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Fortuner",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "4x2",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "4x2",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "4x2",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "4x4",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Neo Drive",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Legender",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Legender 4x4",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Legender Neo Drive",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GR-S",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Glanza",
+          "bodyStyle": "hatchback",
+          "options": [
+            {
+              "variant": "E",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "S",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "G",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "G",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "G",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Hilux",
+          "bodyStyle": "pickup",
+          "options": [
+            {
+              "variant": "GX 2.8L (4x2)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GX 2.8L (4x4)",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VX",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Innova Crysta",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "GX",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "GX+",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "VX",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "ZX",
+              "fuel": "Diesel",
+              "transmission": "Manual"
+            }
+          ]
+        },
+        {
+          "name": "Innova Hycross",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "G-SLF 7S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "G-SLF 8S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GX 7S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GX 8S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GX(O) 8S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GX(O) 7S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VX 7S",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VX 8S",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VX(O) 7S",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VX(O) 8S",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZX",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "ZX(O)",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Land Cruiser 300",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "ZX",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GR-S",
+              "fuel": "Diesel",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Rumion",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "E",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "G",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "G",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Urban Cruiser eBella",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "E3",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Urban Cruiser Hyryder",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "E",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S E-CNG",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "G(O)",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "G E-CNG",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "G(O)",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S Hybrid",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "G(O) Hybrid",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "V Hybrid",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Urban Cruiser Taisor",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "E",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "E",
+              "fuel": "CNG",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S+",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "S",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "S+",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "G",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "G",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "V",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Vellfire",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "Hi",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "VIP Executive Lounge",
+              "fuel": "Hybrid",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VinFast",
+      "models": [
+        {
+          "name": "VF 6",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Earth",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Wind",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Wind Infinity",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "VF 7",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Earth",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Wind",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Wind Infinity",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Sky",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Sky Infinity",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "VF MPV 7",
+          "bodyStyle": "mpv",
+          "options": [
+            {
+              "variant": "VF MPV 7",
+              "fuel": "Electric",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Volkswagen",
+      "models": [
+        {
+          "name": "Taigun",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Comfortline",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Highline",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Highline",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Highline Plus",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Highline Plus",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GT Line",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "GT Line",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Topline",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Topline",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GT Plus Chrome",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Tayron",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "Life",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "R-Line",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Tiguan R-Line",
+          "bodyStyle": "suv",
+          "options": [
+            {
+              "variant": "R-Line",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        },
+        {
+          "name": "Virtus",
+          "bodyStyle": "sedan",
+          "options": [
+            {
+              "variant": "Comfortline",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Highline",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Highline",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Highline Plus",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Highline Plus",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "Topline",
+              "fuel": "Petrol",
+              "transmission": "Manual"
+            },
+            {
+              "variant": "Topline",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            },
+            {
+              "variant": "GT Plus",
+              "fuel": "Petrol",
+              "transmission": "Automatic"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
