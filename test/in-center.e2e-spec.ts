@@ -132,7 +132,7 @@ describe('In-center service (e2e)', () => {
       .send({ name: 'Periodic service', priceInr: 1499, durationMinutes: 90 })
       .expect(201);
     await asCustomer(http().put('/v1/me/profile'))
-      .send({ displayName: 'Priya Sharma' })
+      .send({ displayName: 'Priya Sharma', dateOfBirth: '1994-03-12' })
       .expect(200);
     const vehicle = await asCustomer(http().post('/v1/me/vehicles'))
       .send({

@@ -65,6 +65,7 @@ describe('Customer kit slice (e2e)', () => {
       .set('Authorization', `Bearer ${customerToken}`)
       .send({
         displayName: 'Priya Sharma',
+        dateOfBirth: '1994-03-12',
         phone: '9876543210',
         locale: 'en-IN',
         selectedPlaceLabel: 'Bengaluru, IN',

@@ -99,7 +99,7 @@ describe('Discovery and reservation (e2e)', () => {
     });
 
     await asCustomer(http().put('/v1/me/profile'))
-      .send({ displayName: 'Priya Sharma' })
+      .send({ displayName: 'Priya Sharma', dateOfBirth: '1994-03-12' })
       .expect(200);
     const vehicle = await asCustomer(http().post('/v1/me/vehicles'))
       .send({

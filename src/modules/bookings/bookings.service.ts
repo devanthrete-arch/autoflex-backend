@@ -26,6 +26,7 @@ import {
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { GarageService } from '../customers/garage.service';
 import { MeService } from '../customers/me.service';
+import { assertBookingEligibility } from '../customers/booking-eligibility';
 import { OfferingsService } from '../offerings/offerings.service';
 import { ServiceCenter } from '../tenancy/entities/service-center.entity';
 import { TenancyService } from '../tenancy/tenancy.service';
@@ -153,6 +154,7 @@ export class BookingsService {
       );
     }
     const profile = await this.meService.ensureProfile(auth);
+    assertBookingEligibility(profile.dateOfBirth);
 
     const slotStart = new Date(dto.slotStart);
     const slotEnd = new Date(dto.slotEnd);

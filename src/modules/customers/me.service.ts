@@ -6,7 +6,16 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
+import {
+  ageYears,
+  assertDateOfBirth,
+  dateOfBirthString,
+} from '../../common/time/date-of-birth';
 import { istToday } from '../../common/time/ist';
+import {
+  bookingEligibility,
+  type BookingEligibility,
+} from './booking-eligibility';
 import { CustomerProfile } from './entities/customer-profile.entity';
 import { UpsertProfileDto } from './dto/customer-me.dto';
 
@@ -32,56 +41,20 @@ export function tryIndiaE164(raw: string): string {
   }
 }
 
-const DATE_OF_BIRTH = /^\d{4}-\d{2}-\d{2}$/;
-
-/** Whole years from a calendar date to today in India. */
-export function ageYears(
-  dateOfBirth: string | null,
-  today = istToday(),
-): number | null {
-  if (!dateOfBirth) return null;
-  const [year, month, day] = dateOfBirth.split('-').map(Number);
-  const [nowYear, nowMonth, nowDay] = today.split('-').map(Number);
-  let age = nowYear - year;
-  if (nowMonth < month || (nowMonth === month && nowDay < day)) age -= 1;
-  return age;
-}
-
-function asDateString(value: string | Date | null | undefined): string | null {
-  if (!value) return null;
-  if (value instanceof Date) return value.toISOString().slice(0, 10);
-  return String(value).slice(0, 10);
-}
-
-/** Rejects dates that are not real, are in the future, or are before 1900. */
-export function assertDateOfBirth(value: string, today = istToday()): string {
-  if (!DATE_OF_BIRTH.test(value)) {
-    throw new BadRequestException('Enter a date of birth');
-  }
-  const parsed = new Date(`${value}T00:00:00.000Z`);
-  if (
-    Number.isNaN(parsed.getTime()) ||
-    parsed.toISOString().slice(0, 10) !== value
-  ) {
-    throw new BadRequestException('Enter a real date of birth');
-  }
-  if (value < '1900-01-01' || value > today) {
-    throw new BadRequestException(
-      'Date of birth must be from 1900 through today',
-    );
-  }
-  return value;
-}
-
 export interface ProfileView extends CustomerProfile {
   dateOfBirth: string | null;
   ageYears: number | null;
+  bookingEligibility: BookingEligibility;
 }
 
 function presentProfile(profile: CustomerProfile): ProfileView {
-  const dateOfBirth = asDateString(profile.dateOfBirth);
+  const dateOfBirth = dateOfBirthString(profile.dateOfBirth);
+  const today = istToday();
   profile.dateOfBirth = dateOfBirth;
-  return Object.assign(profile, { ageYears: ageYears(dateOfBirth) });
+  return Object.assign(profile, {
+    ageYears: ageYears(dateOfBirth, today),
+    bookingEligibility: bookingEligibility(dateOfBirth, today),
+  });
 }
 
 @Injectable()

@@ -103,7 +103,10 @@ describe('BookingsService', () => {
         {
           provide: MeService,
           useValue: {
-            ensureProfile: jest.fn().mockResolvedValue({ id: 'profile-1' }),
+            ensureProfile: jest.fn().mockResolvedValue({
+              id: 'profile-1',
+              dateOfBirth: '1994-03-12',
+            }),
           },
         },
         {
