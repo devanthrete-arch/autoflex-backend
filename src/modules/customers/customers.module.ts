@@ -12,9 +12,11 @@ import { GarageController } from './garage.controller';
 import { GarageService } from './garage.service';
 import { MeController } from './me.controller';
 import { MeService } from './me.service';
+import { VehicleCatalogModule } from '../vehicle-catalog/vehicle-catalog.module';
 
 @Module({
   imports: [
+    VehicleCatalogModule,
     TypeOrmModule.forFeature([
       Customer,
       Vehicle,

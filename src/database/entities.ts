@@ -31,6 +31,15 @@ import { ServiceOffering } from '../modules/offerings/entities/service-offering.
 import { OperatingHour } from '../modules/tenancy/entities/operating-hour.entity';
 import { ServiceCenter } from '../modules/tenancy/entities/service-center.entity';
 import { StaffProfile } from '../modules/tenancy/entities/staff-profile.entity';
+import {
+  VehicleCatalogColour,
+  VehicleCatalogConfiguration,
+  VehicleCatalogGeneration,
+  VehicleCatalogMake,
+  VehicleCatalogModel,
+  VehicleCatalogPhase,
+  VehicleCatalogPowertrain,
+} from '../modules/vehicle-catalog/vehicle-catalog.entity';
 
 /** Explicit entity list for data sources that cannot glob (pg-mem, tests). */
 export const ENTITIES = [
@@ -65,4 +74,11 @@ export const ENTITIES = [
   CustomerNotification,
   NotificationDelivery,
   SupportRequest,
+  VehicleCatalogMake,
+  VehicleCatalogModel,
+  VehicleCatalogGeneration,
+  VehicleCatalogPhase,
+  VehicleCatalogConfiguration,
+  VehicleCatalogPowertrain,
+  VehicleCatalogColour,
 ];

@@ -58,6 +58,10 @@ export class GarageVehicle {
   @Column({ type: 'varchar', length: 128, nullable: true })
   variant: string | null;
 
+  /** Catalogue leaf for a car. Two-wheelers stay null until they have a catalogue. */
+  @Column({ name: 'catalog_configuration_id', type: 'uuid', nullable: true })
+  catalogConfigurationId: string | null;
+
   @Column({
     name: 'chassis_number',
     type: 'varchar',

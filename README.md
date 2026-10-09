@@ -19,8 +19,11 @@ docker compose up -d
 cp .env.example .env
 npm install
 npm run migration:run
+npm run catalog:import
 npm run start:workshop
 ```
+
+`npm run catalog:import` loads the India car catalogue and nothing else. A new car cannot be saved until that import has run. `npm start` does not import it. `npm run start:workshop` still imports the catalogue while it upserts the demo center, staff, and customers.
 
 API: `http://localhost:3001`  
 Swagger: `http://localhost:3001/docs`  

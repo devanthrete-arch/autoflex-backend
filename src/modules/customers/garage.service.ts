@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -8,6 +9,10 @@ import { Repository } from 'typeorm';
 import { GarageVehicleStatus } from '../../common/enums/garage-vehicle-status.enum';
 import { VehicleType } from '../../common/enums/vehicle-type.enum';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
+import {
+  CatalogIdentity,
+  VehicleCatalogQuery,
+} from '../vehicle-catalog/vehicle-catalog.query';
 import {
   CreateGarageVehicleDto,
   ListGarageVehiclesQueryDto,
@@ -20,12 +25,39 @@ export function normalizeRegistration(raw: string): string {
   return raw.replace(/[\s-]/g, '').toUpperCase();
 }
 
+function assertCatalogAgreement(
+  dto: {
+    make?: string;
+    model?: string;
+    variant?: string;
+    fuel?: string;
+    transmission?: string;
+  },
+  identity: CatalogIdentity,
+): void {
+  const pairs: Array<[string | undefined, string, string]> = [
+    [dto.make, identity.make, 'make'],
+    [dto.model, identity.model, 'model'],
+    [dto.variant, identity.variant, 'variant'],
+    [dto.fuel, identity.fuel, 'fuel'],
+    [dto.transmission, identity.gearboxCode, 'transmission'],
+  ];
+  for (const [sent, canonical, field] of pairs) {
+    if (sent !== undefined && sent !== canonical) {
+      throw new BadRequestException(
+        `The ${field} does not match the selected car.`,
+      );
+    }
+  }
+}
+
 @Injectable()
 export class GarageService {
   constructor(
     @InjectRepository(GarageVehicle)
     private readonly vehicleRepository: Repository<GarageVehicle>,
     private readonly meService: MeService,
+    private readonly catalog: VehicleCatalogQuery,
   ) {}
 
   async list(
@@ -57,11 +89,12 @@ export class GarageService {
     const profile = await this.meService.ensureProfile(auth);
     const registrationNumber = normalizeRegistration(dto.registrationNumber);
     await this.assertRegistrationFree(profile.id, registrationNumber);
+    const vehicleType = dto.vehicleType ?? VehicleType.TWO_WHEELER;
     const vehicle = this.vehicleRepository.create({
       customerProfileId: profile.id,
-      vehicleType: dto.vehicleType ?? VehicleType.TWO_WHEELER,
-      make: dto.make,
-      model: dto.model,
+      vehicleType,
+      make: dto.make ?? '',
+      model: dto.model ?? '',
       year: dto.year ?? null,
       registrationNumber,
       color: dto.color ?? null,
@@ -73,7 +106,15 @@ export class GarageService {
       currentOdometerKm: dto.currentOdometerKm ?? null,
       purchaseDate: dto.purchaseDate ?? null,
       status: GarageVehicleStatus.ACTIVE,
+      catalogConfigurationId: null,
     });
+    if (vehicleType === VehicleType.FOUR_WHEELER) {
+      await this.applyCatalogIdentity(vehicle, dto);
+    } else if (dto.catalogConfigurationId) {
+      throw new BadRequestException(
+        'Two-wheelers are not chosen from the car catalogue.',
+      );
+    }
     return this.vehicleRepository.save(vehicle);
   }
 
@@ -93,13 +134,21 @@ export class GarageService {
         vehicle.registrationNumber = registrationNumber;
       }
     }
-    if (dto.make !== undefined) vehicle.make = dto.make;
-    if (dto.model !== undefined) vehicle.model = dto.model;
+    if (vehicle.vehicleType === VehicleType.FOUR_WHEELER) {
+      if (dto.catalogConfigurationId) {
+        await this.applyCatalogIdentity(vehicle, dto);
+      } else if (!vehicle.catalogConfigurationId) {
+        this.applyTypedIdentity(vehicle, dto);
+      }
+    } else if (dto.catalogConfigurationId) {
+      throw new BadRequestException(
+        'Two-wheelers are not chosen from the car catalogue.',
+      );
+    } else {
+      this.applyTypedIdentity(vehicle, dto);
+    }
     if (dto.year !== undefined) vehicle.year = dto.year;
     if (dto.color !== undefined) vehicle.color = dto.color;
-    if (dto.fuel !== undefined) vehicle.fuel = dto.fuel;
-    if (dto.transmission !== undefined) vehicle.transmission = dto.transmission;
-    if (dto.variant !== undefined) vehicle.variant = dto.variant;
     if (dto.chassisNumber !== undefined) {
       vehicle.chassisNumber = dto.chassisNumber.toUpperCase();
     }
@@ -132,6 +181,37 @@ export class GarageService {
       throw new NotFoundException();
     }
     return vehicle;
+  }
+
+  private applyTypedIdentity(
+    vehicle: GarageVehicle,
+    dto: UpdateGarageVehicleDto,
+  ): void {
+    if (dto.make !== undefined) vehicle.make = dto.make;
+    if (dto.model !== undefined) vehicle.model = dto.model;
+    if (dto.fuel !== undefined) vehicle.fuel = dto.fuel;
+    if (dto.transmission !== undefined) vehicle.transmission = dto.transmission;
+    if (dto.variant !== undefined) vehicle.variant = dto.variant;
+  }
+
+  private async applyCatalogIdentity(
+    vehicle: GarageVehicle,
+    dto: CreateGarageVehicleDto | UpdateGarageVehicleDto,
+  ): Promise<void> {
+    if (!dto.catalogConfigurationId) {
+      throw new BadRequestException('Choose a car from the catalogue.');
+    }
+    const identity = await this.catalog.findIdentity(dto.catalogConfigurationId);
+    if (!identity) {
+      throw new BadRequestException('That car is not in the catalogue.');
+    }
+    assertCatalogAgreement(dto, identity);
+    vehicle.catalogConfigurationId = identity.id;
+    vehicle.make = identity.make;
+    vehicle.model = identity.model;
+    vehicle.variant = identity.variant;
+    vehicle.fuel = identity.fuel;
+    vehicle.transmission = identity.gearboxCode;
   }
 
   private async assertRegistrationFree(

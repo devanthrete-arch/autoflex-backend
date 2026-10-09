@@ -16,6 +16,7 @@ import { ServiceOffering } from '../modules/offerings/entities/service-offering.
 import { OperatingHour } from '../modules/tenancy/entities/operating-hour.entity';
 import { ServiceCenter } from '../modules/tenancy/entities/service-center.entity';
 import { StaffProfile } from '../modules/tenancy/entities/staff-profile.entity';
+import { VehicleCatalogImporter } from '../modules/vehicle-catalog/vehicle-catalog.importer';
 import {
   customerIdForPhone,
   STAFF_PERSONAS,
@@ -133,6 +134,7 @@ export async function assertWorkshopSchema(
 export async function bootstrapWorkshop(
   dataSource: DataSource,
 ): Promise<ServiceCenter> {
+  await new VehicleCatalogImporter(dataSource).importFromSeed();
   const categories = await upsertCategories(dataSource);
   const center = await upsertCenter(dataSource);
   await upsertHours(dataSource, center.id);

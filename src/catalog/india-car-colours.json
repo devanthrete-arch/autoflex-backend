@@ -1,0 +1,6808 @@
+{
+  "meta": {
+    "gatheredOn": "2026-10-09",
+    "source": "Public CarWale model colour pages. Each page lists the paint names offered on a current variant.",
+    "sourceUrl": "https://www.carwale.com",
+    "note": "Paint names only. Photographs were not copied. A name is stored only when the page's variant matches one catalogue configuration."
+  },
+  "configurations": {
+    "byd-atto-3:dynamic:ev-50:1EV": [
+      "Cosmos Black",
+      "Surf Blue",
+      "Ski White",
+      "Harbour Grey"
+    ],
+    "byd-atto-3:premium:ev-60:1EV": [
+      "Cosmos Black",
+      "Surf Blue",
+      "Ski White",
+      "Harbour Grey"
+    ],
+    "byd-atto-3:superior:ev-60:1EV": [
+      "Cosmos Black",
+      "Surf Blue",
+      "Ski White",
+      "Harbour Grey"
+    ],
+    "byd-emax-7:superior:ev-150:1EV": [
+      "Harbour Grey",
+      "Cosmos Black",
+      "Quartz Blue",
+      "Crystal White"
+    ],
+    "byd-seal:dynamic:ev-61:1EV": [
+      "Atlantis Gray",
+      "Cosmos Black",
+      "Aurora White",
+      "Shark Gray"
+    ],
+    "byd-seal:performance:ev-83-awd:1EV": [
+      "Atlantis Gray",
+      "Cosmos Black",
+      "Aurora White",
+      "Shark Gray"
+    ],
+    "byd-seal:premium:ev-83-rwd:1EV": [
+      "Atlantis Gray",
+      "Cosmos Black",
+      "Aurora White",
+      "Shark Gray"
+    ],
+    "byd-sealion-7:dynamic:ev-72:1EV": [
+      "Shark Gray",
+      "Atlantis Gray",
+      "Aurora White",
+      "Cosmos Black"
+    ],
+    "byd-sealion-7:performance:ev-83-awd:1EV": [
+      "Shark Gray",
+      "Atlantis Gray",
+      "Aurora White",
+      "Cosmos Black"
+    ],
+    "byd-sealion-7:premium:ev-83-rwd:1EV": [
+      "Shark Gray",
+      "Atlantis Gray",
+      "Aurora White",
+      "Cosmos Black"
+    ],
+    "citroen-basaltx:max:puretech-110:6AT": [
+      "Perla Nera Black",
+      "Garnet Red",
+      "Cosmo Blue",
+      "Steel Grey",
+      "Polar White",
+      "Garnet Red with Perla Nera Black Roof",
+      "Polar White with Perla Nera Black roof"
+    ],
+    "citroen-basaltx:max:puretech-110:6MT": [
+      "Perla Nera Black",
+      "Garnet Red",
+      "Cosmo Blue",
+      "Steel Grey",
+      "Polar White",
+      "Garnet Red with Perla Nera Black Roof",
+      "Polar White with Perla Nera Black roof"
+    ],
+    "citroen-basaltx:plus:puretech-82:5MT": [
+      "Perla Nera Black",
+      "Garnet Red",
+      "Cosmo Blue",
+      "Steel Grey",
+      "Polar White"
+    ],
+    "citroen-basaltx:you:puretech-82:5MT": [
+      "Steel Grey",
+      "Polar White",
+      "Perla Nera Black",
+      "Garnet Red",
+      "Cosmo Blue"
+    ],
+    "citroen-c5-aircross:shine:diesel-20:8AT": [
+      "Pearl Nera Black",
+      "Eclipse Blue",
+      "Cumulus Grey",
+      "Pearl White"
+    ],
+    "honda-amaze:v:ivtec-12-petrol:5MT": [
+      "Crystal Black Pearl",
+      "Obsidian Blue Pearl",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Meteoroid Grey Metallic",
+      "Lunar Silver Metallic",
+      "Golden Brown Metallic"
+    ],
+    "honda-amaze:v:ivtec-12-petrol:CVT": [
+      "Obsidian Blue Pearl",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Meteoroid Grey Metallic",
+      "Lunar Silver Metallic",
+      "Golden Brown Metallic"
+    ],
+    "honda-amaze:vx:ivtec-12-petrol:5MT": [
+      "Crystal Black Pearl",
+      "Obsidian Blue Pearl",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Meteoroid Grey Metallic",
+      "Lunar Silver Metallic",
+      "Golden Brown Metallic"
+    ],
+    "honda-amaze:vx:ivtec-12-petrol:CVT": [
+      "Crystal Black Pearl",
+      "Obsidian Blue Pearl",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Meteoroid Grey Metallic",
+      "Lunar Silver Metallic",
+      "Golden Brown Metallic"
+    ],
+    "honda-amaze:zx:ivtec-12-petrol:5MT": [
+      "Crystal Black Pearl",
+      "Obsidian Blue Pearl",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Meteoroid Grey Metallic",
+      "Lunar Silver Metallic",
+      "Golden Brown Metallic"
+    ],
+    "honda-amaze:zx:ivtec-12-petrol:CVT": [
+      "Crystal Black Pearl",
+      "Obsidian Blue Pearl",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Meteoroid Grey Metallic",
+      "Lunar Silver Metallic",
+      "Golden Brown Metallic"
+    ],
+    "honda-city:sv:i-vtec-petrol:6MT": [
+      "Crystal Black Pearl",
+      "Lunar Silver Metallic",
+      "Platinum White Pearl",
+      "Obsidian Blue Pearl"
+    ],
+    "honda-city:v:i-vtec-petrol:6MT": [
+      "Crystal Black Pearl",
+      "Lunar Silver Metallic",
+      "Meteoroid Grey Metallic",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Obsidian Blue Pearl"
+    ],
+    "honda-city:v:i-vtec-petrol:CVT": [
+      "Crystal Black Pearl",
+      "Lunar Silver Metallic",
+      "Meteoroid Grey Metallic",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Obsidian Blue Pearl"
+    ],
+    "honda-city:zx-plus:i-vtec-petrol:6MT": [
+      "Crystal Black Pearl",
+      "Lunar Silver Metallic",
+      "Meteoroid Grey Metallic",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Obsidian Blue Pearl"
+    ],
+    "honda-city:zx-plus:i-vtec-petrol:CVT": [
+      "Crystal Black Pearl",
+      "Lunar Silver Metallic",
+      "Meteoroid Grey Metallic",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Obsidian Blue Pearl"
+    ],
+    "honda-city:zx:i-vtec-petrol:6MT": [
+      "Crystal Black Pearl",
+      "Lunar Silver Metallic",
+      "Meteoroid Grey Metallic",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Obsidian Blue Pearl"
+    ],
+    "honda-city:zx:i-vtec-petrol:CVT": [
+      "Crystal Black Pearl",
+      "Lunar Silver Metallic",
+      "Meteoroid Grey Metallic",
+      "Platinum White Pearl",
+      "Radiant Red Metallic",
+      "Obsidian Blue Pearl"
+    ],
+    "hyundai-alcazar:corporate:diesel:6AT": [
+      "Starry Night",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-alcazar:corporate:diesel:6MT": [
+      "Starry Night",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-alcazar:executive:diesel:6MT": [
+      "Starry Night",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-alcazar:executive:turbo-petrol:6MT": [
+      "Starry Night",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-alcazar:platinum-diesel:diesel:6MT": [
+      "Starry Night",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-alcazar:platinum:turbo-petrol:6MT": [
+      "Starry Night",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-alcazar:prestige:turbo-petrol:6MT": [
+      "Starry Night",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-alcazar:prestige:turbo-petrol:7DCA": [
+      "Starry Night",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-alcazar:signature-diesel:diesel:6AT": [
+      "Atlas white with Titanium Black",
+      "Starry Night",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black",
+      "Golden Bronze"
+    ],
+    "hyundai-alcazar:signature:turbo-petrol:7DCA": [
+      "Atlas white with Titanium Black",
+      "Starry Night",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-aura:e:kappa-12-petrol:5MT": [
+      "Atlas White",
+      "Typhoon Silver",
+      "Titan Grey",
+      "Starry Night"
+    ],
+    "hyundai-aura:s:kappa-12-cng:5MT": [
+      "Atlas White",
+      "Typhoon Silver",
+      "Titan Grey",
+      "Starry Night"
+    ],
+    "hyundai-aura:s:kappa-12-petrol:5MT": [
+      "Atlas White",
+      "Typhoon Silver",
+      "Titan Grey",
+      "Starry Night"
+    ],
+    "hyundai-aura:sx-o:kappa-12-petrol:5MT": [
+      "Atlas White",
+      "Typhoon Silver",
+      "Titan Grey",
+      "Starry Night"
+    ],
+    "hyundai-aura:sx-plus:kappa-12-petrol:5AMT": [
+      "Atlas White",
+      "Typhoon Silver",
+      "Titan Grey",
+      "Starry Night"
+    ],
+    "hyundai-aura:sx:kappa-12-cng:5MT": [
+      "Atlas White",
+      "Typhoon Silver",
+      "Titan Grey",
+      "Starry Night"
+    ],
+    "hyundai-aura:sx:kappa-12-petrol:5MT": [
+      "Atlas White",
+      "Typhoon Silver",
+      "Titan Grey",
+      "Starry Night"
+    ],
+    "hyundai-creta-electric:executive-o:ev-51:1EV": [
+      "Atlas White"
+    ],
+    "hyundai-creta-electric:executive-tech:ev-42:1EV": [
+      "Atlas White"
+    ],
+    "hyundai-creta-electric:executive:ev-42:1EV": [
+      "Atlas White"
+    ],
+    "hyundai-creta-electric:premium:ev-42:1EV": [
+      "Atlas White with Titanium Black Roof",
+      "Ocean Blue Metallic with Titanium Black Roof",
+      "Titanium Black matte Knight",
+      "Robust Emerald Matte",
+      "Titan Grey",
+      "Ocean Blue Matte",
+      "Ocean Blue",
+      "Starry Night",
+      "Fiery Red",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta-electric:smart-o:ev-51:1EV": [
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta-n-line:n10:petrol-turbo-gdi:6MT": [
+      "Atlas white",
+      "Titan Grey Matte",
+      "Thunder Blue with Black roof",
+      "Atlas White with Black roof"
+    ],
+    "hyundai-creta-n-line:n10:petrol-turbo-gdi:7DCA": [
+      "Atlas white",
+      "Titan Grey Matte",
+      "Thunder Blue with Black roof",
+      "Atlas White with Black roof"
+    ],
+    "hyundai-creta:e:diesel-u2-crdi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:e:petrol-mpi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:ex-o:diesel-u2-crdi:6AT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:ex-o:diesel-u2-crdi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:ex-o:petrol-mpi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:ex-o:petrol-mpi:CVT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:ex:diesel-u2-crdi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:ex:petrol-mpi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:king-lounge:diesel-u2-crdi:6AT": [
+      "Golden Bronze"
+    ],
+    "hyundai-creta:king-lounge:petrol-mpi:CVT": [
+      "Golden Bronze"
+    ],
+    "hyundai-creta:king:diesel-u2-crdi:6AT": [
+      "King Limited Edition Titanium Black Matte",
+      "Titanium Black"
+    ],
+    "hyundai-creta:king:diesel-u2-crdi:6MT": [
+      "King Limited Edition Titanium Black Matte",
+      "Titanium Black"
+    ],
+    "hyundai-creta:king:petrol-mpi:6MT": [
+      "King Limited Edition Titanium Black Matte",
+      "Titanium Black"
+    ],
+    "hyundai-creta:king:petrol-mpi:CVT": [
+      "King Limited Edition Titanium Black Matte",
+      "Titanium Black",
+      "Atlas White with Titanium Black"
+    ],
+    "hyundai-creta:king:petrol-turbo-gdi:7DCA": [
+      "King Limited Edition Titanium Black Matte",
+      "Titanium Black"
+    ],
+    "hyundai-creta:s-o:diesel-u2-crdi:6AT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:s-o:diesel-u2-crdi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:s-o:petrol-mpi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:s-o:petrol-mpi:CVT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-creta:sx-premium:diesel-u2-crdi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black",
+      "King Limited Edition Titanium Black Matte",
+      "Atlas White with Titanium Black"
+    ],
+    "hyundai-creta:sx-premium:petrol-mpi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black",
+      "Atlas White with Titanium Black"
+    ],
+    "hyundai-creta:sx-premium:petrol-mpi:CVT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black",
+      "King Limited Edition Titanium Black Matte",
+      "Atlas White with Titanium Black"
+    ],
+    "hyundai-creta:sx:petrol-mpi:6MT": [
+      "Titan Grey Matte",
+      "Robust Emerald Pearl",
+      "Atlas White",
+      "Titanium Black",
+      "Atlas White with Titanium Black"
+    ],
+    "hyundai-exter:hx10:kappa-12-petrol:5AMT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze",
+      "Ranger Khaki with Black Roof"
+    ],
+    "hyundai-exter:hx2:kappa-12-hy-cng-duo:5MT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-exter:hx2:kappa-12-petrol:5MT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-exter:hx3:kappa-12-hy-cng-duo:5MT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-exter:hx3:kappa-12-petrol:5AMT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-exter:hx3:kappa-12-petrol:5MT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-exter:hx4-plus:kappa-12-petrol:5AMT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-exter:hx4:kappa-12-hy-cng-duo:5MT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-exter:hx4:kappa-12-petrol:5MT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-exter:hx6:kappa-12-hy-cng-duo:5MT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze",
+      "Ranger Khaki with Black Roof"
+    ],
+    "hyundai-exter:hx6:kappa-12-petrol:5AMT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze",
+      "Ranger Khaki with Black Roof"
+    ],
+    "hyundai-exter:hx6:kappa-12-petrol:5MT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze",
+      "Ranger Khaki with Black Roof"
+    ],
+    "hyundai-exter:hx8:kappa-12-hy-cng-duo:5MT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-exter:hx8:kappa-12-petrol:5AMT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-exter:hx8:kappa-12-petrol:5MT": [
+      "Ranger Khaki",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey",
+      "Starry Night",
+      "Titanium Black Matte",
+      "Golden Bronze"
+    ],
+    "hyundai-grand-i10-nios:asta:kappa-12-petrol:5AMT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-grand-i10-nios:asta:kappa-12-petrol:5MT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-grand-i10-nios:corporate:kappa-12-petrol:5AMT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-grand-i10-nios:corporate:kappa-12-petrol:5MT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-grand-i10-nios:era:kappa-12-petrol:5MT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-grand-i10-nios:magna:kappa-12-hy-cng-duo:5MT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-grand-i10-nios:magna:kappa-12-petrol:5MT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-grand-i10-nios:sportz-o:kappa-12-petrol:5AMT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red",
+      "Titan Grey Matte"
+    ],
+    "hyundai-grand-i10-nios:sportz-o:kappa-12-petrol:5MT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-grand-i10-nios:sportz:kappa-12-hy-cng-duo:5MT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-grand-i10-nios:sportz:kappa-12-petrol:5AMT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red",
+      "Titan Grey Matte"
+    ],
+    "hyundai-grand-i10-nios:sportz:kappa-12-petrol:5MT": [
+      "Titan Grey",
+      "Typhoon Silver",
+      "Teal Blue",
+      "Atlas White",
+      "Fiery Red",
+      "Titan Grey Matte"
+    ],
+    "hyundai-i20-n-line:n6:turbo-gdi-10-petrol:6MT": [
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White"
+    ],
+    "hyundai-i20-n-line:n8:turbo-gdi-10-petrol:6MT": [
+      "Thunder Blue with Black roof",
+      "Atlas White with Black roof",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White"
+    ],
+    "hyundai-i20-n-line:n8:turbo-gdi-10-petrol:7DCA": [
+      "Thunder Blue with Black roof",
+      "Atlas White with Black roof",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White"
+    ],
+    "hyundai-i20:asta-opt:kappa-12-petrol:5MT": [
+      "Atlas White with Black roof",
+      "Titanium Black",
+      "Titan Grey Matte",
+      "Titan Grey",
+      "Starry Night",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-i20:asta-opt:kappa-12-petrol:CVT": [
+      "Atlas White with Black roof",
+      "Titanium Black",
+      "Titan Grey Matte",
+      "Starry Night",
+      "Atlas White",
+      "Titan Grey",
+      "Fiery Red"
+    ],
+    "hyundai-i20:asta:kappa-12-petrol:5MT": [
+      "Titanium Black",
+      "Titan Grey Matte",
+      "Titan Grey",
+      "Starry Night",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-i20:era:kappa-12-petrol:5MT": [
+      "Titanium Black",
+      "Titan Grey Matte",
+      "Titan Grey",
+      "Starry Night",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-i20:magna-executive:kappa-12-petrol:5MT": [
+      "Titanium Black",
+      "Titan Grey Matte",
+      "Titan Grey",
+      "Starry Night",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-i20:magna:kappa-12-petrol:5MT": [
+      "Titanium Black",
+      "Titan Grey Matte",
+      "Titan Grey",
+      "Starry Night",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-i20:sportz-opt:kappa-12-petrol:5MT": [
+      "Titanium Black",
+      "Titan Grey Matte",
+      "Titan Grey",
+      "Starry Night",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-i20:sportz-opt:kappa-12-petrol:CVT": [
+      "Titanium Black",
+      "Titan Grey Matte",
+      "Titan Grey",
+      "Starry Night",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-i20:sportz:kappa-12-petrol:5MT": [
+      "Titanium Black",
+      "Titan Grey Matte",
+      "Titan Grey",
+      "Starry Night",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-i20:sportz:kappa-12-petrol:CVT": [
+      "Titanium Black",
+      "Titan Grey Matte",
+      "Titan Grey",
+      "Starry Night",
+      "Atlas White",
+      "Fiery Red"
+    ],
+    "hyundai-venue-n-line:n10:kappa-10-tgdi:7DCA": [
+      "Dragon Red",
+      "Hazel Blue",
+      "Titanium Black",
+      "Titan Grey",
+      "Atlas White",
+      "Dragon Red with Titanium Black Roof",
+      "Hazel Blue with Titanium Black Roof",
+      "Atlas White with Titanium Black Roof"
+    ],
+    "hyundai-venue-n-line:n6:kappa-10-tgdi:6MT": [
+      "Dragon Red",
+      "Hazel Blue",
+      "Titanium Black",
+      "Titan Grey",
+      "Atlas White",
+      "Dragon Red with Titanium Black Roof",
+      "Hazel Blue with Titanium Black Roof",
+      "Atlas White with Titanium Black Roof"
+    ],
+    "hyundai-venue-n-line:n6:kappa-10-tgdi:7DCA": [
+      "Dragon Red",
+      "Hazel Blue",
+      "Titanium Black",
+      "Titan Grey",
+      "Atlas White",
+      "Dragon Red with Titanium Black Roof",
+      "Hazel Blue with Titanium Black Roof",
+      "Atlas White with Titanium Black Roof"
+    ],
+    "hyundai-venue:hx10:kappa-10-tgdi:7DCA": [
+      "Mystic Sapphire Matte",
+      "Hazel Blue Matte",
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Titanium Black Knight",
+      "Atlas White with Titanium Black Roof",
+      "Hazel blue with Titanium Black Roof"
+    ],
+    "hyundai-venue:hx10:u2-15-crdi:6AT": [
+      "Mystic Sapphire Matte",
+      "Hazel Blue Matte",
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Atlas White with Titanium Black Roof",
+      "Hazel blue with Titanium Black Roof"
+    ],
+    "hyundai-venue:hx2:kappa-10-tgdi:6MT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red"
+    ],
+    "hyundai-venue:hx2:kappa-12-mpi:5MT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red"
+    ],
+    "hyundai-venue:hx2:u2-15-crdi:6MT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red"
+    ],
+    "hyundai-venue:hx4:kappa-12-mpi:5MT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red"
+    ],
+    "hyundai-venue:hx5-plus:kappa-12-mpi:5MT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Atlas White with Titanium Black Roof",
+      "Hazel blue with Titanium Black Roof"
+    ],
+    "hyundai-venue:hx5:kappa-10-tgdi:6MT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red"
+    ],
+    "hyundai-venue:hx5:kappa-10-tgdi:7DCA": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red"
+    ],
+    "hyundai-venue:hx5:kappa-12-mpi:5MT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Titanium Black Knight"
+    ],
+    "hyundai-venue:hx5:u2-15-crdi:6AT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red"
+    ],
+    "hyundai-venue:hx5:u2-15-crdi:6MT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Titanium Black Knight"
+    ],
+    "hyundai-venue:hx6:kappa-10-tgdi:7DCA": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Atlas White with Titanium Black Roof",
+      "Hazel blue with Titanium Black Roof"
+    ],
+    "hyundai-venue:hx6t:kappa-12-mpi:5MT": [
+      "Mystic Sapphire Matte",
+      "Hazel Blue Matte",
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Titanium Black Knight",
+      "Atlas White with Titanium Black Roof",
+      "Hazel blue with Titanium Black Roof"
+    ],
+    "hyundai-venue:hx7:u2-15-crdi:6MT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Atlas White with Titanium Black Roof",
+      "Hazel blue with Titanium Black Roof"
+    ],
+    "hyundai-venue:hx8:kappa-10-tgdi:6MT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Atlas White with Titanium Black Roof",
+      "Hazel blue with Titanium Black Roof"
+    ],
+    "hyundai-venue:hx8:kappa-10-tgdi:7DCA": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Atlas White with Titanium Black Roof",
+      "Hazel blue with Titanium Black Roof"
+    ],
+    "hyundai-venue:hx8:u2-15-crdi:6AT": [
+      "Hazel Blue",
+      "Atlas White",
+      "Mystic Sapphire",
+      "Titan Grey",
+      "Titanium Black",
+      "Dragon Red",
+      "Atlas White with Titanium Black Roof",
+      "Hazel blue with Titanium Black Roof",
+      "Titanium Black Knight"
+    ],
+    "hyundai-verna:hx10:mpi-petrol:CVT": [
+      "Classy Blue",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White",
+      "Titanium Black",
+      "Atlas White with Black Roof",
+      "Titan Grey Matte"
+    ],
+    "hyundai-verna:hx10:turbo-gdi-petrol:7DCA": [
+      "Classy Blue",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White",
+      "Titanium Black",
+      "Atlas White with Black Roof",
+      "Titan Grey Matte"
+    ],
+    "hyundai-verna:hx2:mpi-petrol:6MT": [
+      "Classy Blue",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White",
+      "Titanium Black"
+    ],
+    "hyundai-verna:hx4:mpi-petrol:6MT": [
+      "Classy Blue",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White",
+      "Titanium Black",
+      "Titan Grey Matte"
+    ],
+    "hyundai-verna:hx6-plus:mpi-petrol:6MT": [
+      "Classy Blue",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White",
+      "Titanium Black",
+      "Atlas White with Black Roof",
+      "Titan Grey Matte"
+    ],
+    "hyundai-verna:hx6-plus:mpi-petrol:CVT": [
+      "Classy Blue",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White",
+      "Titanium Black",
+      "Atlas White with Black Roof",
+      "Titan Grey Matte"
+    ],
+    "hyundai-verna:hx6:mpi-petrol:6MT": [
+      "Classy Blue",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White",
+      "Titanium Black",
+      "Atlas White with Black Roof",
+      "Titan Grey Matte"
+    ],
+    "hyundai-verna:hx6:mpi-petrol:CVT": [
+      "Classy Blue",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White",
+      "Titanium Black",
+      "Atlas White with Black Roof",
+      "Titan Grey Matte"
+    ],
+    "hyundai-verna:hx8:mpi-petrol:6MT": [
+      "Classy Blue",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White",
+      "Titanium Black",
+      "Atlas White with Black Roof",
+      "Titan Grey Matte"
+    ],
+    "hyundai-verna:hx8:mpi-petrol:CVT": [
+      "Classy Blue",
+      "Starry Night",
+      "Titan Grey",
+      "Atlas White",
+      "Titanium Black",
+      "Atlas White with Black Roof",
+      "Titan Grey Matte"
+    ],
+    "jeep-compass:limited-o:multijet-20-4x2:6MT": [
+      "Silvery Moon",
+      "Pearl White",
+      "Grigio Magnesio grey",
+      "Exotica Red",
+      "Brilliant Black",
+      "Galaxy Blue",
+      "Techno Metallic Green"
+    ],
+    "jeep-compass:sport:multijet-20-4x2:6MT": [
+      "Silvery Moon",
+      "Pearl White",
+      "Grigio Magnesio grey",
+      "Exotica Red",
+      "Brilliant Black",
+      "Galaxy Blue",
+      "Techno Metallic Green"
+    ],
+    "jeep-grand-cherokee:limited-o:petrol-20-gme-t4:8AT": [
+      "Velvet Red",
+      "Rocky Mountain",
+      "Diamond Black Crystal",
+      "Bright White"
+    ],
+    "jeep-meridian:limited-o:multijet-20-4x2:6MT": [
+      "Silvery Moon",
+      "Galaxy Blue",
+      "Magnesio Grey",
+      "Velvet Red",
+      "Pearl White",
+      "Brilliant Black",
+      "Techno Metallic Green"
+    ],
+    "jeep-meridian:longitude-plus:multijet-20-4x2:6MT": [
+      "Silvery Moon",
+      "Galaxy Blue",
+      "Magnesio Grey",
+      "Velvet Red",
+      "Pearl White",
+      "Brilliant Black",
+      "Techno Metallic Green"
+    ],
+    "jeep-meridian:longitude-plus:multijet-20-4x2:9AT": [
+      "Silvery Moon",
+      "Galaxy Blue",
+      "Magnesio Grey",
+      "Velvet Red",
+      "Pearl White",
+      "Brilliant Black",
+      "Techno Metallic Green"
+    ],
+    "jeep-meridian:longitude:multijet-20-4x2:6MT": [
+      "Minimal Grey",
+      "Silvery Moon",
+      "Galaxy Blue",
+      "Magnesio Grey",
+      "Velvet Red",
+      "Pearl White",
+      "Brilliant Black",
+      "Techno Metallic Green"
+    ],
+    "jeep-meridian:longitude:multijet-20-4x2:9AT": [
+      "Minimal Grey",
+      "Silvery Moon",
+      "Galaxy Blue",
+      "Magnesio Grey",
+      "Velvet Red",
+      "Pearl White",
+      "Brilliant Black",
+      "Techno Metallic Green"
+    ],
+    "jeep-wrangler:rubicon:petrol-20-gme-t4:8AT": [
+      "Firecracker Red",
+      "Sarge Green",
+      "Anvil Clear Coat",
+      "Black",
+      "Bright White"
+    ],
+    "jeep-wrangler:unlimited:petrol-20-gme-t4:8AT": [
+      "Firecracker Red",
+      "Anvil Clear Coat",
+      "Black",
+      "Bright White"
+    ],
+    "kia-carens-clavis-ev:gtx-plus:ev-51:1EV": [
+      "Ivory Silver Matte",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-carens-clavis-ev:gtx:ev-51:1EV": [
+      "Ivory Silver Matte",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-carens-clavis-ev:htk-plus:ev-42:1EV": [
+      "Ivory Silver Matte",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-carens-clavis-ev:htx-plus:ev-51:1EV": [
+      "Ivory Silver Matte",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-carens-clavis-ev:x-line:ev-51:1EV": [
+      "Ivory Silver Matte",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-carens-clavis:gtx-plus:t-gdi-petrol:7DCA": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl"
+    ],
+    "kia-carens-clavis:gtx:t-gdi-petrol:7DCA": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Clear White"
+    ],
+    "kia-carens-clavis:hte-ex:d15-diesel:6MT": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Clear White"
+    ],
+    "kia-carens-clavis:hte-o:d15-diesel:6MT": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Clear White"
+    ],
+    "kia-carens-clavis:hte-o:g15-cng:6MT": [
+      "Sparkling Silver",
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Clear White"
+    ],
+    "kia-carens-clavis:hte:g15-cng:6MT": [
+      "Sparkling Silver",
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Clear White"
+    ],
+    "kia-carens-clavis:hte:g15-petrol:6MT": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Clear White"
+    ],
+    "kia-carens-clavis:htk-plus-o:d15-diesel:6MT": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl"
+    ],
+    "kia-carens-clavis:htk-plus-o:t-gdi-petrol:6MT": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl"
+    ],
+    "kia-carens-clavis:htk-plus-o:t-gdi-petrol:7DCA": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl"
+    ],
+    "kia-carens-clavis:htk-plus:d15-diesel:6MT": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl"
+    ],
+    "kia-carens-clavis:htk-plus:t-gdi-petrol:7DCA": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl"
+    ],
+    "kia-carens-clavis:htx-diesel:d15-diesel:6MT": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl"
+    ],
+    "kia-carens-clavis:htx-o:t-gdi-petrol:7DCA": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Clear White"
+    ],
+    "kia-carens-clavis:htx-plus:t-gdi-petrol:6MT": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl"
+    ],
+    "kia-carens-clavis:htx-plus:t-gdi-petrol:6iMT": [
+      "Ivory Silver Gloss",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Imperial Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl"
+    ],
+    "kia-carens-clavis:x-line:t-gdi-petrol:7DCA": [
+      "Dark Gun Metal",
+      "Aurora Black Pearl"
+    ],
+    "kia-carens:premium-o:d15-diesel:6MT": [
+      "Clear White",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-carens:premium-o:g15-cng:6MT": [
+      "Clear White",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-carens:premium-o:g15-petrol:6MT": [
+      "Clear White",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-carnival:limousine-plus:diesel:8AT": [
+      "Glacier White Pearl",
+      "Fusion Black"
+    ],
+    "kia-seltos:gtx-a:diesel-crdi:6AT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Magma Red with Aurora Black roof",
+      "Glacier White with Aurora Black roof"
+    ],
+    "kia-seltos:gtx-a:petrol-g15:CVT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Magma Red with Aurora Black roof",
+      "Glacier White with Aurora Black roof"
+    ],
+    "kia-seltos:gtx-a:petrol-turbo-tgdi:7DCA": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Magma Red with Aurora Black roof",
+      "Glacier White with Aurora Black roof"
+    ],
+    "kia-seltos:gtx-o:diesel-crdi:6AT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Magma Red with Aurora Black roof",
+      "Glacier White with Aurora Black roof"
+    ],
+    "kia-seltos:gtx-o:petrol-turbo-tgdi:7DCA": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Magma Red with Aurora Black roof",
+      "Glacier White with Aurora Black roof"
+    ],
+    "kia-seltos:gtx:diesel-crdi:6AT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Magma Red with Aurora Black roof",
+      "Glacier White with Aurora Black roof"
+    ],
+    "kia-seltos:gtx:petrol-g15:CVT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Magma Red with Aurora Black roof",
+      "Glacier White with Aurora Black roof"
+    ],
+    "kia-seltos:gtx:petrol-turbo-tgdi:7DCA": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Magma Red with Aurora Black roof",
+      "Glacier White with Aurora Black roof"
+    ],
+    "kia-seltos:hte-o:diesel-crdi:6AT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:hte-o:diesel-crdi:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:hte-o:petrol-g15:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:hte-o:petrol-g15:CVT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:hte-o:petrol-turbo-tgdi:6iMT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:hte:diesel-crdi:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:hte:petrol-g15:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk-o:diesel-crdi:6AT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk-o:diesel-crdi:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk-o:petrol-g15:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk-o:petrol-g15:CVT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk-o:petrol-turbo-tgdi:6iMT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk-o:petrol-turbo-tgdi:7DCA": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk:diesel-crdi:6AT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk:diesel-crdi:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk:petrol-g15:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk:petrol-g15:CVT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htk:petrol-turbo-tgdi:6iMT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htx-a:diesel-crdi:6AT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htx-a:diesel-crdi:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htx-a:petrol-g15:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htx-a:petrol-g15:CVT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htx-a:petrol-turbo-tgdi:7DCA": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htx:diesel-crdi:6AT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htx:diesel-crdi:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htx:petrol-g15:6MT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htx:petrol-g15:CVT": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:htx:petrol-turbo-tgdi:7DCA": [
+      "Glacier White Pearl",
+      "Frost Blue",
+      "Magma Red",
+      "Ivory Silver Gloss",
+      "Pewter Olive",
+      "Morning Haze",
+      "Gravity Grey",
+      "Aurora Black Pearl",
+      "Imperial Blue"
+    ],
+    "kia-seltos:x-line-a:diesel-crdi:6AT": [
+      "Matte Graphite",
+      "Aurora Black Pearl"
+    ],
+    "kia-seltos:x-line-a:petrol-g15:CVT": [
+      "Matte Graphite",
+      "Aurora Black Pearl"
+    ],
+    "kia-seltos:x-line-a:petrol-turbo-tgdi:7DCA": [
+      "Matte Graphite",
+      "Aurora Black Pearl"
+    ],
+    "kia-seltos:x-line-o:diesel-crdi:6AT": [
+      "Matte Graphite",
+      "Aurora Black Pearl"
+    ],
+    "kia-seltos:x-line-o:petrol-turbo-tgdi:7DCA": [
+      "Matte Graphite",
+      "Aurora Black Pearl"
+    ],
+    "kia-seltos:x-line:diesel-crdi:6AT": [
+      "Matte Graphite",
+      "Aurora Black Pearl"
+    ],
+    "kia-seltos:x-line:petrol-g15:CVT": [
+      "Matte Graphite",
+      "Aurora Black Pearl"
+    ],
+    "kia-seltos:x-line:petrol-turbo-tgdi:7DCA": [
+      "Matte Graphite",
+      "Aurora Black Pearl"
+    ],
+    "kia-sonet:gtx-plus:crdi-15:6AT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive",
+      "Glacier White Pearl with Aurora Black Pearl",
+      "Magma Red with Aurora Black Pearl"
+    ],
+    "kia-sonet:gtx-plus:smartstream-10-tgdi:7DCA": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive",
+      "Glacier White Pearl with Aurora Black Pearl",
+      "Magma Red with Aurora Black Pearl"
+    ],
+    "kia-sonet:hte-o:crdi-15:6AT": [
+      "Clear White",
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Pewter Olive"
+    ],
+    "kia-sonet:hte-o:crdi-15:6MT": [
+      "Clear White",
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Pewter Olive"
+    ],
+    "kia-sonet:hte-o:smartstream-12:5MT": [
+      "Clear White",
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Pewter Olive"
+    ],
+    "kia-sonet:hte:smartstream-12:5MT": [
+      "Clear White",
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-o:crdi-15:6AT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-o:crdi-15:6MT": [
+      "Clear White",
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-o:smartstream-10-tgdi:6iMT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-o:smartstream-10-tgdi:7DCA": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-o:smartstream-12:5MT": [
+      "Clear White",
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-plus-o:crdi-15:6AT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-plus-o:crdi-15:6MT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-plus-o:smartstream-10-tgdi:6iMT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-plus-o:smartstream-10-tgdi:7DCA": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-plus-o:smartstream-12:5MT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-plus:crdi-15:6AT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-plus:crdi-15:6MT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htk-plus:smartstream-12:5MT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htx:crdi-15:6AT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htx:crdi-15:6MT": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:htx:smartstream-10-tgdi:7DCA": [
+      "Imperial Blue",
+      "Magma Red",
+      "Aurora Black Pearl",
+      "Gravity Grey",
+      "Glacier White Pearl",
+      "Pewter Olive"
+    ],
+    "kia-sonet:x-line:smartstream-10-tgdi:7DCA": [
+      "Matte Graphite",
+      "Aurora Black Pearl"
+    ],
+    "kia-sorento:hte:diesel:8AT": [
+      "Dark Gun Metal",
+      "Ivory Silver",
+      "Magma Red",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Glacier White Pearl",
+      "Gravity Grey"
+    ],
+    "kia-sorento:htk-a:diesel:8AT": [
+      "Dark Gun Metal",
+      "Ivory Silver",
+      "Magma Red",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Glacier White Pearl",
+      "Gravity Grey"
+    ],
+    "kia-sorento:htk:diesel:8AT": [
+      "Dark Gun Metal",
+      "Ivory Silver",
+      "Magma Red",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Glacier White Pearl",
+      "Gravity Grey"
+    ],
+    "kia-sorento:htx-a:diesel-awd:8AT": [
+      "Dark Gun Metal",
+      "Ivory Silver",
+      "Magma Red",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Glacier White Pearl",
+      "Gravity Grey"
+    ],
+    "kia-sorento:htx:diesel-awd:8AT": [
+      "Dark Gun Metal",
+      "Ivory Silver",
+      "Magma Red",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Imperial Blue",
+      "Glacier White Pearl",
+      "Gravity Grey"
+    ],
+    "kia-syros-ev:htk:ev-42:1EV": [
+      "Glacier White Pearl",
+      "Aurora Black Pearl",
+      "Pewter Olive",
+      "Frost Blue",
+      "Ivory Silver Matte",
+      "Gravity Grey",
+      "Magma Red",
+      "Ivory Silver Gloss"
+    ],
+    "kia-syros-ev:htx-plus:ev-51:1EV": [
+      "Glacier White Pearl",
+      "Aurora Black Pearl",
+      "Pewter Olive",
+      "Frost Blue",
+      "Ivory Silver Matte",
+      "Gravity Grey",
+      "Magma Red",
+      "Ivory Silver Gloss"
+    ],
+    "kia-syros-ev:x-line:ev-51:1EV": [
+      "Xclusive Matte Graphite",
+      "Aurora Black Pearl"
+    ],
+    "kia-syros:hte-o:d15-crdi:6MT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:hte-o:g10-tgdi:6MT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:hte:g10-tgdi:6MT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htk-ex:d15-crdi:6MT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htk-ex:g10-tgdi:6MT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htk-plus-o:d15-crdi:6AT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htk-plus-o:d15-crdi:6MT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htk-plus-o:g10-tgdi:6MT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htk-plus-o:g10-tgdi:7DCA": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htk-plus:d15-crdi:6AT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htk-plus:d15-crdi:6MT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htk-plus:g10-tgdi:6MT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htk-plus:g10-tgdi:7DCA": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htx-o:d15-crdi:6AT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htx-o:g10-tgdi:7DCA": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htx:d15-crdi:6AT": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "kia-syros:htx:g10-tgdi:7DCA": [
+      "Ivory Silver Gloss",
+      "Ivory Silver Matte",
+      "Frost Blue",
+      "Pewter Olive",
+      "Aurora Black Pearl",
+      "Magma Red",
+      "Imperial Blue",
+      "Gravity Grey",
+      "Glacier White Pearl"
+    ],
+    "mahindra-bolero-neo-plus:p10:mhawk-2200:6MT": [
+      "Diamond White",
+      "DSAT Silver",
+      "Napoli Black"
+    ],
+    "mahindra-bolero-neo-plus:p4:mhawk-2200:6MT": [
+      "Diamond White",
+      "DSAT Silver",
+      "Napoli Black"
+    ],
+    "mahindra-bolero-neo:n10-r:mhawk100:5MT": [
+      "Jeans Blue",
+      "Rocky Beige",
+      "Diamond White",
+      "Pearl White",
+      "Stealth Black"
+    ],
+    "mahindra-bolero-neo:n11:mhawk100:5MT": [
+      "Jeans Blue",
+      "Rocky Beige",
+      "Diamond White",
+      "Pearl White",
+      "Stealth Black"
+    ],
+    "mahindra-bolero-neo:n4:mhawk100:5MT": [
+      "Jeans Blue",
+      "Rocky Beige",
+      "Diamond White",
+      "Pearl White",
+      "Stealth Black"
+    ],
+    "mahindra-bolero-neo:n8:mhawk100:5MT": [
+      "Jeans Blue",
+      "Rocky Beige",
+      "Diamond White",
+      "Pearl White",
+      "Stealth Black"
+    ],
+    "mahindra-bolero:b4:mhawk75:5MT": [
+      "Rocky Beige",
+      "Stealth Black",
+      "Diamond White",
+      "Dsat Silver"
+    ],
+    "mahindra-bolero:b6:mhawk75:5MT": [
+      "Rocky Beige",
+      "Stealth Black",
+      "Diamond White",
+      "Dsat Silver"
+    ],
+    "mahindra-bolero:b8:mhawk75:5MT": [
+      "Rocky Beige",
+      "Stealth Black",
+      "Diamond White",
+      "Dsat Silver"
+    ],
+    "mahindra-scorpio-n:z2:diesel-132:6MT": [
+      "Galaxy Grey",
+      "Oceanic",
+      "Stealth Black",
+      "Deep Forest",
+      "Everest White"
+    ],
+    "mahindra-scorpio-n:z2:petrol:6MT": [
+      "Galaxy Grey",
+      "Oceanic",
+      "Stealth Black",
+      "Deep Forest",
+      "Everest White"
+    ],
+    "mahindra-scorpio-n:z4:diesel-175:6AT": [
+      "Galaxy Grey",
+      "Oceanic",
+      "Stealth Black",
+      "Deep Forest",
+      "Everest White"
+    ],
+    "mahindra-scorpio-n:z4:petrol:6AT": [
+      "Galaxy Grey",
+      "Oceanic",
+      "Stealth Black",
+      "Deep Forest",
+      "Everest White"
+    ],
+    "mahindra-scorpio-n:z4:petrol:6MT": [
+      "Galaxy Grey",
+      "Oceanic",
+      "Stealth Black",
+      "Deep Forest",
+      "Everest White"
+    ],
+    "mahindra-scorpio-n:z6:diesel-175:6AT": [
+      "Galaxy Grey",
+      "Oceanic",
+      "Stealth Black",
+      "Deep Forest",
+      "Everest White"
+    ],
+    "mahindra-scorpio-n:z6:diesel-175:6MT": [
+      "Galaxy Grey",
+      "Oceanic",
+      "Stealth Black",
+      "Deep Forest",
+      "Everest White"
+    ],
+    "mahindra-scorpio-n:z8:diesel-175:6AT": [
+      "Galaxy Grey",
+      "Oceanic",
+      "Stealth Black",
+      "Deep Forest",
+      "Everest White"
+    ],
+    "mahindra-scorpio-n:z8:diesel-175:6MT": [
+      "Galaxy Grey",
+      "Oceanic",
+      "Stealth Black",
+      "Deep Forest",
+      "Everest White"
+    ],
+    "mahindra-thar-roxx:mx1:mhawk-22-rwd:6MT": [
+      "Everest White",
+      "Stealth Black",
+      "Tango Red"
+    ],
+    "mahindra-thar-roxx:mx1:mstallion-20-rwd:6MT": [
+      "Everest White",
+      "Stealth Black",
+      "Tango Red"
+    ],
+    "mahindra-thar-roxx:mx3:mhawk-22-rwd:6AT": [
+      "Everest White",
+      "Stealth Black",
+      "Tango Red"
+    ],
+    "mahindra-thar-roxx:mx3:mhawk-22-rwd:6MT": [
+      "Everest White",
+      "Stealth Black",
+      "Tango Red"
+    ],
+    "mahindra-thar-roxx:mx3:mstallion-20-rwd:6AT": [
+      "Everest White",
+      "Stealth Black",
+      "Tango Red"
+    ],
+    "mahindra-thar-roxx:mx5:mhawk-22-rwd:6AT": [
+      "Burnt Sienna",
+      "Battleship Grey",
+      "Nebula Blue",
+      "Deep Forest",
+      "Everest White",
+      "Stealth Black",
+      "Tango Red"
+    ],
+    "mahindra-thar-roxx:mx5:mstallion-20-rwd:6AT": [
+      "Burnt Sienna",
+      "Battleship Grey",
+      "Nebula Blue",
+      "Deep Forest",
+      "Everest White",
+      "Stealth Black",
+      "Tango Red"
+    ],
+    "mahindra-thar-roxx:mx5:mstallion-20-rwd:6MT": [
+      "Burnt Sienna",
+      "Battleship Grey",
+      "Nebula Blue",
+      "Deep Forest",
+      "Everest White",
+      "Stealth Black",
+      "Tango Red"
+    ],
+    "mahindra-xev-9e:cineluxe:ev-79:1EV": [
+      "Satin Desert Mist",
+      "Satin Black",
+      "Satin White"
+    ],
+    "mahindra-xev-9e:pack-one:ev-59:1EV": [
+      "Stealth Black",
+      "Ruby Velvet",
+      "Nebula Blue",
+      "Deep Forest",
+      "Tango Red",
+      "Everest White",
+      "Desert Myst"
+    ],
+    "mahindra-xev-9e:pack-three-select:ev-59:1EV": [
+      "Stealth Black",
+      "Ruby Velvet",
+      "Nebula Blue",
+      "Deep Forest",
+      "Tango Red",
+      "Everest White",
+      "Desert Myst"
+    ],
+    "mahindra-xev-9e:pack-three:ev-79:1EV": [
+      "Stealth Black",
+      "Ruby Velvet",
+      "Nebula Blue",
+      "Deep Forest",
+      "Tango Red",
+      "Everest White",
+      "Desert Myst"
+    ],
+    "mahindra-xev-9s:pack-three-above:ev-79:1EV": [
+      "Nebula Blue",
+      "Midnight Black",
+      "Ruby Velvet",
+      "Stealth Black",
+      "Desert Myst",
+      "Everest White"
+    ],
+    "mahindra-xev-9s:pack-three:ev-79:1EV": [
+      "Nebula Blue",
+      "Midnight Black",
+      "Ruby Velvet",
+      "Stealth Black",
+      "Desert Myst",
+      "Everest White"
+    ],
+    "mahindra-xuv-3xo-ev:ax5:ev-39:1EV": [
+      "Deep Forest",
+      "Galaxy Grey",
+      "Nebula Blue",
+      "Stealth Black",
+      "Tango Red",
+      "Everest White"
+    ],
+    "mahindra-xuv-3xo-ev:ax7-l:ev-39:1EV": [
+      "Deep Forest",
+      "Galaxy Grey",
+      "Nebula Blue",
+      "Stealth Black",
+      "Tango Red",
+      "Everest White"
+    ],
+    "mahindra-xuv-3xo:ax5:diesel:6AMT": [
+      "Tango Red",
+      "Stealth Black",
+      "Nebula Blue",
+      "Galaxy Grey",
+      "Everest White",
+      "Dune Beige",
+      "Deep Forest",
+      "Citrine Yellow"
+    ],
+    "mahindra-xuv-3xo:ax5:diesel:6MT": [
+      "Tango Red",
+      "Stealth Black",
+      "Nebula Blue",
+      "Galaxy Grey",
+      "Everest White",
+      "Dune Beige",
+      "Deep Forest",
+      "Citrine Yellow"
+    ],
+    "mahindra-xuv-3xo:ax5:petrol-turbo-mpfi:6AT": [
+      "Tango Red",
+      "Stealth Black",
+      "Nebula Blue",
+      "Galaxy Grey",
+      "Everest White",
+      "Dune Beige",
+      "Deep Forest",
+      "Citrine Yellow"
+    ],
+    "mahindra-xuv-3xo:ax5:petrol-turbo-mpfi:6MT": [
+      "Tango Red",
+      "Stealth Black",
+      "Nebula Blue",
+      "Galaxy Grey",
+      "Everest White",
+      "Dune Beige",
+      "Deep Forest",
+      "Citrine Yellow"
+    ],
+    "mahindra-xuv-3xo:ax7:diesel:6AMT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black",
+      "Dune Beige with Stealth Black",
+      "Deep Forest with Galvono Grey",
+      "Citrine Yellow with Stealth Black"
+    ],
+    "mahindra-xuv-3xo:ax7:diesel:6MT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black",
+      "Dune Beige with Stealth Black",
+      "Deep Forest with Galvono Grey",
+      "Citrine Yellow with Stealth Black"
+    ],
+    "mahindra-xuv-3xo:ax7:petrol-turbo-gdi:6AT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black",
+      "Dune Beige with Stealth Black",
+      "Deep Forest with Galvono Grey",
+      "Citrine Yellow with Stealth Black"
+    ],
+    "mahindra-xuv-3xo:ax7:petrol-turbo-gdi:6MT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black",
+      "Dune Beige with Stealth Black",
+      "Deep Forest with Galvono Grey",
+      "Citrine Yellow with Stealth Black"
+    ],
+    "mahindra-xuv-3xo:mx1:petrol-turbo-mpfi:6MT": [
+      "Tango Red",
+      "Stealth Black",
+      "Nebula Blue",
+      "Galaxy Grey",
+      "Everest White",
+      "Dune Beige",
+      "Deep Forest"
+    ],
+    "mahindra-xuv-3xo:mx2:diesel:6MT": [
+      "Tango Red",
+      "Stealth Black",
+      "Nebula Blue",
+      "Galaxy Grey",
+      "Everest White",
+      "Dune Beige",
+      "Deep Forest"
+    ],
+    "mahindra-xuv-3xo:revx-edge-o:diesel:6AMT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black"
+    ],
+    "mahindra-xuv-3xo:revx-edge-o:diesel:6MT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black"
+    ],
+    "mahindra-xuv-3xo:revx-edge-o:petrol-turbo-mpfi:6AT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black"
+    ],
+    "mahindra-xuv-3xo:revx-edge-o:petrol-turbo-mpfi:6MT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black"
+    ],
+    "mahindra-xuv-3xo:revx-edge:diesel:6MT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black"
+    ],
+    "mahindra-xuv-3xo:revx-edge:petrol-turbo-mpfi:6AT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black"
+    ],
+    "mahindra-xuv-3xo:revx-edge:petrol-turbo-mpfi:6MT": [
+      "Tango Red with Stealth Black",
+      "Stealth Black with Galvono Grey",
+      "Nebula Blue with Galvano Grey",
+      "Galaxy Grey with Stealth Black",
+      "Everest White with Stealth Black"
+    ],
+    "mahindra-xuv-7xo:ax3:diesel:6AT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White"
+    ],
+    "mahindra-xuv-7xo:ax3:diesel:6MT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White"
+    ],
+    "mahindra-xuv-7xo:ax3:petrol:6AT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White"
+    ],
+    "mahindra-xuv-7xo:ax3:petrol:6MT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White"
+    ],
+    "mahindra-xuv-7xo:ax5:diesel:6AT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White"
+    ],
+    "mahindra-xuv-7xo:ax5:diesel:6MT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White"
+    ],
+    "mahindra-xuv-7xo:ax5:petrol:6AT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White"
+    ],
+    "mahindra-xuv-7xo:ax5:petrol:6MT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White"
+    ],
+    "mahindra-xuv-7xo:ax7:diesel:6AT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White",
+      "Midnight Black with Stealth Black",
+      "Everest White with Stealth Black",
+      "Desert Myst with Stealth Black",
+      "Galaxy Grey with Stealth Black"
+    ],
+    "mahindra-xuv-7xo:ax7:diesel:6MT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White",
+      "Midnight Black with Stealth Black",
+      "Everest White with Stealth Black",
+      "Desert Myst with Stealth Black",
+      "Galaxy Grey with Stealth Black"
+    ],
+    "mahindra-xuv-7xo:ax7:petrol:6AT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White",
+      "Midnight Black with Stealth Black",
+      "Everest White with Stealth Black",
+      "Desert Myst with Stealth Black",
+      "Galaxy Grey with Stealth Black"
+    ],
+    "mahindra-xuv-7xo:ax7:petrol:6MT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Ruby Velvet",
+      "Desert Myst",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White",
+      "Midnight Black with Stealth Black",
+      "Everest White with Stealth Black",
+      "Desert Myst with Stealth Black",
+      "Galaxy Grey with Stealth Black"
+    ],
+    "mahindra-xuv-7xo:ax:diesel:6MT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White"
+    ],
+    "mahindra-xuv-7xo:ax:petrol:6MT": [
+      "Midnight Black",
+      "Nebula Blue",
+      "Galaxy Grey",
+      "Stealth Black",
+      "Everest White"
+    ],
+    "maruti-alto-k10:lxi:cng:5MT": [
+      "Premium Earth Gold",
+      "Metallic Sizzling Red",
+      "Metallic Speedy Blue",
+      "Metallic Granite Grey",
+      "Metallic Silky Silver",
+      "Solid White"
+    ],
+    "maruti-alto-k10:lxi:petrol:5MT": [
+      "Premium Earth Gold",
+      "Metallic Sizzling Red",
+      "Metallic Speedy Blue",
+      "Metallic Granite Grey",
+      "Metallic Silky Silver",
+      "Solid White"
+    ],
+    "maruti-alto-k10:std:petrol:5MT": [
+      "Premium Earth Gold",
+      "Metallic Sizzling Red",
+      "Metallic Speedy Blue",
+      "Metallic Granite Grey",
+      "Metallic Silky Silver",
+      "Solid White"
+    ],
+    "maruti-alto-k10:vxi-plus:petrol:5AMT": [
+      "Bluish Black",
+      "Premium Earth Gold",
+      "Metallic Sizzling Red",
+      "Metallic Speedy Blue",
+      "Metallic Granite Grey",
+      "Metallic Silky Silver",
+      "Solid White"
+    ],
+    "maruti-alto-k10:vxi-plus:petrol:5MT": [
+      "Bluish Black",
+      "Premium Earth Gold",
+      "Metallic Sizzling Red",
+      "Metallic Speedy Blue",
+      "Metallic Granite Grey",
+      "Metallic Silky Silver",
+      "Solid White"
+    ],
+    "maruti-alto-k10:vxi:cng:5MT": [
+      "Bluish Black",
+      "Premium Earth Gold",
+      "Metallic Sizzling Red",
+      "Metallic Speedy Blue",
+      "Metallic Granite Grey",
+      "Metallic Silky Silver",
+      "Solid White"
+    ],
+    "maruti-alto-k10:vxi:petrol:5AMT": [
+      "Bluish Black",
+      "Premium Earth Gold",
+      "Metallic Sizzling Red",
+      "Metallic Speedy Blue",
+      "Metallic Granite Grey",
+      "Metallic Silky Silver",
+      "Solid White"
+    ],
+    "maruti-alto-k10:vxi:petrol:5MT": [
+      "Bluish Black",
+      "Premium Earth Gold",
+      "Metallic Sizzling Red",
+      "Metallic Speedy Blue",
+      "Metallic Granite Grey",
+      "Metallic Silky Silver",
+      "Solid White"
+    ],
+    "maruti-baleno:alpha-o:z12e-petrol:5AMT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:alpha-o:z12e-petrol:5MT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:alpha:z12e-petrol:5AMT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:alpha:z12e-petrol:5MT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:delta:z12e-cng:5AMT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:delta:z12e-cng:5MT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:delta:z12e-petrol:5AMT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:delta:z12e-petrol:5MT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:sigma:z12e-petrol:5MT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:zeta:z12e-cng:5AMT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:zeta:z12e-cng:5MT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:zeta:z12e-petrol:5AMT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-baleno:zeta:z12e-petrol:5MT": [
+      "Bluish Black",
+      "Grandeur Grey",
+      "Splendid Sliver",
+      "Arctic White",
+      "Opulent Red",
+      "Nexa Blue",
+      "Enigmatic Teal Green"
+    ],
+    "maruti-brezza:lxi:k15c-cng:6MT": [
+      "Sizzling Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Pearl Arctic White"
+    ],
+    "maruti-brezza:vxi:k15c-cng:6MT": [
+      "Sizzling Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Pearl Arctic White",
+      "Lustrous Beige",
+      "Vivacious Orange"
+    ],
+    "maruti-brezza:vxi:k15c-mild-hybrid:6AT": [
+      "Sizzling Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Pearl Arctic White",
+      "Lustrous Beige",
+      "Vivacious Orange"
+    ],
+    "maruti-brezza:zxi-plus:boosterjet-turbo:6MT": [
+      "Pearl Arctic White with Bluish Black Roof",
+      "Lustrous Beige with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof",
+      "Magma Grey",
+      "Splendid Silver",
+      "Bluish Black",
+      "Pearl Arctic White",
+      "Lustrous Beige",
+      "Vivacious Orange"
+    ],
+    "maruti-brezza:zxi-plus:k15c-mild-hybrid:6AT": [
+      "Magma Grey",
+      "Splendid Silver",
+      "Bluish Black",
+      "Pearl Arctic White",
+      "Lustrous Beige",
+      "Vivacious Orange",
+      "Pearl Arctic White with Bluish Black Roof",
+      "Lustrous Beige with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof"
+    ],
+    "maruti-brezza:zxi:k15c-cng:6MT": [
+      "Pearl Arctic White with Bluish Black Roof",
+      "Lustrous Beige with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof",
+      "Magma Grey",
+      "Splendid Silver",
+      "Bluish Black",
+      "Pearl Arctic White",
+      "Lustrous Beige",
+      "Vivacious Orange"
+    ],
+    "maruti-brezza:zxi:k15c-mild-hybrid:6AT": [
+      "Magma Grey",
+      "Splendid Silver",
+      "Bluish Black",
+      "Pearl Arctic White",
+      "Lustrous Beige",
+      "Vivacious Orange",
+      "Pearl Arctic White with Bluish Black Roof",
+      "Lustrous Beige with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof"
+    ],
+    "maruti-celerio:lxi:petrol:5MT": [
+      "Pearl Caffeine Brown",
+      "Solid Fire Red",
+      "Metallic Silky Silver",
+      "Pearl Arctic White",
+      "Metallic Glistening Grey",
+      "Metallic Speedy Blue"
+    ],
+    "maruti-celerio:vxi:cng:5MT": [
+      "Pearl Bluish Black",
+      "Pearl Caffeine Brown",
+      "Solid Fire Red",
+      "Metallic Silky Silver",
+      "Pearl Arctic White",
+      "Metallic Glistening Grey",
+      "Metallic Speedy Blue"
+    ],
+    "maruti-celerio:vxi:petrol:5AMT": [
+      "Pearl Bluish Black",
+      "Pearl Caffeine Brown",
+      "Solid Fire Red",
+      "Metallic Silky Silver",
+      "Pearl Arctic White",
+      "Metallic Glistening Grey",
+      "Metallic Speedy Blue"
+    ],
+    "maruti-celerio:vxi:petrol:5MT": [
+      "Pearl Bluish Black",
+      "Pearl Caffeine Brown",
+      "Solid Fire Red",
+      "Metallic Silky Silver",
+      "Pearl Arctic White",
+      "Metallic Glistening Grey",
+      "Metallic Speedy Blue"
+    ],
+    "maruti-celerio:zxi-plus:petrol:5AMT": [
+      "Pearl Bluish Black",
+      "Pearl Caffeine Brown",
+      "Solid Fire Red",
+      "Metallic Silky Silver",
+      "Pearl Arctic White",
+      "Metallic Glistening Grey",
+      "Metallic Speedy Blue"
+    ],
+    "maruti-celerio:zxi-plus:petrol:5MT": [
+      "Pearl Bluish Black",
+      "Pearl Caffeine Brown",
+      "Solid Fire Red",
+      "Metallic Silky Silver",
+      "Pearl Arctic White",
+      "Metallic Glistening Grey",
+      "Metallic Speedy Blue"
+    ],
+    "maruti-celerio:zxi:petrol:5AMT": [
+      "Pearl Bluish Black",
+      "Pearl Caffeine Brown",
+      "Solid Fire Red",
+      "Metallic Silky Silver",
+      "Pearl Arctic White",
+      "Metallic Glistening Grey",
+      "Metallic Speedy Blue"
+    ],
+    "maruti-celerio:zxi:petrol:5MT": [
+      "Pearl Bluish Black",
+      "Pearl Caffeine Brown",
+      "Solid Fire Red",
+      "Metallic Silky Silver",
+      "Pearl Arctic White",
+      "Metallic Glistening Grey",
+      "Metallic Speedy Blue"
+    ],
+    "maruti-dzire:lxi:z12e-petrol:5MT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-dzire:vxi:z12e-cng:5AMT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-dzire:vxi:z12e-cng:5MT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-dzire:vxi:z12e-petrol:5AMT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-dzire:vxi:z12e-petrol:5MT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-dzire:zxi-plus:z12e-petrol:5AMT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-dzire:zxi-plus:z12e-petrol:5MT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-dzire:zxi:z12e-cng:5AMT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-dzire:zxi:z12e-cng:5MT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-dzire:zxi:z12e-petrol:5AMT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-dzire:zxi:z12e-petrol:5MT": [
+      "Nutmeg Brown",
+      "Alluring Blue",
+      "Gallant Red",
+      "Magma Grey",
+      "Arctic White",
+      "Bluish Black",
+      "Splendid Silver"
+    ],
+    "maruti-e-vitara:alpha:ev-61kwh:1EV": [
+      "Bluish Black",
+      "Opulent Red",
+      "Arctic White",
+      "Splendid Silver",
+      "Grandeur Grey",
+      "Nexa Blue",
+      "Arctic White with Bluish Black Roof",
+      "Opulent Red with Bluish Black Roof",
+      "Splendid Silver with Bluish Black Roof",
+      "Land Breeze Green with Bluish Black Roof"
+    ],
+    "maruti-e-vitara:delta:ev-49kwh:1EV": [
+      "Bluish Black",
+      "Opulent Red",
+      "Arctic White",
+      "Splendid Silver",
+      "Grandeur Grey",
+      "Nexa Blue"
+    ],
+    "maruti-e-vitara:zeta:ev-61kwh:1EV": [
+      "Bluish Black",
+      "Opulent Red",
+      "Arctic White",
+      "Splendid Silver",
+      "Grandeur Grey",
+      "Nexa Blue"
+    ],
+    "maruti-ertiga:lxi:k15c-mild-hybrid:5MT": [
+      "Pearl Metallic Dignity Brown",
+      "Prime Oxford Blue",
+      "Auburn Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-ertiga:vxi:k15c-cng:5MT": [
+      "Bluish Black",
+      "Pearl Metallic Dignity Brown",
+      "Prime Oxford Blue",
+      "Auburn Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-ertiga:vxi:k15c-mild-hybrid:5MT": [
+      "Bluish Black",
+      "Pearl Metallic Dignity Brown",
+      "Prime Oxford Blue",
+      "Auburn Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-ertiga:vxi:k15c-mild-hybrid:6AT": [
+      "Bluish Black",
+      "Pearl Metallic Dignity Brown",
+      "Prime Oxford Blue",
+      "Auburn Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-ertiga:zxi-plus:k15c-mild-hybrid:5MT": [
+      "Bluish Black",
+      "Pearl Metallic Dignity Brown",
+      "Prime Oxford Blue",
+      "Auburn Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-ertiga:zxi-plus:k15c-mild-hybrid:6AT": [
+      "Bluish Black",
+      "Pearl Metallic Dignity Brown",
+      "Prime Oxford Blue",
+      "Auburn Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-ertiga:zxi:k15c-cng:5MT": [
+      "Bluish Black",
+      "Pearl Metallic Dignity Brown",
+      "Prime Oxford Blue",
+      "Auburn Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-ertiga:zxi:k15c-mild-hybrid:5MT": [
+      "Bluish Black",
+      "Pearl Metallic Dignity Brown",
+      "Prime Oxford Blue",
+      "Auburn Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-ertiga:zxi:k15c-mild-hybrid:6AT": [
+      "Bluish Black",
+      "Pearl Metallic Dignity Brown",
+      "Prime Oxford Blue",
+      "Auburn Red",
+      "Magma Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-fronx:alpha:k10c-turbo:5MT": [
+      "Opulent Red with Bluish Black Roof",
+      "Splendid Silver With Bluish Black Roof",
+      "Earthen Brown with Bluish Black Roof",
+      "Bluish Black",
+      "Opulent Red",
+      "Earthen Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue (Celestial)"
+    ],
+    "maruti-fronx:alpha:k10c-turbo:6AT": [
+      "Opulent Red with Bluish Black Roof",
+      "Splendid Silver With Bluish Black Roof",
+      "Earthen Brown with Bluish Black Roof",
+      "Bluish Black",
+      "Opulent Red",
+      "Earthen Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue (Celestial)"
+    ],
+    "maruti-fronx:delta-plus:k12n-petrol:5AMT": [
+      "Bluish Black",
+      "Opulent Red",
+      "Earthen Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue (Celestial)"
+    ],
+    "maruti-fronx:delta:k12n-cng:5MT": [
+      "Bluish Black",
+      "Opulent Red",
+      "Earthen Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue (Celestial)"
+    ],
+    "maruti-fronx:delta:k12n-petrol:5AMT": [
+      "Bluish Black",
+      "Opulent Red",
+      "Earthen Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue (Celestial)"
+    ],
+    "maruti-fronx:delta:k12n-petrol:5MT": [
+      "Bluish Black",
+      "Opulent Red",
+      "Earthen Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue (Celestial)"
+    ],
+    "maruti-fronx:sigma:k12n-cng:5MT": [
+      "Bluish Black",
+      "Opulent Red",
+      "Earthen Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue (Celestial)"
+    ],
+    "maruti-fronx:sigma:k12n-petrol:5MT": [
+      "Bluish Black",
+      "Opulent Red",
+      "Earthen Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue (Celestial)"
+    ],
+    "maruti-fronx:zeta:k10c-turbo:5MT": [
+      "Bluish Black",
+      "Opulent Red",
+      "Earthen Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue (Celestial)"
+    ],
+    "maruti-fronx:zeta:k10c-turbo:6AT": [
+      "Bluish Black",
+      "Opulent Red",
+      "Earthen Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue (Celestial)"
+    ],
+    "maruti-grand-vitara:alpha:k15c-mild-hybrid:5MT": [
+      "Midnight Black",
+      "Opulent Red",
+      "Chestnut Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue",
+      "Opulent Red with Black Roof",
+      "Splendid Silver with Black Roof",
+      "Arctic White with Black Roof"
+    ],
+    "maruti-grand-vitara:delta:k15c-cng:5MT": [
+      "Opulent Red",
+      "Chestnut Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue"
+    ],
+    "maruti-grand-vitara:delta:k15c-mild-hybrid:5MT": [
+      "Opulent Red",
+      "Chestnut Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue"
+    ],
+    "maruti-grand-vitara:delta:k15c-mild-hybrid:6AT": [
+      "Opulent Red",
+      "Chestnut Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue"
+    ],
+    "maruti-grand-vitara:sigma:k15c-mild-hybrid:5MT": [
+      "Arctic White"
+    ],
+    "maruti-grand-vitara:zeta:k15c-cng:5MT": [
+      "Opulent Red",
+      "Chestnut Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue"
+    ],
+    "maruti-grand-vitara:zeta:k15c-mild-hybrid:5MT": [
+      "Opulent Red",
+      "Chestnut Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue",
+      "Opulent Red with Black Roof",
+      "Splendid Silver with Black Roof",
+      "Arctic White with Black Roof"
+    ],
+    "maruti-grand-vitara:zeta:k15c-mild-hybrid:6AT": [
+      "Midnight Black",
+      "Opulent Red",
+      "Chestnut Brown",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Nexa Blue",
+      "Opulent Red with Black Roof",
+      "Splendid Silver with Black Roof",
+      "Arctic White with Black Roof"
+    ],
+    "maruti-jimny:alpha:k15b-petrol:4AT": [
+      "Pearl Arctic White",
+      "Granite Gray",
+      "Nexa Blue",
+      "Bluish Black",
+      "Sizzling Red with Bluish Black Roof",
+      "Kinetic Yellow with Bluish Black Roof"
+    ],
+    "maruti-jimny:alpha:k15b-petrol:5MT": [
+      "Pearl Arctic White",
+      "Granite Gray",
+      "Nexa Blue",
+      "Bluish Black",
+      "Sizzling Red with Bluish Black Roof",
+      "Kinetic Yellow with Bluish Black Roof"
+    ],
+    "maruti-jimny:zeta:k15b-petrol:4AT": [
+      "Pearl Arctic White",
+      "Granite Gray",
+      "Sizzling Red",
+      "Nexa Blue",
+      "Bluish Black"
+    ],
+    "maruti-jimny:zeta:k15b-petrol:5MT": [
+      "Pearl Arctic White",
+      "Granite Gray",
+      "Sizzling Red",
+      "Nexa Blue",
+      "Bluish Black"
+    ],
+    "maruti-s-presso:lxi:k10c-cng:5MT": [
+      "Solid White",
+      "Metallic Silky Silver",
+      "Metallic Granite Grey",
+      "Pearl Starry Blue",
+      "Solid Sizzle Orange",
+      "Solid Fire Red"
+    ],
+    "maruti-s-presso:lxi:k10c-petrol:5MT": [
+      "Solid White",
+      "Metallic Silky Silver",
+      "Metallic Granite Grey",
+      "Pearl Starry Blue",
+      "Solid Sizzle Orange",
+      "Solid Fire Red"
+    ],
+    "maruti-s-presso:std:k10c-petrol:5MT": [
+      "Solid White",
+      "Metallic Silky Silver",
+      "Metallic Granite Grey",
+      "Pearl Starry Blue",
+      "Solid Sizzle Orange",
+      "Solid Fire Red"
+    ],
+    "maruti-s-presso:vxi-plus:k10c-petrol:5AMT": [
+      "Bluish Black",
+      "Solid White",
+      "Metallic Silky Silver",
+      "Metallic Granite Grey",
+      "Pearl Starry Blue",
+      "Solid Sizzle Orange",
+      "Solid Fire Red"
+    ],
+    "maruti-s-presso:vxi-plus:k10c-petrol:5MT": [
+      "Bluish Black",
+      "Solid White",
+      "Metallic Silky Silver",
+      "Metallic Granite Grey",
+      "Pearl Starry Blue",
+      "Solid Sizzle Orange",
+      "Solid Fire Red"
+    ],
+    "maruti-s-presso:vxi:k10c-cng:5MT": [
+      "Bluish Black",
+      "Solid White",
+      "Metallic Silky Silver",
+      "Metallic Granite Grey",
+      "Pearl Starry Blue",
+      "Solid Sizzle Orange",
+      "Solid Fire Red"
+    ],
+    "maruti-s-presso:vxi:k10c-petrol:5AMT": [
+      "Bluish Black",
+      "Solid White",
+      "Metallic Silky Silver",
+      "Metallic Granite Grey",
+      "Pearl Starry Blue",
+      "Solid Sizzle Orange",
+      "Solid Fire Red"
+    ],
+    "maruti-s-presso:vxi:k10c-petrol:5MT": [
+      "Bluish Black",
+      "Solid White",
+      "Metallic Silky Silver",
+      "Metallic Granite Grey",
+      "Pearl Starry Blue",
+      "Solid Sizzle Orange",
+      "Solid Fire Red"
+    ],
+    "maruti-swift:lxi:z12e-petrol:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Sizzling Red"
+    ],
+    "maruti-swift:vxi-o:z12e-cng:5AMT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-swift:vxi-o:z12e-cng:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-swift:vxi-o:z12e-petrol:5AMT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-swift:vxi-o:z12e-petrol:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-swift:vxi:z12e-cng:5AMT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-swift:vxi:z12e-cng:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-swift:vxi:z12e-petrol:5AMT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-swift:vxi:z12e-petrol:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-swift:zxi-plus:z12e-petrol:5AMT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Pearl Arctic White with Bluish Black Roof",
+      "Luster Blue with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof"
+    ],
+    "maruti-swift:zxi-plus:z12e-petrol:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Pearl Arctic White with Bluish Black Roof",
+      "Luster Blue with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof"
+    ],
+    "maruti-swift:zxi:z12e-cng:5AMT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-swift:zxi:z12e-cng:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange"
+    ],
+    "maruti-swift:zxi:z12e-petrol:5AMT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-swift:zxi:z12e-petrol:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Novel Orange",
+      "Luster Blue",
+      "Sizzling Red"
+    ],
+    "maruti-victoris:lxi:k15c-cng:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey"
+    ],
+    "maruti-victoris:lxi:k15c-mild-hybrid:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey"
+    ],
+    "maruti-victoris:vxi:k15c-cng:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Sizzling Red",
+      "Eternal Blue"
+    ],
+    "maruti-victoris:vxi:k15c-mild-hybrid:5MT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Sizzling Red",
+      "Eternal Blue"
+    ],
+    "maruti-victoris:vxi:k15c-mild-hybrid:6AT": [
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Sizzling Red",
+      "Eternal Blue"
+    ],
+    "maruti-victoris:zxi-o:k15c-mild-hybrid:5MT": [
+      "Splendid Silver with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof",
+      "Eternal Blue with Bluish Black Roof",
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Bluish Black",
+      "Mystic Green"
+    ],
+    "maruti-victoris:zxi-o:k15c-mild-hybrid:6AT": [
+      "Splendid Silver with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof",
+      "Eternal Blue with Bluish Black Roof",
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Bluish Black",
+      "Mystic Green"
+    ],
+    "maruti-victoris:zxi-plus-o:k15c-mild-hybrid:5MT": [
+      "Splendid Silver with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof",
+      "Eternal Blue with Bluish Black Roof",
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Bluish Black",
+      "Mystic Green"
+    ],
+    "maruti-victoris:zxi-plus:k15c-mild-hybrid:5MT": [
+      "Splendid Silver with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof",
+      "Eternal Blue with Bluish Black Roof",
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Bluish Black",
+      "Mystic Green"
+    ],
+    "maruti-victoris:zxi:k15c-cng:5MT": [
+      "Splendid Silver with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof",
+      "Eternal Blue with Bluish Black Roof",
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Bluish Black",
+      "Mystic Green"
+    ],
+    "maruti-victoris:zxi:k15c-mild-hybrid:5MT": [
+      "Splendid Silver with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof",
+      "Eternal Blue with Bluish Black Roof",
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Bluish Black",
+      "Mystic Green"
+    ],
+    "maruti-victoris:zxi:k15c-mild-hybrid:6AT": [
+      "Splendid Silver with Bluish Black Roof",
+      "Sizzling Red with Bluish Black Roof",
+      "Eternal Blue with Bluish Black Roof",
+      "Pearl Arctic White",
+      "Splendid Silver",
+      "Magma Grey",
+      "Bluish Black",
+      "Mystic Green"
+    ],
+    "maruti-wagon-r:lxi:cng:5MT": [
+      "Peral Metallic Nutmeg Brown",
+      "Metallic Silky Silver",
+      "Metallic Magma Grey",
+      "Pearl Metallic Poolside Blue",
+      "Solid White"
+    ],
+    "maruti-wagon-r:lxi:petrol-1-0:5MT": [
+      "Metallic Silky Silver",
+      "Metallic Magma Grey",
+      "Solid White"
+    ],
+    "maruti-wagon-r:vxi:cng:5MT": [
+      "Pearl Metallic Gallant Red",
+      "Peral Metallic Nutmeg Brown",
+      "Metallic Silky Silver",
+      "Metallic Magma Grey",
+      "Pearl Metallic Poolside Blue",
+      "Solid White"
+    ],
+    "maruti-wagon-r:vxi:petrol-1-0:5AMT": [
+      "Pearl Metallic Gallant Red",
+      "Peral Metallic Nutmeg Brown",
+      "Metallic Silky Silver",
+      "Metallic Magma Grey",
+      "Pearl Metallic Poolside Blue",
+      "Solid White"
+    ],
+    "maruti-wagon-r:vxi:petrol-1-0:5MT": [
+      "Pearl Metallic Gallant Red",
+      "Peral Metallic Nutmeg Brown",
+      "Metallic Silky Silver",
+      "Metallic Magma Grey",
+      "Pearl Metallic Poolside Blue",
+      "Solid White"
+    ],
+    "maruti-wagon-r:zxi-plus:petrol-1-2:5AMT": [
+      "Peral Metallic Nutmeg Brown",
+      "Metallic Silky Silver",
+      "Metallic Magma Grey",
+      "Pearl Metallic Poolside Blue",
+      "Solid White",
+      "Metallic Gallant Red with Bluish Black Roof",
+      "Magma Grey with Black Roof"
+    ],
+    "maruti-wagon-r:zxi-plus:petrol-1-2:5MT": [
+      "Pearl Bluish Black",
+      "Pearl Metallic Gallant Red",
+      "Peral Metallic Nutmeg Brown",
+      "Metallic Silky Silver",
+      "Metallic Magma Grey",
+      "Pearl Metallic Poolside Blue",
+      "Solid White",
+      "Metallic Gallant Red with Bluish Black Roof",
+      "Magma Grey with Black Roof"
+    ],
+    "maruti-wagon-r:zxi:petrol-1-2:5AMT": [
+      "Pearl Bluish Black",
+      "Peral Metallic Nutmeg Brown",
+      "Metallic Silky Silver",
+      "Metallic Magma Grey",
+      "Pearl Metallic Poolside Blue",
+      "Solid White"
+    ],
+    "maruti-wagon-r:zxi:petrol-1-2:5MT": [
+      "Pearl Bluish Black",
+      "Peral Metallic Nutmeg Brown",
+      "Metallic Silky Silver",
+      "Metallic Magma Grey",
+      "Pearl Metallic Poolside Blue",
+      "Solid White"
+    ],
+    "maruti-xl6:alpha-plus:k15c-mild-hybrid:5MT": [
+      "Bluish Black",
+      "Nexa Blue (Celestial)",
+      "Opulent Red",
+      "Brave Khaki",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Opulent Red with Midnight Black Roof",
+      "Brave Khaki with Midnight Black Roof",
+      "Splendid Silver with Midnight Black Roof"
+    ],
+    "maruti-xl6:alpha-plus:k15c-mild-hybrid:6AT": [
+      "Bluish Black",
+      "Nexa Blue (Celestial)",
+      "Opulent Red",
+      "Brave Khaki",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White",
+      "Opulent Red with Midnight Black Roof",
+      "Brave Khaki with Midnight Black Roof",
+      "Splendid Silver with Midnight Black Roof"
+    ],
+    "maruti-xl6:alpha:k15c-mild-hybrid:5MT": [
+      "Bluish Black",
+      "Nexa Blue (Celestial)",
+      "Opulent Red",
+      "Brave Khaki",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-xl6:alpha:k15c-mild-hybrid:6AT": [
+      "Bluish Black",
+      "Nexa Blue (Celestial)",
+      "Opulent Red",
+      "Brave Khaki",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-xl6:zeta:k15c-cng:5MT": [
+      "Bluish Black",
+      "Nexa Blue (Celestial)",
+      "Opulent Red",
+      "Brave Khaki",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-xl6:zeta:k15c-mild-hybrid:5MT": [
+      "Bluish Black",
+      "Nexa Blue (Celestial)",
+      "Opulent Red",
+      "Brave Khaki",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "maruti-xl6:zeta:k15c-mild-hybrid:6AT": [
+      "Bluish Black",
+      "Nexa Blue (Celestial)",
+      "Opulent Red",
+      "Brave Khaki",
+      "Grandeur Grey",
+      "Splendid Silver",
+      "Arctic White"
+    ],
+    "mg-astor:savvy-pro:petrol-vti-tech:CVT": [
+      "Havana Grey",
+      "Candy White with Black Dual Tone",
+      "Starry Black",
+      "Candy White",
+      "Glaze Red",
+      "Aurora Silver"
+    ],
+    "mg-astor:select:petrol-vti-tech:5MT": [
+      "Starry Black",
+      "Candy White",
+      "Glaze Red",
+      "Aurora Silver"
+    ],
+    "mg-astor:select:petrol-vti-tech:CVT": [
+      "Starry Black",
+      "Candy White",
+      "Glaze Red",
+      "Aurora Silver"
+    ],
+    "mg-astor:sharp-pro:petrol-vti-tech:5MT": [
+      "Havana Grey",
+      "Candy White with Black Dual Tone",
+      "Starry Black",
+      "Candy White",
+      "Glaze Red",
+      "Aurora Silver"
+    ],
+    "mg-astor:sharp-pro:petrol-vti-tech:CVT": [
+      "Havana Grey",
+      "Candy White with Black Dual Tone",
+      "Starry Black",
+      "Candy White",
+      "Glaze Red",
+      "Aurora Silver"
+    ],
+    "mg-astor:shine:petrol-vti-tech:5MT": [
+      "Starry Black",
+      "Candy White",
+      "Aurora Silver"
+    ],
+    "mg-astor:sprint:petrol-vti-tech:5MT": [
+      "Candy White",
+      "Aurora Silver"
+    ],
+    "mg-comet-ev:executive:ev-17-3:1EV": [
+      "Aurora Silver"
+    ],
+    "mg-cyberster:gt:ev-77-awd:1EV": [
+      "Irises Cyan",
+      "Modern Beige with Flare Red roof",
+      "Andes Grey with Flare Red roof",
+      "Nuclear Yellow with Black roof",
+      "Flare Red with Black roof"
+    ],
+    "mg-hector-plus:savvy-pro:turbo-petrol:CVT": [
+      "Starry Black",
+      "Glaze Red",
+      "Aurora Silver",
+      "Pearl White",
+      "Celadon Blue"
+    ],
+    "mg-hector-plus:sharp-pro:turbo-petrol:6MT": [
+      "Starry Black",
+      "Glaze Red",
+      "Aurora Silver",
+      "Pearl White",
+      "Celadon Blue"
+    ],
+    "mg-hector-plus:sharp-pro:turbo-petrol:CVT": [
+      "Starry Black",
+      "Glaze Red",
+      "Aurora Silver",
+      "Pearl White",
+      "Celadon Blue"
+    ],
+    "mg-hector-tomahawk-ev:excite:ev-69:1EV": [
+      "Khaki Green",
+      "Pearl White",
+      "Starry Black",
+      "Aurora Silver",
+      "Celadon Blue"
+    ],
+    "mg-hector-tomahawk-ev:exclusive:ev-69:1EV": [
+      "Khaki Green",
+      "Pearl White",
+      "Starry Black",
+      "Aurora Silver",
+      "Celadon Blue"
+    ],
+    "mg-hector:savvy-pro:turbo-petrol:CVT": [
+      "Starry Black",
+      "Glaze Red",
+      "Aurora Silver",
+      "Pearl White",
+      "Celadon Blue"
+    ],
+    "mg-hector:select-pro:turbo-petrol:6MT": [
+      "Starry Black",
+      "Glaze Red",
+      "Aurora Silver",
+      "Pearl White",
+      "Celadon Blue"
+    ],
+    "mg-hector:sharp-pro:turbo-petrol:6MT": [
+      "Starry Black",
+      "Glaze Red",
+      "Aurora Silver",
+      "Pearl White",
+      "Celadon Blue"
+    ],
+    "mg-hector:sharp-pro:turbo-petrol:CVT": [
+      "Starry Black",
+      "Glaze Red",
+      "Aurora Silver",
+      "Pearl White",
+      "Celadon Blue"
+    ],
+    "mg-hector:smart-pro:turbo-petrol:6MT": [
+      "Starry Black",
+      "Glaze Red",
+      "Aurora Silver",
+      "Pearl White",
+      "Celadon Blue"
+    ],
+    "mg-hector:smart-pro:turbo-petrol:CVT": [
+      "Starry Black",
+      "Glaze Red",
+      "Aurora Silver",
+      "Pearl White",
+      "Celadon Blue"
+    ],
+    "mg-hector:style:turbo-petrol:6MT": [
+      "Starry Black",
+      "Glaze Red",
+      "Aurora Silver",
+      "Pearl White",
+      "Celadon Blue"
+    ],
+    "mg-m9:presidential-limo:ev-90-fwd:1EV": [
+      "Concrete Grey with black roof",
+      "Pearl Lustre White with black roof",
+      "Metal Black"
+    ],
+    "mg-windsor-ev:essence-pro:ev-52-9:1EV": [
+      "Aurora Silver",
+      "Celadon Blue",
+      "Glaze Red",
+      "Turquoise Green",
+      "Starry Black",
+      "Pearl White"
+    ],
+    "mg-windsor-ev:essence:ev-38:1EV": [
+      "Turquoise Green",
+      "Starry Black",
+      "Pearl White",
+      "Clay Beige"
+    ],
+    "mg-windsor-ev:excite:ev-38:1EV": [
+      "Pearl White"
+    ],
+    "mg-windsor-ev:exclusive-pro:ev-52-9:1EV": [
+      "Aurora Silver",
+      "Celadon Blue",
+      "Glaze Red",
+      "Turquoise Green",
+      "Starry Black",
+      "Pearl White"
+    ],
+    "mg-windsor-ev:exclusive:ev-38:1EV": [
+      "Starry Black",
+      "Pearl White"
+    ],
+    "mg-zs-ev:essence:ev-50:1EV": [
+      "Candy White",
+      "Starry Black",
+      "Aurora Silver",
+      "Glaze Red"
+    ],
+    "mg-zs-ev:excite-pro:ev-50:1EV": [
+      "Candy White",
+      "Starry Black",
+      "Aurora Silver",
+      "Glaze Red"
+    ],
+    "mg-zs-ev:exclusive-plus:ev-50:1EV": [
+      "Candy White",
+      "Starry Black",
+      "Aurora Silver",
+      "Glaze Red"
+    ],
+    "mg-zs-ev:executive:ev-50:1EV": [
+      "Candy White",
+      "Starry Black",
+      "Aurora Silver"
+    ],
+    "nissan-gravite:acenta:b4d-10-petrol:5MT": [
+      "Metallic Grey",
+      "Onyx Black",
+      "Blade Silver",
+      "Storm White"
+    ],
+    "nissan-gravite:n-connecta:b4d-10-petrol:5AMT": [
+      "Forest Green",
+      "Metallic Grey",
+      "Onyx Black",
+      "Blade Silver",
+      "Storm White"
+    ],
+    "nissan-gravite:n-connecta:b4d-10-petrol:5MT": [
+      "Forest Green",
+      "Metallic Grey",
+      "Onyx Black",
+      "Blade Silver",
+      "Storm White"
+    ],
+    "nissan-gravite:tekna:b4d-10-petrol:5AMT": [
+      "Forest Green",
+      "Metallic Grey",
+      "Onyx Black",
+      "Blade Silver",
+      "Storm White"
+    ],
+    "nissan-gravite:tekna:b4d-10-petrol:5MT": [
+      "Forest Green",
+      "Metallic Grey",
+      "Onyx Black",
+      "Blade Silver",
+      "Storm White"
+    ],
+    "nissan-gravite:visia:b4d-10-petrol:5MT": [
+      "Blade Silver",
+      "Storm White"
+    ],
+    "nissan-magnite:acenta:b4d-10-petrol:5AMT": [
+      "Pearl White",
+      "Onyx Black",
+      "Flare Garnet Red",
+      "Blade Silver"
+    ],
+    "nissan-magnite:acenta:b4d-10-petrol:5MT": [
+      "Pearl White",
+      "Onyx Black",
+      "Flare Garnet Red",
+      "Blade Silver"
+    ],
+    "nissan-magnite:acenta:hra0-10-turbo:CVT": [
+      "Pearl White",
+      "Onyx Black",
+      "Flare Garnet Red",
+      "Blade Silver"
+    ],
+    "nissan-magnite:n-connecta:b4d-10-petrol:5AMT": [
+      "Pearl White",
+      "Onyx Black",
+      "Flare Garnet Red",
+      "Sunrise Copper Orange",
+      "Blade Silver",
+      "Blade Silver with Onyx black roof",
+      "Flare Garnet Red with Onyx black roof",
+      "Pearl White with Onyx black roof",
+      "Sunrise Copper Orange with Onyx black roof"
+    ],
+    "nissan-magnite:n-connecta:hra0-10-turbo:CVT": [
+      "Pearl White",
+      "Onyx Black",
+      "Flare Garnet Red",
+      "Sunrise Copper Orange",
+      "Blade Silver",
+      "Blade Silver with Onyx black roof",
+      "Flare Garnet Red with Onyx black roof",
+      "Pearl White with Onyx black roof",
+      "Sunrise Copper Orange with Onyx black roof"
+    ],
+    "nissan-magnite:tekna-plus:b4d-10-petrol:5AMT": [
+      "Metallic Grey",
+      "Pearl White",
+      "Onyx Black",
+      "Flare Garnet Red",
+      "Sunrise Copper Orange",
+      "Blade Silver",
+      "Blade Silver with Onyx black roof",
+      "Flare Garnet Red with Onyx black roof",
+      "Pearl White with Onyx black roof",
+      "Sunrise Copper Orange with Onyx black roof"
+    ],
+    "nissan-magnite:tekna-plus:hra0-10-turbo:CVT": [
+      "Metallic Grey",
+      "Pearl White",
+      "Onyx Black",
+      "Flare Garnet Red",
+      "Sunrise Copper Orange",
+      "Blade Silver",
+      "Blade Silver with Onyx black roof",
+      "Flare Garnet Red with Onyx black roof",
+      "Pearl White with Onyx black roof",
+      "Sunrise Copper Orange with Onyx black roof"
+    ],
+    "nissan-magnite:tekna:b4d-10-petrol:5AMT": [
+      "Metallic Grey",
+      "Pearl White",
+      "Onyx Black",
+      "Flare Garnet Red",
+      "Sunrise Copper Orange",
+      "Blade Silver",
+      "Blade Silver with Onyx black roof",
+      "Flare Garnet Red with Onyx black roof",
+      "Pearl White with Onyx black roof",
+      "Sunrise Copper Orange with Onyx black roof"
+    ],
+    "nissan-magnite:tekna:hra0-10-turbo:CVT": [
+      "Metallic Grey",
+      "Pearl White",
+      "Onyx Black",
+      "Flare Garnet Red",
+      "Sunrise Copper Orange",
+      "Blade Silver",
+      "Blade Silver with Onyx black roof",
+      "Flare Garnet Red with Onyx black roof",
+      "Pearl White with Onyx black roof",
+      "Sunrise Copper Orange with Onyx black roof"
+    ],
+    "nissan-magnite:visia-plus:b4d-10-petrol:5MT": [
+      "Pearl White",
+      "Onyx Black",
+      "Blade Silver"
+    ],
+    "nissan-magnite:visia:b4d-10-petrol:5AMT": [
+      "Blade Silver",
+      "Storm White"
+    ],
+    "nissan-magnite:visia:b4d-10-petrol:5MT": [
+      "Blade Silver",
+      "Storm White"
+    ],
+    "nissan-tekton:acenta:t160-turbo-petrol:6MT": [
+      "Flare Garnet Red",
+      "Blade Silver",
+      "Pearl White",
+      "Onyx Black"
+    ],
+    "nissan-tekton:acenta:t280-turbo-petrol:6DCA": [
+      "Flare Garnet Red",
+      "Blade Silver",
+      "Pearl White",
+      "Onyx Black"
+    ],
+    "nissan-tekton:n-connecta:t280-turbo-petrol:6DCA": [
+      "Indigo Blue",
+      "Flare Garnet Red",
+      "Blade Silver",
+      "Pearl White",
+      "Onyx Black"
+    ],
+    "nissan-tekton:tekna-plus:t160-turbo-petrol:6MT": [
+      "Moonbow Gray with Onyx Black",
+      "Blade Silver with Onyx Black",
+      "Indigo Blue with Onyx Black",
+      "Flare Garnet Red with Onyx Black",
+      "Pearl White with Onyx Black",
+      "Indigo Blue",
+      "Flare Garnet Red",
+      "Blade Silver",
+      "Pearl White",
+      "Onyx Black",
+      "Moonbow Gray"
+    ],
+    "nissan-tekton:tekna-plus:t280-turbo-petrol:6DCA": [
+      "Moonbow Gray with Onyx Black",
+      "Blade Silver with Onyx Black",
+      "Indigo Blue with Onyx Black",
+      "Flare Garnet Red with Onyx Black",
+      "Pearl White with Onyx Black",
+      "Indigo Blue",
+      "Flare Garnet Red",
+      "Blade Silver",
+      "Pearl White",
+      "Onyx Black",
+      "Moonbow Gray"
+    ],
+    "nissan-tekton:tekna:t280-turbo-petrol:6DCA": [
+      "Indigo Blue",
+      "Flare Garnet Red",
+      "Blade Silver",
+      "Pearl White",
+      "Onyx Black",
+      "Moonbow Gray"
+    ],
+    "nissan-tekton:visia-plus:t160-turbo-petrol:6MT": [
+      "Blade Silver",
+      "Pearl White",
+      "Onyx Black"
+    ],
+    "nissan-tekton:visia:t160-turbo-petrol:6MT": [
+      "Blade Silver",
+      "Pearl White",
+      "Onyx Black"
+    ],
+    "renault-duster:authentic:tce-100-petrol:6MT": [
+      "Moonlight Silver",
+      "Pearl White",
+      "Stealth Black"
+    ],
+    "renault-duster:evolution:tce-160-petrol:6DCA": [
+      "Moonlight Silver",
+      "Pearl White",
+      "Stealth Black"
+    ],
+    "renault-duster:iconic:tce-160-petrol:6DCA": [
+      "Mountain Jade Green",
+      "Moonlight Silver",
+      "Pearl White",
+      "River Blue",
+      "Sunset Red",
+      "Stealth Black",
+      "Pearl White with Stealth Black Roof",
+      "Sunset Red with Stealth Black Roof",
+      "River Blue with Stealth Black Roof",
+      "Mountain Jade Green with Stealth Black Roof"
+    ],
+    "renault-duster:iconic:tce-160-petrol:6MT": [
+      "Mountain Jade Green",
+      "Moonlight Silver",
+      "Pearl White",
+      "River Blue",
+      "Sunset Red",
+      "Stealth Black",
+      "Pearl White with Stealth Black Roof",
+      "Sunset Red with Stealth Black Roof",
+      "River Blue with Stealth Black Roof",
+      "Mountain Jade Green with Stealth Black Roof"
+    ],
+    "renault-duster:techno-plus:tce-160-petrol:6DCA": [
+      "Moonlight Silver",
+      "Pearl White",
+      "River Blue",
+      "Sunset Red",
+      "Stealth Black",
+      "Mountain Jade Green",
+      "Pearl White with Stealth Black Roof",
+      "Sunset Red with Stealth Black Roof",
+      "River Blue with Stealth Black Roof",
+      "Mountain Jade Green with Stealth Black Roof"
+    ],
+    "renault-duster:techno-plus:tce-160-petrol:6MT": [
+      "Moonlight Silver",
+      "Pearl White",
+      "River Blue",
+      "Sunset Red",
+      "Stealth Black",
+      "Mountain Jade Green",
+      "Pearl White with Stealth Black Roof",
+      "Sunset Red with Stealth Black Roof",
+      "River Blue with Stealth Black Roof",
+      "Mountain Jade Green with Stealth Black Roof"
+    ],
+    "renault-kiger:authentic:energy-10-petrol:5MT": [
+      "Stealth Black",
+      "Moonlight Silver",
+      "Ice Cool White"
+    ],
+    "renault-kiger:emotion:turbo-10-petrol:CVT": [
+      "Shadow Grey",
+      "Caspian Blue",
+      "Oasis Yellow",
+      "Stealth Black",
+      "Moonlight Silver",
+      "Ice Cool White",
+      "Radiant Red with Mystery Black roof",
+      "Ice Cool White with Black roof",
+      "Shadow Grey with Mystery Black roof",
+      "Oasis Yellow with Mystery Black roof"
+    ],
+    "renault-kiger:evolution-plus:energy-10-petrol:5AMT": [
+      "Shadow Grey",
+      "Stealth Black",
+      "Moonlight Silver",
+      "Ice Cool White"
+    ],
+    "renault-kiger:evolution:energy-10-petrol:5AMT": [
+      "Shadow Grey",
+      "Stealth Black",
+      "Moonlight Silver",
+      "Ice Cool White"
+    ],
+    "renault-kiger:evolution:energy-10-petrol:5MT": [
+      "Shadow Grey",
+      "Stealth Black",
+      "Moonlight Silver",
+      "Ice Cool White"
+    ],
+    "renault-kiger:techno:energy-10-petrol:5AMT": [
+      "Shadow Grey",
+      "Caspian Blue",
+      "Oasis Yellow",
+      "Stealth Black",
+      "Moonlight Silver",
+      "Ice Cool White",
+      "Radiant Red with Mystery Black roof",
+      "Ice Cool White with Black roof",
+      "Shadow Grey with Mystery Black roof",
+      "Oasis Yellow with Mystery Black roof"
+    ],
+    "renault-kiger:techno:turbo-10-petrol:CVT": [
+      "Shadow Grey",
+      "Caspian Blue",
+      "Oasis Yellow",
+      "Stealth Black",
+      "Moonlight Silver",
+      "Ice Cool White",
+      "Radiant Red with Mystery Black roof",
+      "Ice Cool White with Black roof",
+      "Shadow Grey with Mystery Black roof",
+      "Oasis Yellow with Mystery Black roof"
+    ],
+    "renault-kwid:climber:energy-10-petrol:5AMT": [
+      "Zanskar Blue with Mystery Black Roof",
+      "Moonlight Silver with Mystery Black Roof",
+      "Ice Cool White with Mystery Black Roof",
+      "Fiery Red with Mystery Black Roof"
+    ],
+    "renault-kwid:climber:energy-10-petrol:5MT": [
+      "Zanskar Blue with Mystery Black Roof",
+      "Moonlight Silver with Mystery Black Roof",
+      "Ice Cool White with Mystery Black Roof",
+      "Fiery Red with Mystery Black Roof"
+    ],
+    "renault-kwid:evolution:energy-10-petrol:5AMT": [
+      "Zanskar Blue",
+      "Outback Bronze",
+      "Moonlight Silver",
+      "Fiery Red",
+      "Ice Cool White"
+    ],
+    "renault-kwid:evolution:energy-10-petrol:5MT": [
+      "Zanskar Blue",
+      "Outback Bronze",
+      "Moonlight Silver",
+      "Fiery Red",
+      "Ice Cool White"
+    ],
+    "renault-triber:authentic:energy-10-petrol:5MT": [
+      "Ice Cool White",
+      "Stealth Black",
+      "Moonlight Silver"
+    ],
+    "renault-triber:emotion:energy-10-petrol:5AMT": [
+      "Ice Cool White",
+      "Stealth Black",
+      "Amber Terracotta",
+      "Moonlight Silver",
+      "Shadow Grey",
+      "Zanskar Blue",
+      "Ice Cool White with Black roof",
+      "Shadow Grey with Mystery Black roof",
+      "Amber Terracotta with Black roof"
+    ],
+    "skoda-kodiaq:lounge:petrol-20-tsi-4x4:7DCA": [
+      "Graphite Grey Metallic",
+      "Race Blue Metallic",
+      "Bronx Gold Metallic",
+      "Magic Black Metallic",
+      "Moon White Metallic"
+    ],
+    "skoda-kodiaq:selection-lk:petrol-20-tsi-4x4:7DCA": [
+      "Graphite Grey Metallic",
+      "Race Blue Metallic",
+      "Bronx Gold Metallic",
+      "Magic Black Metallic",
+      "Moon White Metallic"
+    ],
+    "skoda-kodiaq:sportline:petrol-20-tsi-4x4:7DCA": [
+      "Graphite Grey Metallic",
+      "Race Blue Metallic",
+      "Bronx Gold Metallic",
+      "Magic Black Metallic",
+      "Moon White Metallic"
+    ],
+    "skoda-kushaq:classic-plus:petrol-10-tsi:6MT": [
+      "Lava Blue",
+      "Carbon Steel",
+      "Brilliant Silver",
+      "Cherry Red",
+      "Candy White"
+    ],
+    "skoda-kushaq:classic-plus:petrol-10-tsi:8AT": [
+      "Lava Blue",
+      "Carbon Steel",
+      "Brilliant Silver",
+      "Cherry Red",
+      "Candy White"
+    ],
+    "skoda-kushaq:monte-carlo:petrol-10-tsi:8AT": [
+      "Candy White with Black Roof",
+      "Brilliant Silver with Black Roof",
+      "Steel Grey with Black Roof",
+      "Cherry Red with Black Roof",
+      "Shimla Green with Black Roof",
+      "Lava Blue",
+      "Deep Black"
+    ],
+    "skoda-kushaq:monte-carlo:petrol-15-tsi:7DCA": [
+      "Candy White with Black Roof",
+      "Brilliant Silver with Black Roof",
+      "Steel Grey with Black Roof",
+      "Cherry Red with Black Roof",
+      "Shimla Green with Black Roof",
+      "Lava Blue",
+      "Deep Black"
+    ],
+    "skoda-kushaq:prestige:petrol-10-tsi:6MT": [
+      "Steel Grey",
+      "Shimla Green",
+      "Lava Blue",
+      "Carbon Steel",
+      "Brilliant Silver",
+      "Deep Black",
+      "Cherry Red",
+      "Candy White"
+    ],
+    "skoda-kushaq:prestige:petrol-10-tsi:8AT": [
+      "Steel Grey",
+      "Shimla Green",
+      "Lava Blue",
+      "Carbon Steel",
+      "Brilliant Silver",
+      "Deep Black",
+      "Cherry Red",
+      "Candy White"
+    ],
+    "skoda-kushaq:prestige:petrol-15-tsi:7DCA": [
+      "Steel Grey",
+      "Shimla Green",
+      "Lava Blue",
+      "Carbon Steel",
+      "Brilliant Silver",
+      "Deep Black",
+      "Cherry Red",
+      "Candy White"
+    ],
+    "skoda-kushaq:signature:petrol-10-tsi:6MT": [
+      "Lava Blue",
+      "Carbon Steel",
+      "Brilliant Silver",
+      "Deep Black",
+      "Cherry Red",
+      "Candy White"
+    ],
+    "skoda-kushaq:signature:petrol-10-tsi:8AT": [
+      "Lava Blue",
+      "Carbon Steel",
+      "Brilliant Silver",
+      "Deep Black",
+      "Cherry Red",
+      "Candy White"
+    ],
+    "skoda-kushaq:sportline:petrol-10-tsi:6MT": [
+      "Steel Grey",
+      "Shimla Green",
+      "Lava Blue",
+      "Carbon Steel",
+      "Brilliant Silver",
+      "Deep Black",
+      "Cherry Red",
+      "Candy White"
+    ],
+    "skoda-kushaq:sportline:petrol-10-tsi:8AT": [
+      "Steel Grey",
+      "Shimla Green",
+      "Lava Blue",
+      "Carbon Steel",
+      "Brilliant Silver",
+      "Deep Black",
+      "Cherry Red",
+      "Candy White"
+    ],
+    "skoda-kylaq:classic-plus:petrol-10-tsi:6AT": [
+      "Cherry Red",
+      "Deep Black",
+      "Lava Blue",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:classic-plus:petrol-10-tsi:6MT": [
+      "Cherry Red",
+      "Deep Black",
+      "Lava Blue",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:classic:petrol-10-tsi:6MT": [
+      "Cherry Red",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:prestige-plus:petrol-10-tsi:6AT": [
+      "Cherry Red",
+      "Deep Black",
+      "Lava Blue",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:prestige-plus:petrol-10-tsi:6MT": [
+      "Cherry Red",
+      "Deep Black",
+      "Lava Blue",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:prestige:petrol-10-tsi:6AT": [
+      "Cherry Red",
+      "Deep Black",
+      "Lava Blue",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:prestige:petrol-10-tsi:6MT": [
+      "Cherry Red",
+      "Deep Black",
+      "Lava Blue",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:signature-plus:petrol-10-tsi:6AT": [
+      "Cherry Red",
+      "Deep Black",
+      "Lava Blue",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:signature-plus:petrol-10-tsi:6MT": [
+      "Cherry Red",
+      "Deep Black",
+      "Lava Blue",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:signature:petrol-10-tsi:6AT": [
+      "Cherry Red",
+      "Deep Black",
+      "Lava Blue",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:signature:petrol-10-tsi:6MT": [
+      "Cherry Red",
+      "Deep Black",
+      "Lava Blue",
+      "Candy White",
+      "Brilliant Silver",
+      "Carbon Steel"
+    ],
+    "skoda-kylaq:sportline:petrol-10-tsi:6AT": [
+      "Deep Black",
+      "Candy White"
+    ],
+    "skoda-kylaq:sportline:petrol-10-tsi:6MT": [
+      "Deep Black",
+      "Candy White"
+    ],
+    "skoda-slavia:classic:petrol-10-tsi:6MT": [
+      "Cherry Red",
+      "Carbon Steel",
+      "Candy White",
+      "Brilliant Silver",
+      "Lava Blue"
+    ],
+    "skoda-slavia:prestige:petrol-10-tsi:6AT": [
+      "Deep Black",
+      "Cherry Red",
+      "Lava Blue",
+      "Steel Grey",
+      "Carbon Steel",
+      "Candy White",
+      "Brilliant Silver",
+      "Shimla Green",
+      "Cappuccino Beige",
+      "Arctic Silver"
+    ],
+    "skoda-slavia:prestige:petrol-10-tsi:6MT": [
+      "Deep Black",
+      "Cherry Red",
+      "Lava Blue",
+      "Steel Grey",
+      "Carbon Steel",
+      "Candy White",
+      "Brilliant Silver",
+      "Shimla Green",
+      "Cappuccino Beige",
+      "Arctic Silver"
+    ],
+    "skoda-slavia:prestige:petrol-15-tsi:7DCA": [
+      "Deep Black",
+      "Cherry Red",
+      "Lava Blue",
+      "Steel Grey",
+      "Carbon Steel",
+      "Candy White",
+      "Brilliant Silver",
+      "Shimla Green",
+      "Cappuccino Beige",
+      "Arctic Silver"
+    ],
+    "skoda-slavia:signature:petrol-10-tsi:6AT": [
+      "Deep Black",
+      "Cherry Red",
+      "Lava Blue",
+      "Carbon Steel",
+      "Candy White",
+      "Brilliant Silver",
+      "Cappuccino Beige",
+      "Arctic Silver"
+    ],
+    "skoda-slavia:signature:petrol-10-tsi:6MT": [
+      "Deep Black",
+      "Cherry Red",
+      "Lava Blue",
+      "Carbon Steel",
+      "Candy White",
+      "Brilliant Silver",
+      "Cappuccino Beige",
+      "Arctic Silver"
+    ],
+    "tata-aeris:accomplished:cng:5AMT": [
+      "Pristine White with Black Roof",
+      "Pure Grey with Black Roof",
+      "Nitro Crimson with Black Roof",
+      "Dune Glow with Black Roof",
+      "Dandeli Drizzle with Black Roof",
+      "Daytona Grey with Black Roof"
+    ],
+    "tata-aeris:accomplished:cng:5MT": [
+      "Pristine White with Black Roof",
+      "Pure Grey with Black Roof",
+      "Nitro Crimson with Black Roof",
+      "Dune Glow with Black Roof",
+      "Dandeli Drizzle with Black Roof",
+      "Daytona Grey with Black Roof"
+    ],
+    "tata-aeris:accomplished:petrol:5AMT": [
+      "Pristine White with Black Roof",
+      "Pure Grey with Black Roof",
+      "Nitro Crimson with Black Roof",
+      "Dune Glow with Black Roof",
+      "Dandeli Drizzle with Black Roof",
+      "Daytona Grey with Black Roof"
+    ],
+    "tata-aeris:accomplished:petrol:5MT": [
+      "Pristine White with Black Roof",
+      "Pure Grey with Black Roof",
+      "Nitro Crimson with Black Roof",
+      "Dune Glow with Black Roof",
+      "Dandeli Drizzle with Black Roof",
+      "Daytona Grey with Black Roof"
+    ],
+    "tata-aeris:creative:cng:5AMT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:creative:cng:5MT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:creative:petrol:5AMT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:creative:petrol:5MT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:pure-plus:cng:5AMT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:pure-plus:cng:5MT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:pure-plus:petrol:5AMT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:pure-plus:petrol:5MT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:pure:cng:5AMT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:pure:cng:5MT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:pure:petrol:5AMT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:pure:petrol:5MT": [
+      "Pristine White",
+      "Nitro Crimson",
+      "Pure Grey",
+      "Dune Glow",
+      "Daytona Grey",
+      "Dandeli Drizzle"
+    ],
+    "tata-aeris:smart:cng:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Daytona Grey"
+    ],
+    "tata-aeris:smart:petrol:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Daytona Grey"
+    ],
+    "tata-altroz:accomplished-plus-s:petrol:6DCA": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:accomplished-s:cng:5AMT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:accomplished-s:cng:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:accomplished-s:diesel:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:accomplished-s:petrol:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:accomplished-s:petrol:6DCA": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:creative-s:cng:5AMT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:creative-s:cng:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:creative-s:diesel:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:creative-s:petrol:5AMT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:creative-s:petrol:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:creative-s:petrol:6DCA": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:creative:cng:5AMT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:creative:cng:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:creative:petrol:5AMT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:creative:petrol:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:pure-s:cng:5AMT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:pure-s:cng:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:pure-s:petrol:5AMT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:pure-s:petrol:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:pure:cng:5AMT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:pure:cng:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:pure:diesel:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:pure:petrol:5AMT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:pure:petrol:5MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Royal Blue",
+      "Ember Glow",
+      "Dune Glow"
+    ],
+    "tata-altroz:smart:cng:5MT": [
+      "Pristine White",
+      "Royal Blue"
+    ],
+    "tata-altroz:smart:petrol:5MT": [
+      "Pristine White",
+      "Royal Blue"
+    ],
+    "tata-curvv-ev:accomplished:ev-55:1EV": [
+      "Empowered Oxide",
+      "Pristine White",
+      "Pure Grey"
+    ],
+    "tata-curvv-ev:empowered:ev-55:1EV": [
+      "Empowered Oxide",
+      "Pristine White",
+      "Pure Grey",
+      "Virtual Sunrise"
+    ],
+    "tata-curvv:accomplished-plus:diesel:7DCA": [
+      "Nitro Crimson With Black Roof",
+      "Opera Blue",
+      "Daytona Grey",
+      "Pristine White",
+      "Flame Red",
+      "Carbon Black"
+    ],
+    "tata-curvv:accomplished-plus:petrol-gdi:7DCA": [
+      "Nitro Crimson With Black Roof",
+      "Opera Blue",
+      "Daytona Grey",
+      "Pristine White",
+      "Flame Red",
+      "Carbon Black"
+    ],
+    "tata-curvv:accomplished:diesel:6MT": [
+      "Nitro Crimson With Black Roof",
+      "Opera Blue",
+      "Daytona Grey",
+      "Pristine White",
+      "Flame Red",
+      "Carbon Black"
+    ],
+    "tata-curvv:accomplished:petrol-gdi:7DCA": [
+      "Nitro Crimson With Black Roof",
+      "Opera Blue",
+      "Daytona Grey",
+      "Pristine White",
+      "Flame Red",
+      "Carbon Black"
+    ],
+    "tata-curvv:creative:diesel:6MT": [
+      "Nitro Crimson With Black Roof",
+      "Opera Blue",
+      "Daytona Grey",
+      "Pristine White",
+      "Flame Red",
+      "Carbon Black"
+    ],
+    "tata-curvv:creative:petrol-revotron:6MT": [
+      "Nitro Crimson With Black Roof",
+      "Opera Blue",
+      "Daytona Grey",
+      "Pristine White",
+      "Flame Red",
+      "Carbon Black"
+    ],
+    "tata-curvv:creative:petrol-revotron:7DCA": [
+      "Nitro Crimson With Black Roof",
+      "Opera Blue",
+      "Daytona Grey",
+      "Pristine White",
+      "Flame Red",
+      "Carbon Black"
+    ],
+    "tata-curvv:pure-plus:diesel:6MT": [
+      "Opera Blue",
+      "Daytona Grey",
+      "Pristine White",
+      "Flame Red",
+      "Carbon Black"
+    ],
+    "tata-curvv:pure-plus:petrol-revotron:6MT": [
+      "Opera Blue",
+      "Daytona Grey",
+      "Pristine White",
+      "Flame Red",
+      "Carbon Black"
+    ],
+    "tata-curvv:pure-plus:petrol-revotron:7DCA": [
+      "Nitro Crimson With Black Roof",
+      "Opera Blue",
+      "Daytona Grey",
+      "Pristine White",
+      "Flame Red",
+      "Carbon Black"
+    ],
+    "tata-curvv:smart:petrol-revotron:6MT": [
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-harrier-ev:adventure-s:ev-65-rwd:1EV": [
+      "Seaweed Green With Dual Tone",
+      "Pristine White With Dual Tone",
+      "Pure Grey With Dual Tone"
+    ],
+    "tata-harrier-ev:adventure:ev-65-rwd:1EV": [
+      "Seaweed Green With Dual Tone",
+      "Pristine White With Dual Tone",
+      "Pure Grey With Dual Tone"
+    ],
+    "tata-harrier:adventure-x-plus:petrol-gdi:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Fearless Red",
+      "Daytona Grey",
+      "Seaweed Green",
+      "Carbon Black"
+    ],
+    "tata-harrier:adventure-x:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Fearless Red",
+      "Daytona Grey",
+      "Seaweed Green",
+      "Carbon Black"
+    ],
+    "tata-harrier:adventure-x:petrol-gdi:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Fearless Red",
+      "Daytona Grey",
+      "Seaweed Green",
+      "Carbon Black"
+    ],
+    "tata-harrier:fearless-ultra:diesel:6AT": [
+      "Nitro Crimson With Dual Tone",
+      "Carbon Black"
+    ],
+    "tata-harrier:fearless-x-plus:petrol-gdi:6MT": [
+      "Seaweed Green With Dual Tone",
+      "Pure Grey With Dual Tone",
+      "Pristine White With Dual Tone",
+      "Fearless Red With Dual Tone",
+      "Daytona Grey With Dual Tone",
+      "Sunlit Yellow With Dual Tone",
+      "Carbon Black"
+    ],
+    "tata-harrier:fearless-x:petrol-gdi:6MT": [
+      "Seaweed Green With Dual Tone",
+      "Pure Grey With Dual Tone",
+      "Pristine White With Dual Tone",
+      "Fearless Red With Dual Tone",
+      "Daytona Grey With Dual Tone",
+      "Carbon Black"
+    ],
+    "tata-harrier:pure-x:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Fearless Red",
+      "Daytona Grey",
+      "Carbon Black"
+    ],
+    "tata-harrier:pure-x:petrol-gdi:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Fearless Red",
+      "Daytona Grey",
+      "Carbon Black"
+    ],
+    "tata-harrier:pure-x:petrol-gdi:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Fearless Red",
+      "Daytona Grey",
+      "Carbon Black"
+    ],
+    "tata-harrier:smart:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Fearless Red",
+      "Daytona Grey"
+    ],
+    "tata-harrier:smart:petrol-gdi:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Fearless Red",
+      "Daytona Grey"
+    ],
+    "tata-nexon-ev:empowered-plus:ev-lr:1EV": [
+      "Oxide With Black Roof",
+      "Daytona Grey With Black Roof",
+      "Pure Grey  With Black Roof",
+      "Ocean Blue With Black Roof",
+      "Pristine White With Black Roof",
+      "Carbon Black"
+    ],
+    "tata-nexon-ev:empowered:ev-lr:1EV": [
+      "Oxide With Black Roof",
+      "Daytona Grey With Black Roof",
+      "Pure Grey  With Black Roof",
+      "Ocean Blue With Black Roof",
+      "Pristine White With Black Roof"
+    ],
+    "tata-nexon:creative-plus:diesel:6MT": [
+      "Ocean Blue",
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey",
+      "Carbon Black",
+      "Ocean Blue with White Roof",
+      "Royal Blue with Black roof",
+      "Pure Grey with Black roof",
+      "Grassland Beige with Black roof",
+      "Daytona Grey with Black Roof",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-nexon:creative-plus:petrol-turbo:5MT": [
+      "Ocean Blue",
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey",
+      "Carbon Black",
+      "Ocean Blue with White Roof",
+      "Royal Blue with Black roof",
+      "Pure Grey with Black roof",
+      "Grassland Beige with Black roof",
+      "Daytona Grey with Black Roof",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-nexon:creative-plus:petrol-turbo:7DCA": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey",
+      "Carbon Black",
+      "Royal Blue with Black roof",
+      "Pure Grey with Black roof",
+      "Grassland Beige with Black roof",
+      "Daytona Grey with Black Roof",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-nexon:creative:cng:6MT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-nexon:creative:diesel:6AMT": [
+      "Ocean Blue",
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-nexon:creative:diesel:6MT": [
+      "Ocean Blue",
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-nexon:creative:petrol-turbo:5MT": [
+      "Ocean Blue",
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-nexon:creative:petrol-turbo:6AMT": [
+      "Ocean Blue",
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-nexon:creative:petrol-turbo:7DCA": [
+      "Ocean Blue",
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-nexon:fearless-plus-ps:petrol-turbo:7DCA": [
+      "Carbon Black"
+    ],
+    "tata-nexon:fearless-plus:petrol-turbo:7DCA": [
+      "Ocean Blue with White Roof",
+      "Royal Blue with Black roof",
+      "Pure Grey with Black roof",
+      "Grassland Beige with Black roof",
+      "Daytona Grey with Black Roof",
+      "Carbon Black",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-nexon:pure-plus:cng:6MT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey"
+    ],
+    "tata-nexon:pure-plus:diesel:6AMT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey"
+    ],
+    "tata-nexon:pure-plus:diesel:6MT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey"
+    ],
+    "tata-nexon:pure-plus:petrol-turbo:5MT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey"
+    ],
+    "tata-nexon:pure-plus:petrol-turbo:6AMT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey",
+      "Pure Grey"
+    ],
+    "tata-nexon:smart-plus:cng:6MT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey"
+    ],
+    "tata-nexon:smart-plus:diesel:6MT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey"
+    ],
+    "tata-nexon:smart-plus:petrol-turbo:5MT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey"
+    ],
+    "tata-nexon:smart-plus:petrol-turbo:6AMT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey"
+    ],
+    "tata-nexon:smart:cng:6MT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey"
+    ],
+    "tata-nexon:smart:petrol-turbo:5MT": [
+      "Royal Blue",
+      "Grassland Beige",
+      "Pristine White",
+      "Daytona Grey"
+    ],
+    "tata-punch-ev:adventure:lr-40:1EV": [
+      "Pure Grey",
+      "Pristine White",
+      "Caramel",
+      "Bengal Rouge",
+      "Supernova Copper"
+    ],
+    "tata-punch-ev:empowered-plus-s:lr-40:1EV": [
+      "Pristine White With Dual Tone",
+      "Supernova Copper With Dual Tone",
+      "Caramel With Dual Tone",
+      "Bengal Rouge With Dual Tone",
+      "Pure Grey With Dual Tone",
+      "Oxide With Dual Tone",
+      "Fearless Yellow With Dual Tone"
+    ],
+    "tata-punch-ev:empowered:lr-40:1EV": [
+      "Pristine White With Dual Tone",
+      "Supernova Copper With Dual Tone",
+      "Caramel With Dual Tone",
+      "Bengal Rouge With Dual Tone",
+      "Pure Grey With Dual Tone",
+      "Oxide With Dual Tone",
+      "Fearless Yellow With Dual Tone"
+    ],
+    "tata-punch-ev:smart:sr-30:1EV": [
+      "Pure Grey",
+      "Pristine White",
+      "Bengal Rouge",
+      "Supernova Copper"
+    ],
+    "tata-punch:accomplished-plus-s:cng:5AMT": [
+      "Cyantafic Blue  With White roof",
+      "Bengal Rouge  With White roof",
+      "Caramel With Black roof",
+      "Coorg Clouds With Black roof",
+      "Daytona Grey With Black roof",
+      "Pristine White With Black roof"
+    ],
+    "tata-punch:accomplished-plus-s:petrol-turbo:6MT": [
+      "Cyantafic Blue  With White roof",
+      "Bengal Rouge  With White roof",
+      "Caramel With Black roof",
+      "Coorg Clouds With Black roof",
+      "Daytona Grey With Black roof",
+      "Pristine White With Black roof"
+    ],
+    "tata-punch:accomplished-plus-s:petrol:5AMT": [
+      "Cyantafic Blue  With White roof",
+      "Bengal Rouge  With White roof",
+      "Caramel With Black roof",
+      "Coorg Clouds With Black roof",
+      "Daytona Grey With Black roof",
+      "Pristine White With Black roof"
+    ],
+    "tata-punch:accomplished-plus-s:petrol:5MT": [
+      "Cyantafic Blue  With White roof",
+      "Bengal Rouge  With White roof",
+      "Caramel With Black roof",
+      "Coorg Clouds With Black roof",
+      "Daytona Grey With Black roof",
+      "Pristine White With Black roof"
+    ],
+    "tata-punch:accomplished:cng:5MT": [
+      "Cyantafic Blue  With White roof",
+      "Bengal Rouge  With White roof",
+      "Caramel With Black roof",
+      "Coorg Clouds With Black roof",
+      "Daytona Grey With Black roof",
+      "Pristine White With Black roof"
+    ],
+    "tata-punch:accomplished:petrol:5AMT": [
+      "Cyantafic Blue  With White roof",
+      "Bengal Rouge  With White roof",
+      "Caramel With Black roof",
+      "Coorg Clouds With Black roof",
+      "Daytona Grey With Black roof",
+      "Pristine White With Black roof"
+    ],
+    "tata-punch:accomplished:petrol:5MT": [
+      "Cyantafic Blue  With White roof",
+      "Bengal Rouge  With White roof",
+      "Caramel With Black roof",
+      "Coorg Clouds With Black roof",
+      "Daytona Grey With Black roof",
+      "Pristine White With Black roof"
+    ],
+    "tata-punch:adventure-s:cng:5AMT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:adventure-s:cng:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:adventure-s:petrol:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:adventure:cng:5AMT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:adventure:cng:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:adventure:petrol-turbo:6MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:adventure:petrol:5AMT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:adventure:petrol:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:pure-plus-s:cng:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:pure-plus-s:petrol:5AMT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:pure-plus-s:petrol:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:pure-plus:cng:5AMT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:pure-plus:cng:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:pure-plus:petrol:5AMT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:pure-plus:petrol:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:pure:cng:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:pure:petrol:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:smart:cng:5MT": [
+      "Caramel",
+      "Cyantafic Blue",
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-punch:smart:petrol:5MT": [
+      "Coorg Clouds",
+      "Daytona Grey",
+      "Bengal Rouge",
+      "Pristine White"
+    ],
+    "tata-safari:accomplished-ultra:diesel:6AT": [
+      "Carbon Black",
+      "Frost White With Dual Tone"
+    ],
+    "tata-safari:accomplished-ultra:petrol-gdi:6AT": [
+      "Frost White With Dual Tone",
+      "Carbon Black"
+    ],
+    "tata-safari:accomplished-x-plus:diesel:6AT": [
+      "Supernova Copper With Dual Tone",
+      "Daytona Grey With Dual Tone",
+      "Cosmic Gold With Dual Tone",
+      "Royal Blue With Dual Tone",
+      "Frost White With Dual Tone",
+      "Pure Grey With Dual Tone",
+      "Carbon Black",
+      "Stealth Black"
+    ],
+    "tata-safari:accomplished-x:petrol-gdi:6MT": [
+      "Supernova Copper With Dual Tone",
+      "Daytona Grey With Dual Tone",
+      "Cosmic Gold With Dual Tone",
+      "Royal Blue With Dual Tone",
+      "Frost White With Dual Tone",
+      "Pure Grey With Dual Tone",
+      "Carbon Black"
+    ],
+    "tata-safari:adventure-x-plus:diesel:6AT": [
+      "Carbon Black",
+      "Daytona Grey",
+      "Pure Grey",
+      "Royal Blue",
+      "Frost White",
+      "Supernova Copper",
+      "Cosmic Gold"
+    ],
+    "tata-safari:adventure-x-plus:diesel:6MT": [
+      "Carbon Black",
+      "Daytona Grey",
+      "Pure Grey",
+      "Royal Blue",
+      "Frost White",
+      "Supernova Copper",
+      "Cosmic Gold"
+    ],
+    "tata-safari:adventure-x-plus:petrol-gdi:6AT": [
+      "Daytona Grey",
+      "Pure Grey",
+      "Royal Blue",
+      "Frost White",
+      "Supernova Copper",
+      "Cosmic Gold",
+      "Carbon Black"
+    ],
+    "tata-safari:adventure-x-plus:petrol-gdi:6MT": [
+      "Daytona Grey",
+      "Pure Grey",
+      "Royal Blue",
+      "Frost White",
+      "Supernova Copper",
+      "Cosmic Gold",
+      "Carbon Black"
+    ],
+    "tata-safari:pure-x:diesel:6AT": [
+      "Daytona Grey",
+      "Pure Grey",
+      "Royal Blue",
+      "Frost White",
+      "Carbon Black"
+    ],
+    "tata-safari:pure-x:diesel:6MT": [
+      "Daytona Grey",
+      "Pure Grey",
+      "Royal Blue",
+      "Frost White",
+      "Carbon Black"
+    ],
+    "tata-safari:pure-x:petrol-gdi:6AT": [
+      "Daytona Grey",
+      "Pure Grey",
+      "Royal Blue",
+      "Frost White",
+      "Carbon Black"
+    ],
+    "tata-safari:pure-x:petrol-gdi:6MT": [
+      "Daytona Grey",
+      "Pure Grey",
+      "Royal Blue",
+      "Frost White",
+      "Carbon Black"
+    ],
+    "tata-safari:smart:diesel:6MT": [
+      "Daytona Grey",
+      "Pure Grey",
+      "Royal Blue",
+      "Frost White"
+    ],
+    "tata-safari:smart:petrol-gdi:6MT": [
+      "Daytona Grey",
+      "Pure Grey",
+      "Royal Blue",
+      "Frost White"
+    ],
+    "tata-sierra-ev:pure-s:ev-63-rwd:1EV": [
+      "Pure Grey",
+      "Coorg Cloud",
+      "Pristine White"
+    ],
+    "tata-sierra-ev:pure:ev-63-rwd:1EV": [
+      "Pure Grey",
+      "Coorg Cloud",
+      "Pristine White"
+    ],
+    "tata-sierra:accomplished-plus:diesel:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:accomplished-plus:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:accomplished-plus:turbo-petrol:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:accomplished:diesel:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:accomplished:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:accomplished:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:accomplished:turbo-petrol:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:adventure-plus-legend:diesel:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:adventure-plus-legend:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:adventure-plus-legend:turbo-petrol:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:adventure-plus:diesel:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:adventure-plus:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:adventure-plus:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:adventure-plus:turbo-petrol:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Andaman Adventure",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:adventure:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:adventure:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:adventure:na-petrol:7DCA": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure-legend-o:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure-legend:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure-plus-legend:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure-plus-legend:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure-plus-legend:na-petrol:7DCA": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure-plus:diesel:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure-plus:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure-plus:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure-plus:na-petrol:7DCA": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Bengal Rouge",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure:diesel:6AT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:pure:na-petrol:7DCA": [
+      "Pristine White",
+      "Pure Grey",
+      "Munnar Mist",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:smart-plus-legend:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:smart-plus-legend:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:smart-plus:diesel:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Coorg Cloud"
+    ],
+    "tata-sierra:smart-plus:na-petrol:6MT": [
+      "Pristine White",
+      "Pure Grey",
+      "Coorg Cloud"
+    ],
+    "tata-tiago-ev:creative-plus:lr-24:1EV": [
+      "Pristine White with Black roof",
+      "Daytona Grey with Black roof",
+      "Pure Grey with Black roof",
+      "Sobo Surge with Black roof",
+      "Dehradun Dew with Black roof",
+      "Pangong Pulse with Black roof"
+    ],
+    "tata-tiago-ev:smart:mr-19:1EV": [
+      "Pure Grey",
+      "Pangong Pulse",
+      "Pristine White",
+      "Daytona Grey"
+    ],
+    "tata-tiago:creative-plus:petrol:5AMT": [
+      "Pure Grey With Black roof",
+      "Varanasi Vibrance With Black roof",
+      "Pangong Pulse With Black roof",
+      "Sobo Surge With Black roof",
+      "Daytona Grey With Black roof",
+      "Pristine White With Black roof"
+    ],
+    "tata-tiago:creative-plus:petrol:5MT": [
+      "Pure Grey With Black roof",
+      "Varanasi Vibrance With Black roof",
+      "Pangong Pulse With Black roof",
+      "Sobo Surge With Black roof",
+      "Daytona Grey With Black roof",
+      "Pristine White With Black roof"
+    ],
+    "tata-tiago:creative:cng:5AMT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:creative:cng:5MT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:creative:petrol:5AMT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:creative:petrol:5MT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure-plus-a:cng:5AMT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure-plus-a:cng:5MT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure-plus-a:petrol:5AMT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure-plus-a:petrol:5MT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure-plus:cng:5AMT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure-plus:cng:5MT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure-plus:petrol:5AMT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure-plus:petrol:5MT": [
+      "Pure Grey",
+      "Varanasi Vibrance",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure:cng:5AMT": [
+      "Pure Grey",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure:cng:5MT": [
+      "Pure Grey",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure:petrol:5AMT": [
+      "Pure Grey",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:pure:petrol:5MT": [
+      "Pure Grey",
+      "Pangong Pulse",
+      "Sobo Surge",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:smart:cng:5MT": [
+      "Pure Grey",
+      "Pangong Pulse",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tiago:smart:petrol:5MT": [
+      "Pure Grey",
+      "Pangong Pulse",
+      "Daytona Grey",
+      "Pristine White"
+    ],
+    "tata-tigor-ev:xe:ziptron-26:1EV": [
+      "Daytona Grey",
+      "Signature Teal Blue",
+      "Magnetic Red"
+    ],
+    "tata-tigor-ev:xt:ziptron-26:1EV": [
+      "Daytona Grey",
+      "Signature Teal Blue",
+      "Magnetic Red"
+    ],
+    "tata-tigor-ev:xz-plus-lux:ziptron-26:1EV": [
+      "Daytona Grey",
+      "Signature Teal Blue",
+      "Magnetic Red"
+    ],
+    "tata-tigor-ev:xz-plus:ziptron-26:1EV": [
+      "Daytona Grey",
+      "Signature Teal Blue",
+      "Magnetic Red"
+    ],
+    "tesla-model-y:premium:ev-rwd:1EV": [
+      "Ultra Red",
+      "Cosmic Silver",
+      "Glacier Blue",
+      "Diamond Black",
+      "Pearl White Multi-Coat",
+      "Stealth Grey"
+    ],
+    "toyota-fortuner:4x2:diesel-28:6AT": [
+      "Silver Metallic",
+      "Platinum White Pearl",
+      "Avant-Garde Bronze",
+      "Attitude Black",
+      "Super White",
+      "Sparkling Black Crystal Shine"
+    ],
+    "toyota-fortuner:4x2:diesel-28:6MT": [
+      "Silver Metallic",
+      "Platinum White Pearl",
+      "Avant-Garde Bronze",
+      "Attitude Black",
+      "Super White",
+      "Sparkling Black Crystal Shine"
+    ],
+    "toyota-fortuner:4x2:petrol-27:6AT": [
+      "Silver Metallic",
+      "Platinum White Pearl",
+      "Avant-Garde Bronze",
+      "Attitude Black",
+      "Super White",
+      "Sparkling Black Crystal Shine"
+    ],
+    "toyota-fortuner:4x4:diesel-28-4x4:6MT": [
+      "Silver Metallic",
+      "Platinum White Pearl",
+      "Avant-Garde Bronze",
+      "Attitude Black",
+      "Super White",
+      "Sparkling Black Crystal Shine"
+    ],
+    "toyota-fortuner:gr-s:diesel-28-4x4:6AT": [
+      "Platinum White Pearl",
+      "Attitude Black"
+    ],
+    "toyota-glanza:e:k12n-petrol:5MT": [
+      "Cafe White",
+      "Gaming Grey",
+      "Insta Blue",
+      "Enticing Silver",
+      "Sportin Red"
+    ],
+    "toyota-glanza:g:k12n-cng:5MT": [
+      "Cafe White",
+      "Gaming Grey",
+      "Insta Blue",
+      "Enticing Silver",
+      "Sportin Red"
+    ],
+    "toyota-glanza:g:k12n-petrol:5AMT": [
+      "Cafe White",
+      "Gaming Grey",
+      "Insta Blue",
+      "Enticing Silver",
+      "Sportin Red"
+    ],
+    "toyota-glanza:g:k12n-petrol:5MT": [
+      "Cafe White",
+      "Gaming Grey",
+      "Insta Blue",
+      "Enticing Silver",
+      "Sportin Red"
+    ],
+    "toyota-glanza:s:k12n-cng:5MT": [
+      "Cafe White",
+      "Gaming Grey",
+      "Insta Blue",
+      "Enticing Silver",
+      "Sportin Red"
+    ],
+    "toyota-glanza:s:k12n-petrol:5AMT": [
+      "Cafe White",
+      "Gaming Grey",
+      "Insta Blue",
+      "Enticing Silver",
+      "Sportin Red"
+    ],
+    "toyota-glanza:s:k12n-petrol:5MT": [
+      "Cafe White",
+      "Gaming Grey",
+      "Insta Blue",
+      "Enticing Silver",
+      "Sportin Red"
+    ],
+    "toyota-glanza:v:k12n-petrol:5AMT": [
+      "Cafe White",
+      "Gaming Grey",
+      "Insta Blue",
+      "Enticing Silver",
+      "Sportin Red"
+    ],
+    "toyota-glanza:v:k12n-petrol:5MT": [
+      "Cafe White",
+      "Gaming Grey",
+      "Insta Blue",
+      "Enticing Silver",
+      "Sportin Red"
+    ],
+    "toyota-hilux:vx:diesel-4x4:6AT": [
+      "Super White",
+      "Emotional Red",
+      "Ash",
+      "Attitude Black",
+      "Platinum Pearl White Metallic",
+      "Sulphur Metallic"
+    ],
+    "toyota-innova-crysta:gx-plus:diesel-24gd:5MT": [
+      "Avant-Garde Bronze Metallic",
+      "Attitude Black Mica",
+      "Silver Metallic",
+      "Super White",
+      "Platinum White Pearl"
+    ],
+    "toyota-innova-crysta:gx:diesel-24gd:5MT": [
+      "Avant-Garde Bronze Metallic",
+      "Attitude Black Mica",
+      "Silver Metallic",
+      "Super White",
+      "Platinum White Pearl"
+    ],
+    "toyota-innova-crysta:vx:diesel-24gd:5MT": [
+      "Avant-Garde Bronze Metallic",
+      "Attitude Black Mica",
+      "Silver Metallic",
+      "Super White",
+      "Platinum White Pearl"
+    ],
+    "toyota-innova-crysta:zx:diesel-24gd:5MT": [
+      "Avant-Garde Bronze Metallic",
+      "Attitude Black Mica",
+      "Silver Metallic",
+      "Super White",
+      "Platinum White Pearl"
+    ],
+    "toyota-rumion:e:k15c-neodrive:5MT": [
+      "Enticing Silver",
+      "Cafe White",
+      "Spunky Blue",
+      "Iconic Grey",
+      "Rustic Brown"
+    ],
+    "toyota-rumion:g:k15c-neodrive:5MT": [
+      "Enticing Silver",
+      "Cafe White",
+      "Spunky Blue",
+      "Iconic Grey",
+      "Rustic Brown"
+    ],
+    "toyota-rumion:g:k15c-neodrive:6AT": [
+      "Enticing Silver",
+      "Cafe White",
+      "Spunky Blue",
+      "Iconic Grey",
+      "Rustic Brown"
+    ],
+    "toyota-rumion:s:k15c-cng:5MT": [
+      "Enticing Silver",
+      "Cafe White",
+      "Spunky Blue",
+      "Iconic Grey",
+      "Rustic Brown"
+    ],
+    "toyota-rumion:s:k15c-neodrive:5MT": [
+      "Enticing Silver",
+      "Cafe White",
+      "Spunky Blue",
+      "Iconic Grey",
+      "Rustic Brown"
+    ],
+    "toyota-rumion:s:k15c-neodrive:6AT": [
+      "Enticing Silver",
+      "Cafe White",
+      "Spunky Blue",
+      "Iconic Grey",
+      "Rustic Brown"
+    ],
+    "toyota-rumion:v:k15c-neodrive:5MT": [
+      "Enticing Silver",
+      "Cafe White",
+      "Spunky Blue",
+      "Iconic Grey",
+      "Rustic Brown"
+    ],
+    "toyota-rumion:v:k15c-neodrive:6AT": [
+      "Enticing Silver",
+      "Cafe White",
+      "Spunky Blue",
+      "Iconic Grey",
+      "Rustic Brown"
+    ],
+    "toyota-urban-cruiser-ebella:e3:ev-61:1EV": [
+      "Land Breeze Green with Black Roof",
+      "Enticing Silver with Black Roof",
+      "Cafe White with Black Roof",
+      "Sportin Red with Black Roof",
+      "Enticing Silver",
+      "Gaming Grey",
+      "Bluish Black",
+      "Sportin Red",
+      "Cafe White"
+    ],
+    "toyota-urban-cruiser-hyryder:e:k15c-neodrive:5MT": [
+      "Speedy Blue",
+      "Cave Black",
+      "Midnight Black",
+      "Sportin Red",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White"
+    ],
+    "toyota-urban-cruiser-hyryder:g-o:k15c-neodrive:5MT": [
+      "Speedy Blue",
+      "Cave Black",
+      "Midnight Black",
+      "Sportin Red",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White"
+    ],
+    "toyota-urban-cruiser-hyryder:g-o:k15c-neodrive:6AT": [
+      "Speedy Blue",
+      "Cave Black",
+      "Midnight Black",
+      "Sportin Red",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Cafe White with Midnight Black",
+      "Speedy Blue with Midnight Black",
+      "Enticing Silver with Midnight Black",
+      "Sportin Red with Midnight Black"
+    ],
+    "toyota-urban-cruiser-hyryder:s:k15c-neodrive:5MT": [
+      "Speedy Blue",
+      "Cave Black",
+      "Midnight Black",
+      "Sportin Red",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White"
+    ],
+    "toyota-urban-cruiser-hyryder:s:k15c-neodrive:6AT": [
+      "Speedy Blue",
+      "Cave Black",
+      "Midnight Black",
+      "Sportin Red",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White"
+    ],
+    "toyota-urban-cruiser-hyryder:v:k15c-neodrive:5MT": [
+      "Cafe White with Midnight Black",
+      "Speedy Blue with Midnight Black",
+      "Enticing Silver with Midnight Black",
+      "Sportin Red with Midnight Black",
+      "Speedy Blue",
+      "Cave Black",
+      "Midnight Black",
+      "Sportin Red",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White"
+    ],
+    "toyota-urban-cruiser-hyryder:v:k15c-neodrive:6AT": [
+      "Cafe White with Midnight Black",
+      "Speedy Blue with Midnight Black",
+      "Enticing Silver with Midnight Black",
+      "Sportin Red with Midnight Black",
+      "Speedy Blue",
+      "Cave Black",
+      "Midnight Black",
+      "Sportin Red",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White"
+    ],
+    "toyota-urban-cruiser-taisor:e:k12n-cng:5MT": [
+      "Bluish Black",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Sportin Red",
+      "Lucent Orange"
+    ],
+    "toyota-urban-cruiser-taisor:e:k12n-petrol:5MT": [
+      "Bluish Black",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Sportin Red",
+      "Lucent Orange"
+    ],
+    "toyota-urban-cruiser-taisor:g:k10c-turbo:5MT": [
+      "Bluish Black",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Sportin Red",
+      "Lucent Orange"
+    ],
+    "toyota-urban-cruiser-taisor:g:k10c-turbo:6AT": [
+      "Bluish Black",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Sportin Red",
+      "Lucent Orange"
+    ],
+    "toyota-urban-cruiser-taisor:s-plus:k12n-petrol:5AMT": [
+      "Bluish Black",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Sportin Red",
+      "Lucent Orange"
+    ],
+    "toyota-urban-cruiser-taisor:s-plus:k12n-petrol:5MT": [
+      "Bluish Black",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Sportin Red",
+      "Lucent Orange"
+    ],
+    "toyota-urban-cruiser-taisor:s:k12n-petrol:5AMT": [
+      "Bluish Black",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Sportin Red",
+      "Lucent Orange"
+    ],
+    "toyota-urban-cruiser-taisor:s:k12n-petrol:5MT": [
+      "Bluish Black",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Sportin Red",
+      "Lucent Orange"
+    ],
+    "toyota-urban-cruiser-taisor:v:k10c-turbo:5MT": [
+      "Bluish Black",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Sportin Red",
+      "Lucent Orange",
+      "Cafe White with Midnight Black",
+      "Enticing Silver with Midnight Black",
+      "Sportin Red with Midnight Black"
+    ],
+    "toyota-urban-cruiser-taisor:v:k10c-turbo:6AT": [
+      "Bluish Black",
+      "Gaming Grey",
+      "Enticing Silver",
+      "Cafe White",
+      "Sportin Red",
+      "Lucent Orange",
+      "Cafe White with Midnight Black",
+      "Enticing Silver with Midnight Black",
+      "Sportin Red with Midnight Black"
+    ],
+    "volkswagen-taigun:comfortline:petrol-10-tsi:6MT": [
+      "Steel Grey",
+      "Avocado Pearl Effect",
+      "Reflex Silver Metallic",
+      "Carbon Steel",
+      "Lava Blue Metallic",
+      "Candy White",
+      "Wild Cherry Red Metallic"
+    ],
+    "volkswagen-taigun:gt-line:petrol-10-tsi:6MT": [
+      "Steel Grey",
+      "Avocado Pearl Effect",
+      "Reflex Silver Metallic",
+      "Carbon Steel",
+      "Lava Blue Metallic",
+      "Candy White",
+      "Wild Cherry Red Metallic",
+      "Deep Black pearl"
+    ],
+    "volkswagen-taigun:gt-line:petrol-10-tsi:8AT": [
+      "Steel Grey",
+      "Avocado Pearl Effect",
+      "Reflex Silver Metallic",
+      "Carbon Steel",
+      "Lava Blue Metallic",
+      "Candy White",
+      "Wild Cherry Red Metallic",
+      "Deep Black pearl"
+    ],
+    "volkswagen-taigun:gt-plus-chrome:petrol-15-tsi:7DCA": [
+      "Carbon Steel Matte",
+      "Steel Grey",
+      "Avocado Pearl Effect",
+      "Reflex Silver Metallic",
+      "Carbon Steel",
+      "Lava Blue Metallic",
+      "Candy White",
+      "Wild Cherry Red Metallic",
+      "Deep Black pearl"
+    ],
+    "volkswagen-taigun:highline-plus:petrol-10-tsi:6MT": [
+      "Steel Grey",
+      "Avocado Pearl Effect",
+      "Reflex Silver Metallic",
+      "Carbon Steel",
+      "Lava Blue Metallic",
+      "Candy White",
+      "Wild Cherry Red Metallic"
+    ],
+    "volkswagen-taigun:highline-plus:petrol-10-tsi:8AT": [
+      "Steel Grey",
+      "Avocado Pearl Effect",
+      "Reflex Silver Metallic",
+      "Carbon Steel",
+      "Lava Blue Metallic",
+      "Candy White",
+      "Wild Cherry Red Metallic"
+    ],
+    "volkswagen-taigun:highline:petrol-10-tsi:6MT": [
+      "Steel Grey",
+      "Avocado Pearl Effect",
+      "Reflex Silver Metallic",
+      "Carbon Steel",
+      "Lava Blue Metallic",
+      "Candy White",
+      "Wild Cherry Red Metallic"
+    ],
+    "volkswagen-taigun:highline:petrol-10-tsi:8AT": [
+      "Steel Grey",
+      "Avocado Pearl Effect",
+      "Reflex Silver Metallic",
+      "Carbon Steel",
+      "Lava Blue Metallic",
+      "Candy White",
+      "Wild Cherry Red Metallic"
+    ],
+    "volkswagen-taigun:topline:petrol-10-tsi:6MT": [
+      "Steel Grey",
+      "Avocado Pearl Effect",
+      "Reflex Silver Metallic",
+      "Carbon Steel",
+      "Lava Blue Metallic",
+      "Candy White",
+      "Wild Cherry Red Metallic",
+      "Deep Black pearl"
+    ],
+    "volkswagen-taigun:topline:petrol-10-tsi:8AT": [
+      "Steel Grey",
+      "Avocado Pearl Effect",
+      "Reflex Silver Metallic",
+      "Carbon Steel",
+      "Lava Blue Metallic",
+      "Candy White",
+      "Wild Cherry Red Metallic",
+      "Deep Black pearl"
+    ],
+    "volkswagen-tayron:life:petrol-20-tsi-4motion:7DCA": [
+      "UltraViolet Metallic",
+      "Oyster Silver Metallic",
+      "Dolphin Grey Metallic",
+      "Cipressino Green Metallic",
+      "Grenadilla Black Metallic",
+      "Night Shade Blue Metallic",
+      "Oryx White Mother of Pearl"
+    ],
+    "volkswagen-tayron:r-line:petrol-20-tsi-4motion:7DCA": [
+      "UltraViolet Metallic",
+      "Oyster Silver Metallic",
+      "Dolphin Grey Metallic",
+      "Cipressino Green Metallic",
+      "Grenadilla Black Metallic",
+      "Night Shade Blue Metallic",
+      "Oryx White Mother of Pearl"
+    ],
+    "volkswagen-virtus:comfortline:petrol-10-tsi:6MT": [
+      "Lava Blue",
+      "Rising Blue Metallic",
+      "Carbon Steel Grey",
+      "Reflex Silver",
+      "Candy White",
+      "Wild Cherry Red"
+    ],
+    "volkswagen-virtus:gt-plus:petrol-15-tsi:7DCA": [
+      "Carbon Steel Matte Grey",
+      "Deep Black pearl",
+      "Lava Blue",
+      "Rising Blue Metallic",
+      "Carbon Steel Grey",
+      "Reflex Silver",
+      "Candy White",
+      "Wild Cherry Red"
+    ],
+    "volkswagen-virtus:highline-plus:petrol-10-tsi:6AT": [
+      "Lava Blue",
+      "Rising Blue Metallic",
+      "Carbon Steel Grey",
+      "Reflex Silver",
+      "Candy White",
+      "Wild Cherry Red"
+    ],
+    "volkswagen-virtus:highline-plus:petrol-10-tsi:6MT": [
+      "Lava Blue",
+      "Rising Blue Metallic",
+      "Carbon Steel Grey",
+      "Reflex Silver",
+      "Candy White",
+      "Wild Cherry Red"
+    ],
+    "volkswagen-virtus:highline:petrol-10-tsi:6AT": [
+      "Lava Blue",
+      "Rising Blue Metallic",
+      "Carbon Steel Grey",
+      "Reflex Silver",
+      "Candy White",
+      "Wild Cherry Red"
+    ],
+    "volkswagen-virtus:highline:petrol-10-tsi:6MT": [
+      "Lava Blue",
+      "Rising Blue Metallic",
+      "Carbon Steel Grey",
+      "Reflex Silver",
+      "Candy White",
+      "Wild Cherry Red"
+    ],
+    "volkswagen-virtus:topline:petrol-10-tsi:6AT": [
+      "Deep Black pearl",
+      "Lava Blue",
+      "Rising Blue Metallic",
+      "Carbon Steel Grey",
+      "Reflex Silver",
+      "Candy White",
+      "Wild Cherry Red"
+    ],
+    "volkswagen-virtus:topline:petrol-10-tsi:6MT": [
+      "Deep Black pearl",
+      "Lava Blue",
+      "Rising Blue Metallic",
+      "Carbon Steel Grey",
+      "Reflex Silver",
+      "Candy White",
+      "Wild Cherry Red"
+    ]
+  }
+}

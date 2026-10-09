@@ -8,7 +8,9 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
   Matches,
+  ValidateIf,
   Max,
   MaxLength,
   Min,
@@ -111,15 +113,22 @@ export class CreateGarageVehicleDto {
   @IsEnum(VehicleType)
   vehicleType?: VehicleType;
 
-  @IsString()
-  @MinLength(1)
-  @MaxLength(128)
-  make: string;
+  /** Required for a car. The catalogue row supplies make, model, variant, fuel, and gearbox. */
+  @IsOptional()
+  @IsUUID()
+  catalogConfigurationId?: string;
 
+  @ValidateIf((dto: CreateGarageVehicleDto) => !dto.catalogConfigurationId)
   @IsString()
   @MinLength(1)
   @MaxLength(128)
-  model: string;
+  make?: string;
+
+  @ValidateIf((dto: CreateGarageVehicleDto) => !dto.catalogConfigurationId)
+  @IsString()
+  @MinLength(1)
+  @MaxLength(128)
+  model?: string;
 
   @IsOptional()
   @Type(() => Number)
@@ -175,6 +184,10 @@ export class CreateGarageVehicleDto {
 }
 
 export class UpdateGarageVehicleDto {
+  @IsOptional()
+  @IsUUID()
+  catalogConfigurationId?: string;
+
   @IsOptional()
   @IsString()
   @MinLength(1)
