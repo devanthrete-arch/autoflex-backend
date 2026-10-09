@@ -7,6 +7,7 @@ import { InCenterService1730000000004 } from './migrations/1730000000004-InCente
 import { OwnershipAfterService1730000000005 } from './migrations/1730000000005-OwnershipAfterService';
 import { CustomerDateOfBirth1730000000006 } from './migrations/1730000000006-CustomerDateOfBirth';
 import { VehicleCatalog1730000000007 } from './migrations/1730000000007-VehicleCatalog';
+import { SupportWorkQueue1730000000008 } from './migrations/1730000000008-SupportWorkQueue';
 
 /** Every migration in apply order. In-memory databases run these by hand. */
 export const MIGRATIONS: (new () => MigrationInterface)[] = [
@@ -18,4 +19,5 @@ export const MIGRATIONS: (new () => MigrationInterface)[] = [
   OwnershipAfterService1730000000005,
   CustomerDateOfBirth1730000000006,
   VehicleCatalog1730000000007,
+  SupportWorkQueue1730000000008,
 ];

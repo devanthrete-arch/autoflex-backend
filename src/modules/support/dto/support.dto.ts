@@ -9,6 +9,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { SupportCategory } from '../../../common/enums/ownership.enum';
+import { Transform } from 'class-transformer';
 
 export const SUPPORT_CHANNELS = ['CALL', 'WHATSAPP', 'EMAIL'] as const;
 
@@ -18,12 +19,18 @@ export class CreateSupportRequestDto {
   category: SupportCategory;
 
   @ApiProperty({ example: 'Bill amount looks higher than approved' })
+  @Transform(({ value }: { value: unknown }) =>
+    typeof value === 'string' ? value.trim() : value,
+  )
   @IsString()
   @MinLength(3)
   @MaxLength(150)
   subject: string;
 
   @ApiProperty()
+  @Transform(({ value }: { value: unknown }) =>
+    typeof value === 'string' ? value.trim() : value,
+  )
   @IsString()
   @MinLength(10)
   @MaxLength(4000)

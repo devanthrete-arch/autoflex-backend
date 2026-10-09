@@ -10,6 +10,8 @@ import { FEATURE_MODULES } from '../feature-modules';
 import { HealthController } from '../health.controller';
 import {
   DEV_CUSTOMER_APP_ID,
+  DEV_SUPPORT_APP_ID,
+  DEV_SUPPORT_DOMAIN_ID,
   STAFF_PERSONAS,
   WORKSHOP_CUSTOMERS,
 } from './dev-personas';
@@ -29,6 +31,8 @@ async function bootstrap() {
   const signer = await loadWorkshopSigner();
   process.env.LOCAL_JWKS_JSON = signer.jwksJson;
   process.env.IAM_CUSTOMER_DOMAIN_APPLICATION_ID = DEV_CUSTOMER_APP_ID;
+  process.env.IAM_SUPPORT_DOMAIN_APPLICATION_ID = DEV_SUPPORT_APP_ID;
+  process.env.IAM_SUPPORT_DOMAIN_ID = DEV_SUPPORT_DOMAIN_ID;
   process.env.IAM_JWT_ISSUER = '';
   process.env.IAM_JWT_AUDIENCE = '';
 

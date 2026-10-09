@@ -1,3 +1,5 @@
+import { SupportAgentProfile } from '../modules/support-identity/support-agent-profile.entity';
+import { DEV_SUPPORT_DOMAIN_ID, SUPPORT_PERSONAS } from './dev-personas';
 import { DataSource } from 'typeorm';
 import { CommunicationChannel } from '../common/enums/communication-channel.enum';
 import { GarageVehicleStatus } from '../common/enums/garage-vehicle-status.enum';
@@ -140,6 +142,21 @@ export async function bootstrapWorkshop(
   await upsertHours(dataSource, center.id);
   await upsertMenu(dataSource, center.id, categories);
   await upsertStaff(dataSource, center.id);
+  const support = dataSource.getRepository(SupportAgentProfile);
+  for (const persona of SUPPORT_PERSONAS) {
+    // A rerun never reactivates an operator or touches existing queue work.
+    await support
+      .createQueryBuilder()
+      .insert()
+      .values({
+        iamDomainId: DEV_SUPPORT_DOMAIN_ID,
+        iamUserId: persona.iamUserId,
+        displayName: persona.displayName,
+        isActive: true,
+      })
+      .orIgnore()
+      .execute();
+  }
   await upsertPromotions(dataSource, center.id);
   for (const customer of WORKSHOP_CUSTOMERS) {
     await upsertCustomer(dataSource, customer);

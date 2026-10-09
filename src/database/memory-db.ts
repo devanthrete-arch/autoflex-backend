@@ -1,10 +1,24 @@
 import { randomUUID } from 'crypto';
-import { IMemoryDb, newDb } from 'pg-mem';
+import { DataType, IMemoryDb, newDb } from 'pg-mem';
 import { DataSource } from 'typeorm';
 import { ENTITIES } from './entities';
 import { MIGRATIONS } from './migration-list';
 
 function registerPgMemFunctions(db: IMemoryDb): void {
+  // pg-mem timestamps have millisecond precision. Production uses PostgreSQL's
+  // native formatter to retain all six fractional digits in queue cursors.
+  db.public.registerFunction({
+    name: 'to_char',
+    args: [DataType.timestamptz, DataType.text],
+    returns: DataType.text,
+    implementation: (value: Date) => value.toISOString(),
+  });
+  db.public.registerFunction({
+    name: 'char_length',
+    args: [DataType.text],
+    returns: DataType.integer,
+    implementation: (value: string) => [...value].length,
+  });
   db.public.registerFunction({
     name: 'version',
     implementation: () => 'PostgreSQL 16.0',

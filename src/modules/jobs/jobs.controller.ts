@@ -1,3 +1,4 @@
+import { RequireStaff } from '../auth/decorators/require-staff.decorator';
 import {
   Body,
   Controller,
@@ -37,6 +38,7 @@ export const IF_MATCH_HEADER = {
 
 @ApiTags('jobs')
 @ApiBearerAuth()
+@RequireStaff()
 @Controller('v1/jobs')
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}

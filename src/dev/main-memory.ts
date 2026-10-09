@@ -11,6 +11,8 @@ import { createJwtTestFixture } from '../test-utils/jwt-test.helper';
 import {
   DEV_CUSTOMER,
   DEV_CUSTOMER_APP_ID,
+  DEV_SUPPORT_APP_ID,
+  DEV_SUPPORT_DOMAIN_ID,
   STAFF_PERSONAS,
 } from './dev-personas';
 import { DevModule, DevSession } from './dev.module';
@@ -27,6 +29,8 @@ async function bootstrap() {
   const signer = await createJwtTestFixture();
   process.env.LOCAL_JWKS_JSON = signer.jwksJson;
   process.env.IAM_CUSTOMER_DOMAIN_APPLICATION_ID = DEV_CUSTOMER_APP_ID;
+  process.env.IAM_SUPPORT_DOMAIN_APPLICATION_ID = DEV_SUPPORT_APP_ID;
+  process.env.IAM_SUPPORT_DOMAIN_ID = DEV_SUPPORT_DOMAIN_ID;
   delete process.env.IAM_JWT_ISSUER;
   delete process.env.IAM_JWT_AUDIENCE;
 

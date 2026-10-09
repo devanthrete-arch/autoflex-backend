@@ -10,6 +10,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { from, Observable, of, switchMap } from 'rxjs';
 import { Repository } from 'typeorm';
+import { Reflector } from '@nestjs/core';
+import { TRANSACTIONAL_COMMAND_KEY } from './transactional-command.decorator';
 import {
   AUTH_CONTEXT_KEY,
   AuthContext,
@@ -42,9 +44,17 @@ export class IdempotencyInterceptor implements NestInterceptor {
   constructor(
     @InjectRepository(CommandIdempotency)
     private readonly repository: Repository<CommandIdempotency>,
+    private readonly reflector: Reflector,
   ) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
+    if (
+      this.reflector.getAllAndOverride<boolean>(TRANSACTIONAL_COMMAND_KEY, [
+        context.getHandler(),
+        context.getClass(),
+      ])
+    )
+      return next.handle();
     const http = context.switchToHttp();
     const request = http.getRequest<HttpRequest>();
     const key = request.headers['idempotency-key'];
@@ -59,9 +69,11 @@ export class IdempotencyInterceptor implements NestInterceptor {
     }
 
     const scope =
-      auth.actorType === 'staff'
-        ? `staff:${auth.staffProfileId}`
-        : `customer:${auth.userId}`;
+      auth.actorType === 'support'
+        ? `support:${auth.supportAgentProfileId}`
+        : auth.actorType === 'staff'
+          ? `staff:${auth.staffProfileId}`
+          : `customer:${auth.userId}`;
     const requestHash = createHash('sha256')
       .update(
         `${request.method} ${request.originalUrl.split('?')[0]} ${JSON.stringify(request.body ?? null)}`,

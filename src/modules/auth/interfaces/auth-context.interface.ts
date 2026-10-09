@@ -11,7 +11,7 @@ export interface IamTokenPayload {
   exp?: number;
 }
 
-export type ActorType = 'staff' | 'customer';
+export type ActorType = 'staff' | 'customer' | 'support';
 
 export interface AuthContext {
   actorType: ActorType;
@@ -23,6 +23,7 @@ export interface AuthContext {
   serviceCenterId: string | null;
   staffProfileId: string | null;
   customerProfileId: string | null;
+  supportAgentProfileId?: string | null;
   phone?: string;
 }
 

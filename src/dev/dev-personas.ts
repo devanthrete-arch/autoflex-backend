@@ -270,3 +270,32 @@ export function customerIdForPhone(phone: string): string {
     hex.slice(20, 32),
   ].join('-');
 }
+
+export const DEV_SUPPORT_APP_ID = 'dev-support-app';
+export const DEV_SUPPORT_DOMAIN_ID = 'dev-support-domain';
+export const SUPPORT_PERSONAS = [
+  {
+    key: 'support-agent',
+    iamUserId: 'd0000000-0000-4000-8000-000000000001',
+    displayName: 'Neha Patel',
+    mobile: '9845000011',
+    role: 'support_agent',
+    permissions: ['support:read', 'support:work'],
+  },
+  {
+    key: 'support-agent2',
+    iamUserId: 'd0000000-0000-4000-8000-000000000002',
+    displayName: 'Kabir Das',
+    mobile: '9845000012',
+    role: 'support_agent',
+    permissions: ['support:read', 'support:work'],
+  },
+  {
+    key: 'support-manager',
+    iamUserId: 'd0000000-0000-4000-8000-000000000003',
+    displayName: 'Ananya Rao',
+    mobile: '9845000013',
+    role: 'support_manager',
+    permissions: ['support:read', 'support:work', 'support:manage'],
+  },
+] as const;

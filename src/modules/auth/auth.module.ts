@@ -8,10 +8,12 @@ import { PermissionsGuard } from './guards/permissions.guard';
 import { RolesGuard } from './guards/roles.guard';
 import { StaffActorGuard } from './guards/staff-actor.guard';
 import { JwtAuthService, JwksService } from './services/jwt-auth.service';
+import { SupportIdentityModule } from '../support-identity/support-identity.module';
+import { SupportActorGuard } from './guards/support-actor.guard';
 
 @Global()
 @Module({
-  imports: [TenancyModule, CustomersModule],
+  imports: [TenancyModule, CustomersModule, SupportIdentityModule],
   providers: [
     JwksService,
     JwtAuthService,
@@ -27,6 +29,7 @@ import { JwtAuthService, JwksService } from './services/jwt-auth.service';
       provide: APP_GUARD,
       useClass: StaffActorGuard,
     },
+    { provide: APP_GUARD, useClass: SupportActorGuard },
     {
       provide: APP_GUARD,
       useClass: RolesGuard,

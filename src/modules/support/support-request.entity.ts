@@ -21,6 +21,7 @@ export class SupportRequest {
   customerProfileId: string;
 
   /** `SR-YYYYMMDD-XXXX`, quoted when the customer calls. */
+  @Index('UQ_support_requests_reference', { unique: true })
   @Column({ name: 'reference_number', type: 'varchar', length: 20 })
   referenceNumber: string;
 
@@ -57,6 +58,56 @@ export class SupportRequest {
 
   @Column({ name: 'resolved_at', type: 'timestamptz', nullable: true })
   resolvedAt: Date | null;
+
+  @Column({ name: 'assigned_agent_profile_id', type: 'uuid', nullable: true })
+  assignedAgentProfileId: string | null;
+  @Column({ type: 'varchar', length: 8, default: 'NORMAL' }) priority:
+    | 'NORMAL'
+    | 'HIGH';
+  @Column({ name: 'waiting_on', type: 'varchar', length: 8, nullable: true })
+  waitingOn: 'CUSTOMER' | 'CENTER' | 'INTERNAL' | null;
+  @Column({ type: 'integer', default: 1 }) version: number;
+  @Column({
+    name: 'resolution_code',
+    type: 'varchar',
+    length: 32,
+    nullable: true,
+  })
+  resolutionCode: string | null;
+  @Column({ name: 'resolution_summary', type: 'text', nullable: true })
+  resolutionSummary: string | null;
+  @Column({ name: 'closure_summary', type: 'text', nullable: true })
+  closureSummary: string | null;
+  @Column({ name: 'closed_at', type: 'timestamptz', nullable: true })
+  closedAt: Date | null;
+  @Column({
+    name: 'last_activity_at',
+    type: 'timestamptz',
+    default: () => 'now()',
+  })
+  lastActivityAt: Date;
+  @Column({
+    name: 'last_customer_message_at',
+    type: 'timestamptz',
+    default: () => 'now()',
+  })
+  lastCustomerMessageAt: Date;
+  @Column({ name: 'last_public_reply_at', type: 'timestamptz', nullable: true })
+  lastPublicReplyAt: Date | null;
+  @Column({
+    name: 'last_customer_message_version',
+    type: 'integer',
+    default: 1,
+  })
+  lastCustomerMessageVersion: number;
+  @Column({
+    name: 'last_public_reply_version',
+    type: 'integer',
+    nullable: true,
+  })
+  lastPublicReplyVersion: number | null;
+  @Column({ name: 'first_response_at', type: 'timestamptz', nullable: true })
+  firstResponseAt: Date | null;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;

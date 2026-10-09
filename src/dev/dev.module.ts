@@ -23,6 +23,9 @@ import {
   DEV_CUSTOMER_DOMAIN_ID,
   DEV_STAFF_APP_ID,
   STAFF_PERSONAS,
+  SUPPORT_PERSONAS,
+  DEV_SUPPORT_APP_ID,
+  DEV_SUPPORT_DOMAIN_ID,
   WORKSHOP_CENTER,
   WORKSHOP_CUSTOMERS,
   staffByPhone,
@@ -48,14 +51,14 @@ class DevSessionDto {
 
   /** `staff` looks the phone up on the workshop roster. Default is a customer. */
   @IsOptional()
-  @IsIn(['customer', 'staff'])
-  actor?: 'customer' | 'staff';
+  @IsIn(['customer', 'staff', 'support'])
+  actor?: 'customer' | 'staff' | 'support';
 }
 
 export interface DevSession {
   accessToken: string;
   expiresIn: string;
-  actor: 'customer' | 'staff';
+  actor: 'customer' | 'staff' | 'support';
   userId: string;
   displayName: string | null;
   role: string;
@@ -85,6 +88,12 @@ export class DevController {
         name: customer.name,
         phone: customer.phone,
       })),
+      support: SUPPORT_PERSONAS.map((p) => ({
+        key: p.key,
+        displayName: p.displayName,
+        role: p.role,
+        phone: p.mobile,
+      })),
       staff: STAFF_PERSONAS.map((p) => ({
         key: p.key,
         displayName: p.displayName,
@@ -101,6 +110,37 @@ export class DevController {
   async session(@Body() dto: DevSessionDto): Promise<DevSession> {
     if (dto.persona && dto.phone) {
       throw new BadRequestException('Send persona or phone, not both');
+    }
+    if (dto.actor === 'support') {
+      if (!dto.phone || dto.persona)
+        throw new BadRequestException('Use a named support mobile number');
+      const persona = SUPPORT_PERSONAS.find(
+        (p) => p.mobile === dto.phone!.slice(-10),
+      );
+      if (!persona)
+        throw new UnauthorizedException(
+          'No support account uses this mobile number',
+        );
+      const accessToken = await this.signer.signAccessToken(
+        {
+          sub: persona.iamUserId,
+          domainId: DEV_SUPPORT_DOMAIN_ID,
+          domainApplicationId: DEV_SUPPORT_APP_ID,
+          roles: [persona.role],
+          permissions: [...persona.permissions],
+          mobile: persona.mobile,
+        },
+        { expiresIn: SESSION_TTL },
+      );
+      return {
+        accessToken,
+        expiresIn: SESSION_TTL,
+        actor: 'support',
+        userId: persona.iamUserId,
+        displayName: persona.displayName,
+        role: persona.role,
+        phone: `+91${persona.mobile}`,
+      };
     }
     if (dto.actor === 'staff') {
       if (!dto.phone) {

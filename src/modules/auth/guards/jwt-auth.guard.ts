@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  ForbiddenException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -15,6 +16,9 @@ import {
   IamTokenPayload,
 } from '../interfaces/auth-context.interface';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { SupportAgentProfile } from '../../support-identity/support-agent-profile.entity';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -24,6 +28,8 @@ export class JwtAuthGuard implements CanActivate {
     private readonly customerProfilesService: CustomerProfilesService,
     private readonly configService: ConfigService,
     private readonly reflector: Reflector,
+    @InjectRepository(SupportAgentProfile)
+    private readonly supportProfiles: Repository<SupportAgentProfile>,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -69,6 +75,58 @@ export class JwtAuthGuard implements CanActivate {
     const customerAppId = this.configService.get<string>(
       'IAM_CUSTOMER_DOMAIN_APPLICATION_ID',
     );
+
+    const supportAppId = this.configService.get<string>(
+      'IAM_SUPPORT_DOMAIN_APPLICATION_ID',
+    );
+    const supportDomainId = this.configService.get<string>(
+      'IAM_SUPPORT_DOMAIN_ID',
+    );
+    if (supportAppId && payload.domainApplicationId === supportAppId) {
+      if (
+        supportAppId === customerAppId ||
+        !supportDomainId ||
+        payload.domainId !== supportDomainId
+      ) {
+        throw new ForbiddenException(
+          'Support identity configuration or domain is invalid',
+        );
+      }
+      const profile = await this.supportProfiles.findOne({
+        where: {
+          iamDomainId: supportDomainId,
+          iamUserId: payload.sub,
+          isActive: true,
+        },
+      });
+      if (!profile)
+        throw new ForbiddenException('This support operator is unavailable');
+      return {
+        actorType: 'support',
+        userId: payload.sub,
+        domainId: payload.domainId,
+        domainApplicationId: payload.domainApplicationId,
+        roles: payload.roles ?? [],
+        permissions: payload.permissions ?? [],
+        serviceCenterId: null,
+        staffProfileId: null,
+        customerProfileId: null,
+        supportAgentProfileId: profile.id,
+      };
+    }
+
+    // A support claim or central support domain must never fall through into
+    // a customer/center mapping when application configuration is absent/wrong.
+    if (
+      (supportDomainId && payload.domainId === supportDomainId) ||
+      payload.roles?.some((role) =>
+        ['support_agent', 'support_manager'].includes(role),
+      )
+    ) {
+      throw new ForbiddenException(
+        'Support application identity is not configured or does not match',
+      );
+    }
 
     if (customerAppId && payload.domainApplicationId === customerAppId) {
       const profile = await this.customerProfilesService.findByIamUserId(

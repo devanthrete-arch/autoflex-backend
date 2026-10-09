@@ -12,7 +12,7 @@ Autoflex does **not** issue identity JWTs, handle OTP login, or define RBAC — 
 
 ## Durable test workshop
 
-This is the path for the three apps. Postgres keeps the center, the roster, the customers, and every booking across API restarts. `POST /v1/dev/session` still stands in for Frevels IAM.
+This is the path for the four client apps. Postgres keeps the center, the roster, the customers, and every booking across API restarts. `POST /v1/dev/session` still stands in for Frevels IAM.
 
 ```bash
 docker compose up -d
@@ -143,10 +143,13 @@ Job statuses: `CHECKED_IN`, `INSPECTION`, `AWAITING_APPROVAL`, `IN_PROGRESS`, `Q
 | `npm run build` | Compile TypeScript |
 | `npm run lint` | ESLint |
 | `npm test` | Unit tests |
-| `npm run test:e2e` | E2E tests (requires Postgres) |
+| `npm run test:e2e` | HTTP/policy E2E tests using pg-mem |
+| `npm run test:support:postgres` | Opt-in AF-010 migration/transaction tests on disposable PostgreSQL |
 | `npm run migration:run` | Apply migrations |
 | `npm run migration:revert` | Revert last migration |
 | `npm run seed:dev` | Map one IAM domain and user (not the workshop roster) |
+| `npm run support:preflight` | Read support status counts and incompatible links before migration |
+| `npm run support:provision` | Provision a support profile for an existing IAM identity |
 
 ## Testing
 
@@ -166,3 +169,17 @@ E2E tests use a local RSA keypair (`LOCAL_JWKS_JSON`) — no IAM instance requir
 - [Technical Architecture](../development-documents/architecture/technical-architecture.md)
 - [Phase 0 Repository Plan](../development-documents/architecture/phase-0-repository-plan.md)
 - [ADR — Frevels IAM](../development-documents/architecture/adr-2026-07-11-frevels-iam-auth.md)
+
+
+## AF-010 central support
+
+Migration `1730000000008` adds the central support queue after the vehicle catalogue. Operators are distinct from customers and center staff; a signed support role/permission and active `support_agent_profiles` mapping are required. Configure `IAM_SUPPORT_DOMAIN_APPLICATION_ID` and `IAM_SUPPORT_DOMAIN_ID` separately from the customer application. Empty configuration disables operator access.
+
+`GET /v1/support/me`, queue/summary/detail/events/roster and explicit command routes power `support-app` (port 5176). Customer conversations are `/v1/me/support-requests/:id/events` and `POST :id/replies`. New commands require `If-Match` and `Idempotency-Key`. Request state, immutable event, receipt and public-action notifications commit together. Customer reads never serialize private notes or operator identities. No SLA/external delivery is promised.
+
+- `npm run support:preflight`: aggregate status and incompatible link report; run and back up the intended target before migrating.
+- `npm run support:provision -- --user <IAM-user-id> --name "Display name"`: create a local active mapping in the configured support domain. Existing profiles stay unchanged; provision IAM roles separately.
+- Local `workshop:bootstrap` / memory runtime seed named support accounts: `{"actor":"support","phone":"9845000011"}` (Neha), `9845000012` (Kabir), `9845000013` (manager Ananya). Reruns never reactivate disabled support profiles.
+- `npm run test:support:postgres`: opt-in transaction/migration suite, fixed disposable `af010_test` database on localhost:55410. It drops that dedicated schema; it never targets the workshop. See the runbook for the disposable Docker command.
+
+[Support runbook](../development-documents/architecture/support-work-queue-runbook.md) · [Current contracts](../development-documents/architecture/api-contracts-v1.md#central-support-work-queue). Real IAM sign-in and production rollout remain separate tracked work.

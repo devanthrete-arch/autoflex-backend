@@ -8,6 +8,8 @@ import { MaintenanceItem } from '../modules/maintenance/maintenance-item.entity'
 import { CustomerNotification } from '../modules/notifications/entities/customer-notification.entity';
 import { NotificationDelivery } from '../modules/notifications/entities/notification-delivery.entity';
 import { SupportRequest } from '../modules/support/support-request.entity';
+import { SupportRequestEvent } from '../modules/support/support-request-event.entity';
+import { SupportAgentProfile } from '../modules/support-identity/support-agent-profile.entity';
 import { VaultDocument } from '../modules/vault/vault-document.entity';
 import { Customer } from '../modules/customers/entities/customer.entity';
 import { CustomerAddress } from '../modules/customers/entities/customer-address.entity';
@@ -43,6 +45,8 @@ import {
 
 /** Explicit entity list for data sources that cannot glob (pg-mem, tests). */
 export const ENTITIES = [
+  SupportAgentProfile,
+  SupportRequestEvent,
   ServiceCenter,
   StaffProfile,
   OperatingHour,
