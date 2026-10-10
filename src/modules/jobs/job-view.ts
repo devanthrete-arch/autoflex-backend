@@ -93,7 +93,6 @@ export interface JobSummaryView {
   budgetCeiling: string | null;
   accessoriesChecklist: Record<string, unknown> | null;
   paymentMode: string | null;
-  publicToken: string;
   sourceBookingId: string | null;
   waitingOnSite: boolean;
   customer: { name: string | null; phone: string } | null;
@@ -277,7 +276,6 @@ export function toJobSummary(job: ServiceJob): JobSummaryView {
         : inr(job.budgetCeiling),
     accessoriesChecklist: job.accessoriesChecklist,
     paymentMode: job.paymentMode,
-    publicToken: job.publicToken,
     sourceBookingId: job.sourceBookingId,
     waitingOnSite: job.waitingOnSite,
     customer: job.customer
@@ -462,24 +460,39 @@ export function toCustomerJobView(job: ServiceJob): CustomerJobView {
   };
 }
 
-/** Link-only tracking page: progress without names, phones, or prices. */
+/** Link-only progress; the only phone is the center's public business contact. */
 export interface PublicTrackingView {
   jobNumber: string | null;
   status: JobStatus;
   serviceType: string;
   estimatedReadyAt: Date | null;
   centerName: string | null;
+  centerPhone: string | null;
   vehicleRegistration: string | null;
   awaitingApproval: boolean;
   progress: { status: JobStatus | null; at: Date }[];
   updatedAt: Date;
 }
 
-export function maskRegistration(registration: string): string {
-  if (registration.length <= 4) return registration;
-  return `${registration.slice(0, 4)}${'•'.repeat(
-    Math.max(registration.length - 8, 1),
-  )}${registration.slice(-4)}`;
+export function maskRegistration(
+  registration: string | null | undefined,
+): string | null {
+  const plate = registration?.toUpperCase().replace(/[^A-Z0-9]/g, '') ?? '';
+  if (!plate) return null;
+  if (plate.length <= 8) return '•'.repeat(plate.length);
+  return `${plate.slice(0, 4)}${'•'.repeat(plate.length - 8)}${plate.slice(-4)}`;
+}
+
+export function publicCenterPhone(
+  raw: string | null | undefined,
+): string | null {
+  if (!raw || !/^\+?[\d ()-]+$/.test(raw.trim())) return null;
+  const value = raw.trim().replace(/[ ()-]/g, '');
+  if (/^\+[1-9]\d{7,14}$/.test(value)) return value;
+  if (/^[1-9]\d{9}$/.test(value)) return `+91${value}`;
+  if (/^0[1-9]\d{9}$/.test(value)) return `+91${value.slice(1)}`;
+  if (/^91[1-9]\d{9}$/.test(value)) return `+${value}`;
+  return null;
 }
 
 export function toPublicTrackingView(job: ServiceJob): PublicTrackingView {
@@ -491,6 +504,7 @@ export function toPublicTrackingView(job: ServiceJob): PublicTrackingView {
     centerName: job.serviceCenter
       ? (job.serviceCenter.displayName ?? job.serviceCenter.name)
       : null,
+    centerPhone: publicCenterPhone(job.serviceCenter?.publicPhone),
     vehicleRegistration: job.vehicle
       ? maskRegistration(job.vehicle.registrationNumber)
       : null,
@@ -500,7 +514,8 @@ export function toPublicTrackingView(job: ServiceJob): PublicTrackingView {
         (event) =>
           event.visibleToCustomer && event.type === JobEventType.STATUS_CHANGE,
       )
-      .sort(byCreated)
+      // Preserve the database's microsecond ordering and ID tie-break. Sorting
+      // JavaScript Dates here would lose sub-millisecond chronology.
       .map((event) => ({ status: event.toStatus, at: event.createdAt })),
     updatedAt: job.updatedAt,
   };

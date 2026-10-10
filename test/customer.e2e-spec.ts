@@ -169,7 +169,7 @@ describe('Customer kit slice (e2e)', () => {
       .expect(201);
 
     expect(response.body.status).toBe('CHECKED_IN');
-    expect(response.body.publicToken).toBeDefined();
+    expect(response.body.publicToken).toBeUndefined();
   });
 
   it('customer JWT is forbidden on /v1/jobs', async () => {

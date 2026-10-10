@@ -104,7 +104,7 @@ export class ServiceJob {
   @Column({ name: 'payment_mode', type: 'varchar', length: 32, nullable: true })
   paymentMode: string | null;
 
-  @Index({ unique: true })
+  @Index('IDX_service_jobs_public_token', { unique: true })
   @Column({ name: 'public_token', type: 'varchar', length: 128 })
   publicToken: string;
 

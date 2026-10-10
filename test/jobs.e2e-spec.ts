@@ -115,7 +115,7 @@ describe('Jobs API (e2e)', () => {
 
     expect(response.body.id).toBeDefined();
     expect(response.body.status).toBe('CHECKED_IN');
-    expect(response.body.publicToken).toMatch(/^[A-Za-z0-9_-]+$/);
+    expect(response.body.publicToken).toBeUndefined();
     createdJobId = response.body.id;
   });
 

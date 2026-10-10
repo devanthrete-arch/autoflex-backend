@@ -423,7 +423,7 @@ describe('Discovery and reservation (e2e)', () => {
       expect(res.body.booking.checkedInAt).not.toBeNull();
       expect(res.body.booking.serviceJobId).toBe(res.body.job.id);
       expect(res.body.job.status).toBe('CHECKED_IN');
-      expect(res.body.job.publicToken).toBeDefined();
+      expect(res.body.job.publicToken).toBeUndefined();
 
       const job = await dataSource.getRepository(ServiceJob).findOneOrFail({
         where: { id: res.body.job.id },

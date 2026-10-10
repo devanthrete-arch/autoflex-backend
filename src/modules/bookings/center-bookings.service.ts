@@ -11,7 +11,12 @@ import {
   BookingStatus,
   OPEN_BOOKING_STATUSES,
 } from '../../common/enums/booking-status.enum';
-import { addDays, daysBetween, istDayRange, istToday } from '../../common/time/ist';
+import {
+  addDays,
+  daysBetween,
+  istDayRange,
+  istToday,
+} from '../../common/time/ist';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { GarageVehicle } from '../customers/entities/garage-vehicle.entity';
 import { ServiceJob } from '../jobs/entities/service-job.entity';
@@ -53,7 +58,6 @@ export interface CheckInResult {
     id: string;
     jobNumber: string | null;
     status: string;
-    publicToken: string;
   };
 }
 
@@ -263,7 +267,6 @@ export class CenterBookingsService {
         id: job.id,
         jobNumber: job.jobNumber,
         status: job.status,
-        publicToken: job.publicToken,
       },
     };
   }

@@ -123,7 +123,7 @@ test/               # E2E specs + DB helpers
 | Method | Path | Auth | Description |
 |--------|------|------|-------------|
 | `GET` | `/health` | Public | Health check |
-| `POST` | `/v1/jobs` | Bearer + `jobs:create` | Create job (generates `publicToken`) |
+| `POST` | `/v1/jobs` | Bearer + `jobs:create` | Create job (token generated internally; omitted from response) |
 | `GET` | `/v1/jobs` | Bearer + `jobs:read` | List/filter/paginate jobs |
 | `GET` | `/v1/jobs/:id` | Bearer + `jobs:read` | Job detail |
 | `PATCH` | `/v1/jobs/:id` | Bearer + `jobs:update` | Update job fields |
@@ -183,3 +183,15 @@ Migration `1730000000008` adds the central support queue after the vehicle catal
 - `npm run test:support:postgres`: opt-in transaction/migration suite, fixed disposable `af010_test` database on localhost:55410. It drops that dedicated schema; it never targets the workshop. See the runbook for the disposable Docker command.
 
 [Support runbook](../development-documents/architecture/support-work-queue-runbook.md) · [Current contracts](../development-documents/architecture/api-contracts-v1.md#central-support-work-queue). Real IAM sign-in and production rollout remain separate tracked work.
+
+## AF-001 public tracking
+
+`GET /v1/track/:publicToken` anonymously returns limited status/history, masked registration, ETA and nullable public business `centerPhone`. It excludes note bodies, personal contact details, prices and approval/payment capabilities. Success and controller-error responses use no-store/noindex headers; malformed or unavailable tokens return 404. Completed/cancelled jobs remain readable. No new migration is needed.
+
+The matching customer route is `/t/:token`. Deploy the API privacy/masking changes before or with that website. [Setup, verification and production launch requirements](../development-documents/architecture/public-job-timeline-runbook.md). Focused coverage lives in `test/public-tracking.e2e-spec.ts` and `src/modules/jobs/public-tracking-view.spec.ts`.
+
+### Tracking token replacement (AF-004)
+
+Same-center admin/manager/advisor staff can read `GET /v1/jobs/:id/public-token` with `jobs:read` and replace via `POST /v1/jobs/:id/public-token/rotate` with read/update permission. POST requires strict `If-Match`, `Idempotency-Key` and `{reason}`. Token/version/private audit/non-secret receipt commit together; retries replay the receipt. No notification or public event is written. All non-deleted statuses are allowed. No migration is added.
+
+Run `npm run test:e2e -- --runInBand --testPathPatterns=tracking-token-rotation.e2e` for API coverage. Real transaction tests require the disposable PostgreSQL database named `af004_test` with matching user/password on `127.0.0.1:55404`; then run `AF004_POSTGRES_TEST=true npm run test:e2e -- --runInBand --testPathPatterns=tracking-token-rotation-postgres`. The opt-in suite resets this fixed test database; do not use durable workshop data. [Setup, recovery and rollout runbook](../development-documents/architecture/public-job-timeline-runbook.md#staff-tracking-link-replacement-af-004).

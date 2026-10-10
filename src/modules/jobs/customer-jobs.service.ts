@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JobApprovalStatus } from '../../common/enums/job-work.enum';
+import { JobEventType } from '../../common/enums/job-event-type.enum';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { MeService } from '../customers/me.service';
 import { DecideApprovalDto } from './dto/job-work.dto';
@@ -110,10 +111,47 @@ export class CustomerJobsService {
   }
 
   async track(publicToken: string): Promise<PublicTrackingView> {
-    const job = await this.jobRepository.findOne({
-      where: { publicToken },
-      relations: { serviceCenter: true, vehicle: true, events: true },
-    });
+    if (
+      typeof publicToken !== 'string' ||
+      !/^[A-Za-z0-9_-]{1,128}$/.test(publicToken)
+    ) {
+      throw new NotFoundException();
+    }
+    // One database snapshot, selecting only the public projection and the IDs
+    // TypeORM needs to hydrate relations. Private event bodies are never loaded.
+    const job = await this.jobRepository
+      .createQueryBuilder('job')
+      .leftJoinAndSelect('job.serviceCenter', 'center')
+      .leftJoinAndSelect('job.vehicle', 'vehicle')
+      .leftJoinAndSelect(
+        'job.events',
+        'event',
+        'event.visible_to_customer = :visible AND event.type = :eventType',
+        { visible: true, eventType: JobEventType.STATUS_CHANGE },
+      )
+      .select([
+        'job.id',
+        'job.jobNumber',
+        'job.status',
+        'job.serviceType',
+        'job.estimatedReadyAt',
+        'job.updatedAt',
+        'center.id',
+        'center.name',
+        'center.displayName',
+        'center.publicPhone',
+        'vehicle.id',
+        'vehicle.registrationNumber',
+        'event.id',
+        'event.type',
+        'event.visibleToCustomer',
+        'event.toStatus',
+        'event.createdAt',
+      ])
+      .where('job.public_token = :publicToken', { publicToken })
+      .orderBy('event.createdAt', 'ASC')
+      .addOrderBy('event.id', 'ASC')
+      .getOne();
     if (!job) {
       throw new NotFoundException();
     }

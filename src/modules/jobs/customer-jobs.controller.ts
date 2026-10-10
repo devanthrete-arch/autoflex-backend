@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Header,
   HttpCode,
   HttpStatus,
   Param,
@@ -59,7 +60,9 @@ export class CustomerJobsController {
 export class TrackingController {
   constructor(private readonly customerJobs: CustomerJobsService) {}
 
-  @Get(':publicToken')
+  @Get(['', ':publicToken', '*path'])
+  @Header('Cache-Control', 'no-store')
+  @Header('X-Robots-Tag', 'noindex, nofollow, noarchive')
   @ApiOperation({ summary: 'Progress for whoever holds the tracking link' })
   track(
     @Param('publicToken') publicToken: string,

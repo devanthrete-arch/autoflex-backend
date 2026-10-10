@@ -163,7 +163,10 @@ describe('In-center service (e2e)', () => {
       .send({ odometerKm: 8420 })
       .expect(201);
     jobId = checkIn.body.job.id;
-    publicToken = checkIn.body.job.publicToken;
+    expect(checkIn.body.job.publicToken).toBeUndefined();
+    publicToken = (
+      await asManager(http().get(`/v1/jobs/${jobId}/public-token`)).expect(200)
+    ).body.publicToken;
     expect(checkIn.body.job.jobNumber).toMatch(/^JC-\d{8}-[A-Z2-9]{4}$/);
   }, 60000);
 

@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import type { Request, Response, NextFunction } from 'express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CustomersModule } from '../customers/customers.module';
 import { EventsModule } from '../events/events.module';
@@ -20,6 +21,8 @@ import { JobWorkController } from './job-work.controller';
 import { JobWorkflowService } from './job-workflow.service';
 import { JobsController } from './jobs.controller';
 import { JobsService } from './jobs.service';
+import { JobTrackingController } from './job-tracking.controller';
+import { JobTrackingService } from './job-tracking.service';
 
 @Module({
   imports: [
@@ -35,12 +38,14 @@ import { JobsService } from './jobs.service';
     EventsModule,
   ],
   controllers: [
+    JobTrackingController,
     JobsController,
     JobWorkController,
     CustomerJobsController,
     TrackingController,
   ],
   providers: [
+    JobTrackingService,
     JobStoreService,
     JobsService,
     JobWorkflowService,
@@ -50,4 +55,14 @@ import { JobsService } from './jobs.service';
   ],
   exports: [JobsService, JobStoreService],
 })
-export class JobsModule {}
+export class JobsModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply((_req: Request, res: Response, next: NextFunction) => {
+        res.setHeader('Cache-Control', 'no-store');
+        res.setHeader('Referrer-Policy', 'no-referrer');
+        next();
+      })
+      .forRoutes(JobTrackingController);
+  }
+}

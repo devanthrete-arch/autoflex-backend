@@ -113,7 +113,8 @@ describe('JobsService', () => {
     expect(job.id).toBe('job-1');
     expect(job.status).toBe(JobStatus.CHECKED_IN);
     expect(job.jobNumber).toMatch(/^JC-\d{8}-[A-Z2-9]{4}$/);
-    expect(job.publicToken.length).toBeGreaterThan(20);
+    expect(job).not.toHaveProperty('publicToken');
+    expect(saved?.publicToken?.length).toBeGreaterThan(20);
   });
 
   it('returns 404 for cross-tenant job access', async () => {
