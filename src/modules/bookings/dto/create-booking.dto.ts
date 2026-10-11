@@ -2,6 +2,8 @@ import { Type } from 'class-transformer';
 import {
   ArrayMaxSize,
   IsArray,
+  IsIn,
+  ValidateNested,
   IsDateString,
   IsEnum,
   IsInt,
@@ -23,7 +25,20 @@ import { PaymentMode } from '../../../common/enums/payment-mode.enum';
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
+export class MenuSelectionDto {
+  @IsIn(['SERVICE', 'PACKAGE']) kind: 'SERVICE' | 'PACKAGE';
+  @IsUUID() id: string;
+  @IsInt() @Min(1) @Max(2147483647) version: number;
+}
+
 export class CreateBookingDto {
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(10)
+  @ValidateNested({ each: true })
+  @Type(() => MenuSelectionDto)
+  selections?: MenuSelectionDto[];
+
   @IsUUID()
   serviceCenterId: string;
 

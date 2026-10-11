@@ -1,3 +1,5 @@
+import { ServiceDefinition } from '../modules/offerings/entities/service-definition.entity';
+import { ServicePackage } from '../modules/offerings/entities/service-package.entity';
 import { BookingAttachment } from '../modules/bookings/entities/booking-attachment.entity';
 import { BookingItem } from '../modules/bookings/entities/booking-item.entity';
 import { Booking } from '../modules/bookings/entities/booking.entity';
@@ -45,6 +47,8 @@ import {
 
 /** Explicit entity list for data sources that cannot glob (pg-mem, tests). */
 export const ENTITIES = [
+  ServiceDefinition,
+  ServicePackage,
   SupportAgentProfile,
   SupportRequestEvent,
   ServiceCenter,

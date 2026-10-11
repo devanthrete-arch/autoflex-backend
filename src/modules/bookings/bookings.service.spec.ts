@@ -74,6 +74,7 @@ describe('BookingsService', () => {
     const manager = {
       getRepository: () => ({
         create: (entity: Partial<Booking>) => entity,
+        count: () => bookingRepo.count(),
         findOne: jest.fn().mockResolvedValue(null),
         save: jest.fn(async (entity: Partial<Booking>) => {
           saved = { ...entity, id: 'booking-1' };
@@ -122,7 +123,10 @@ describe('BookingsService', () => {
         },
         {
           provide: OfferingsService,
-          useValue: { requireBookable: jest.fn() },
+          useValue: {
+            lockCenter: jest.fn().mockResolvedValue(center),
+            snapshotSelections: jest.fn().mockResolvedValue([]),
+          },
         },
         {
           provide: DataSource,

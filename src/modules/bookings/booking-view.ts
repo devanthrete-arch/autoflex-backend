@@ -1,3 +1,4 @@
+import type { ServiceScope } from '../offerings/entities/service-package.entity';
 import { inr } from '../../common/money';
 import { generateReference } from '../../common/reference-number';
 import { Booking } from './entities/booking.entity';
@@ -7,6 +8,11 @@ export function generateBookingNumber(now = new Date()): string {
 }
 
 export interface BookingItemView {
+  servicePackageId: string | null;
+  menuVersion: number | null;
+  description: string | null;
+  scope: ServiceScope[];
+
   id: string;
   serviceOfferingId: string | null;
   name: string;
@@ -87,6 +93,10 @@ export function toBookingView(booking: Booking): BookingView {
     items: (booking.items ?? []).map((item) => ({
       id: item.id,
       serviceOfferingId: item.serviceOfferingId,
+      servicePackageId: item.servicePackageId,
+      menuVersion: item.menuVersion,
+      description: item.description,
+      scope: item.scope ?? [],
       name: item.name,
       priceInr: inr(item.priceInr),
       priceIsStarting: item.priceIsStarting,

@@ -1,3 +1,7 @@
+import { Req } from '@nestjs/common';
+import type { Request } from 'express';
+import { menuCommand } from './menu-command';
+import { TransactionalCommand } from '../idempotency/transactional-command.decorator';
 import {
   Body,
   Controller,
@@ -44,6 +48,8 @@ export class PublicOfferingsController {
 @ApiTags('center')
 @ApiBearerAuth()
 @RequireStaff()
+@Roles('admin', 'manager')
+@Permissions('center:manage')
 @Controller('v1/center/offerings')
 export class CenterOfferingsController {
   constructor(private readonly offeringsService: OfferingsService) {}
@@ -55,17 +61,20 @@ export class CenterOfferingsController {
   }
 
   @Post()
+  @TransactionalCommand()
   @Roles('admin', 'manager')
   @Permissions('center:manage')
   @ApiOperation({ summary: 'Add a service to the menu' })
   create(
     @CurrentAuth() auth: AuthContext,
     @Body() dto: CreateOfferingDto,
+    @Req() req: Request,
   ): Promise<OfferingView> {
-    return this.offeringsService.create(auth, dto);
+    return this.offeringsService.create(auth, dto, menuCommand(req, dto, true));
   }
 
   @Patch(':id')
+  @TransactionalCommand()
   @Roles('admin', 'manager')
   @Permissions('center:manage')
   @ApiOperation({ summary: 'Edit, reprice, or pause a service' })
@@ -73,11 +82,13 @@ export class CenterOfferingsController {
     @CurrentAuth() auth: AuthContext,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UpdateOfferingDto,
+    @Req() req: Request,
   ): Promise<OfferingView> {
-    return this.offeringsService.update(auth, id, dto);
+    return this.offeringsService.update(auth, id, dto, menuCommand(req, dto));
   }
 
   @Delete(':id')
+  @TransactionalCommand()
   @HttpCode(HttpStatus.NO_CONTENT)
   @Roles('admin', 'manager')
   @Permissions('center:manage')
@@ -85,7 +96,8 @@ export class CenterOfferingsController {
   async remove(
     @CurrentAuth() auth: AuthContext,
     @Param('id', ParseUUIDPipe) id: string,
+    @Req() req: Request,
   ): Promise<void> {
-    await this.offeringsService.remove(auth, id);
+    await this.offeringsService.remove(auth, id, menuCommand(req, {}));
   }
 }

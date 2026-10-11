@@ -20,6 +20,7 @@ cp .env.example .env
 npm install
 npm run migration:run
 npm run catalog:import
+npm run services:import
 npm run start:workshop
 ```
 
@@ -29,7 +30,7 @@ API: `http://localhost:3001`
 Swagger: `http://localhost:3001/docs`  
 Health: `http://localhost:3001/health`
 
-`start:workshop` upserts the roster on boot. `npm run workshop:bootstrap` does the same upsert without starting the API. Rerunning restores the center card, menu, staff, and customer garages. It does not delete bookings, jobs, or documents. A vehicle's odometer is kept once it has been set.
+`start:workshop` upserts the roster on boot. `npm run workshop:bootstrap` does the same upsert without starting the API. Rerunning restores the center card, staff, and customer garages. The demo menu is seeded only when the center has no offerings (including soft-deleted rows), so manager edits and pauses survive restart. It does not delete bookings, jobs, or documents. A vehicle's odometer is kept once it has been set.
 
 The first start writes `.workshop/dev-signing-key.json` (gitignored). Dev tokens keep working after a restart until that file is deleted.
 
@@ -195,3 +196,11 @@ The matching customer route is `/t/:token`. Deploy the API privacy/masking chang
 Same-center admin/manager/advisor staff can read `GET /v1/jobs/:id/public-token` with `jobs:read` and replace via `POST /v1/jobs/:id/public-token/rotate` with read/update permission. POST requires strict `If-Match`, `Idempotency-Key` and `{reason}`. Token/version/private audit/non-secret receipt commit together; retries replay the receipt. No notification or public event is written. All non-deleted statuses are allowed. No migration is added.
 
 Run `npm run test:e2e -- --runInBand --testPathPatterns=tracking-token-rotation.e2e` for API coverage. Real transaction tests require the disposable PostgreSQL database named `af004_test` with matching user/password on `127.0.0.1:55404`; then run `AF004_POSTGRES_TEST=true npm run test:e2e -- --runInBand --testPathPatterns=tracking-token-rotation-postgres`. The opt-in suite resets this fixed test database; do not use durable workshop data. [Setup, recovery and rollout runbook](../development-documents/architecture/public-job-timeline-runbook.md#staff-tracking-link-replacement-af-004).
+
+## AF-029 service catalog and packages
+
+Migration `1730000000009` adds the shared activity catalog, versioned menu options, packages, and immutable booking/job scope. Run `npm run services:import` after migrations to import the initial 12 activities. This is separate from the vehicle `catalog:import`; it creates no centers, staff, customers or prices. Neither catalog is loaded by `npm start`. Workshop startup then links two exact, reviewed Apex demo services to their catalog activities without changing their prices; other existing offerings remain unmapped until a manager reviews them.
+
+Admins/managers with `center:manage` configure the menu in the desk's **Services & packages** screen. Menu writes require an explicit `Idempotency-Key`; edits/removal also require `If-Match`. Shared catalog identity, exact service filtering, typed booking selections and package contents are documented in the [contracts](../development-documents/architecture/api-contracts-v1.md) and [runbook](../development-documents/architecture/service-marketplace-runbook.md).
+
+PostgreSQL integration verification uses the isolated fixed target on port 55429, never the normal workshop environment. See the runbook before running `AF029_POSTGRES_TEST=true npm run test:e2e -- --runInBand --testPathPatterns=service-marketplace`.

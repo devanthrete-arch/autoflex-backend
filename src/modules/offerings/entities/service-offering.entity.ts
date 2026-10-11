@@ -12,10 +12,21 @@ import {
 import { VehicleType } from '../../../common/enums/vehicle-type.enum';
 import { ServiceCategory } from '../../marketplace/entities/service-category.entity';
 import { ServiceCenter } from '../../tenancy/entities/service-center.entity';
+import { ServiceDefinition } from './service-definition.entity';
 
 /** A priced item on a center's service menu. `vehicleType` null fits every type. */
 @Entity('service_offerings')
 export class ServiceOffering {
+  @Column({ name: 'service_definition_id', type: 'uuid', nullable: true })
+  serviceDefinitionId: string | null;
+
+  @ManyToOne(() => ServiceDefinition, { nullable: true, onDelete: 'RESTRICT' })
+  @JoinColumn({ name: 'service_definition_id' })
+  serviceDefinition: ServiceDefinition | null;
+
+  @Column({ type: 'integer', default: 1 })
+  version: number;
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

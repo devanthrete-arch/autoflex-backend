@@ -1,3 +1,4 @@
+import type { ServiceScope } from '../../offerings/entities/service-package.entity';
 import {
   Column,
   CreateDateColumn,
@@ -19,6 +20,9 @@ import { ServiceJob } from './service-job.entity';
 
 @Entity('service_job_line_items')
 export class JobLineItem {
+  @Column({ type: 'jsonb', default: () => "'[]'" })
+  scope: ServiceScope[];
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

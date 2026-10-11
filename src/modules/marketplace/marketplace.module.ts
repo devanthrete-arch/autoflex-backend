@@ -1,3 +1,4 @@
+import { OfferingsModule } from '../offerings/offerings.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServiceCenter } from '../tenancy/entities/service-center.entity';
@@ -19,6 +20,7 @@ import { MarketplaceService } from './marketplace.service';
       ServiceCenter,
     ]),
     TenancyModule,
+    OfferingsModule,
   ],
   controllers: [MarketplaceController],
   providers: [MarketplaceService],

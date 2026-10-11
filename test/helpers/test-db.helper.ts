@@ -1,3 +1,4 @@
+import { VehicleType } from '../../src/common/enums/vehicle-type.enum';
 import { DataSource } from 'typeorm';
 import { ServiceCenterStatus } from '../../src/common/enums/service-center-status.enum';
 import { ServiceCenter } from '../../src/modules/tenancy/entities/service-center.entity';
@@ -26,6 +27,7 @@ export async function seedTestTenancy(dataSource: DataSource): Promise<{
       iamDomainId: TEST_DOMAIN_ID,
       name: 'Test Motors',
       status: ServiceCenterStatus.ACTIVE,
+      supportedVehicleTypes: [VehicleType.TWO_WHEELER],
     }),
   );
 
@@ -43,6 +45,7 @@ export async function seedTestTenancy(dataSource: DataSource): Promise<{
       iamDomainId: TEST_OTHER_DOMAIN_ID,
       name: 'Other Motors',
       status: ServiceCenterStatus.ACTIVE,
+      supportedVehicleTypes: [VehicleType.TWO_WHEELER],
     }),
   );
 

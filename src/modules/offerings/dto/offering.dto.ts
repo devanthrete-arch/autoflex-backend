@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -15,7 +15,10 @@ import {
 import { VehicleType } from '../../../common/enums/vehicle-type.enum';
 
 export class CreateOfferingDto {
+  @IsOptional() @IsUUID() serviceDefinitionId?: string;
+
   @IsString()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @MinLength(2)
   @MaxLength(150)
   name: string;
@@ -37,6 +40,7 @@ export class CreateOfferingDto {
   @Type(() => Number)
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
+  @Max(9999999)
   priceInr: number;
 
   @IsOptional()
@@ -56,8 +60,11 @@ export class CreateOfferingDto {
 }
 
 export class UpdateOfferingDto {
+  @IsOptional() @IsUUID() serviceDefinitionId?: string;
+
   @IsOptional()
   @IsString()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @MinLength(2)
   @MaxLength(150)
   name?: string;
@@ -79,6 +86,7 @@ export class UpdateOfferingDto {
   @Type(() => Number)
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
+  @Max(9999999)
   priceInr?: number;
 
   @IsOptional()
@@ -106,4 +114,9 @@ export class ListOfferingsQueryDto {
   @IsOptional()
   @IsEnum(VehicleType)
   vehicleType?: VehicleType;
+}
+
+export class ListServiceDefinitionsQueryDto {
+  @IsOptional() @Type(() => Number) @IsInt() @Min(1) @Max(200) limit?: number;
+  @IsOptional() @Type(() => Number) @IsInt() @Min(0) offset?: number;
 }

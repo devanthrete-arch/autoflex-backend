@@ -7,6 +7,7 @@ import {
   ServiceCenterCategory,
 } from '../modules/marketplace/entities/service-category.entity';
 import { ServiceOffering } from '../modules/offerings/entities/service-offering.entity';
+import { ServiceCatalogImporter } from '../modules/offerings/service-catalog.importer';
 import { ServiceCenter } from '../modules/tenancy/entities/service-center.entity';
 import { DEV_CENTER_DOMAINS, DEV_CUSTOMER } from './dev-personas';
 import { bootstrapWorkshop } from './workshop-bootstrap';
@@ -177,6 +178,7 @@ export async function seedDevData(
   baseUrl: string,
   tokens: SeedTokens,
 ): Promise<SeedSummary> {
+  await new ServiceCatalogImporter(dataSource).importFromSeed();
   const apex = await bootstrapWorkshop(dataSource);
   await seedMemoryNeighborCenters(dataSource);
 

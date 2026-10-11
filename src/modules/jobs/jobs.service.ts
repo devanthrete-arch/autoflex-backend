@@ -279,6 +279,7 @@ export class JobsService {
               serviceCenterId,
               kind: JobLineKind.LABOUR,
               description: item.name,
+              scope: item.scope ?? [],
               quantity: String(item.quantity),
               unitPriceInr: String(item.priceInr),
               amountInr: lineAmount(item.quantity, item.priceInr),

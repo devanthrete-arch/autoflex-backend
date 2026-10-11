@@ -1,6 +1,6 @@
 import { SupportAgentProfile } from '../modules/support-identity/support-agent-profile.entity';
 import { DEV_SUPPORT_DOMAIN_ID, SUPPORT_PERSONAS } from './dev-personas';
-import { DataSource } from 'typeorm';
+import { DataSource, IsNull } from 'typeorm';
 import { CommunicationChannel } from '../common/enums/communication-channel.enum';
 import { GarageVehicleStatus } from '../common/enums/garage-vehicle-status.enum';
 import { PromotionScope } from '../common/enums/promotion-scope.enum';
@@ -15,6 +15,8 @@ import {
   ServiceCenterCategory,
 } from '../modules/marketplace/entities/service-category.entity';
 import { ServiceOffering } from '../modules/offerings/entities/service-offering.entity';
+import { ServiceDefinition } from '../modules/offerings/entities/service-definition.entity';
+import { ServicePackage } from '../modules/offerings/entities/service-package.entity';
 import { OperatingHour } from '../modules/tenancy/entities/operating-hour.entity';
 import { ServiceCenter } from '../modules/tenancy/entities/service-center.entity';
 import { StaffProfile } from '../modules/tenancy/entities/staff-profile.entity';
@@ -253,6 +255,63 @@ async function upsertMenu(
 ): Promise<void> {
   const offerings = dataSource.getRepository(ServiceOffering);
   const links = dataSource.getRepository(ServiceCenterCategory);
+  const knownMappings = [
+    { menuName: 'Engine oil change', definitionSlug: 'engine-oil-change' },
+    {
+      menuName: 'Brake inspection and adjustment',
+      definitionSlug: 'brake-inspection',
+    },
+  ];
+  const linkKnownServices = async () => {
+    const definitions = await dataSource
+      .getRepository(ServiceDefinition)
+      .findBy({
+        isActive: true,
+      });
+    if (!definitions.length) return;
+    await dataSource.transaction(async (manager) => {
+      await manager.getRepository(ServiceCenter).findOne({
+        where: { id: serviceCenterId },
+        lock: { mode: 'pessimistic_write' },
+      });
+      for (const mapping of knownMappings) {
+        const definition = definitions.find(
+          (d) => d.slug === mapping.definitionSlug,
+        );
+        const seeded = MENU.find((item) => item.name === mapping.menuName);
+        if (!definition || !seeded) continue;
+        const row = await manager.getRepository(ServiceOffering).findOneBy({
+          serviceCenterId,
+          name: seeded.name,
+          categoryId: categories.get(seeded.slug)?.id,
+          vehicleType: seeded.vehicleType ?? IsNull(),
+          durationMinutes: seeded.minutes,
+          serviceDefinitionId: IsNull(),
+        });
+        if (row && Number(row.priceInr) === seeded.price) {
+          row.serviceDefinitionId = definition.id;
+          row.version++;
+          await manager.getRepository(ServiceOffering).save(row);
+          const packages = await manager
+            .getRepository(ServicePackage)
+            .findBy({ serviceCenterId });
+          for (const pkg of packages.filter((p) =>
+            p.components.some((component) => component.offeringId === row.id),
+          )) {
+            pkg.version++;
+            await manager.getRepository(ServicePackage).save(pkg);
+          }
+        }
+      }
+    });
+  };
+  // Seed an empty workshop only. Restarting must not undo manager menu edits.
+  if (
+    await offerings.count({ where: { serviceCenterId }, withDeleted: true })
+  ) {
+    await linkKnownServices();
+    return;
+  }
   for (const [index, item] of MENU.entries()) {
     const category = categories.get(item.slug);
     if (!category) {
@@ -288,6 +347,7 @@ async function upsertMenu(
       );
     }
   }
+  await linkKnownServices();
 }
 
 async function upsertStaff(

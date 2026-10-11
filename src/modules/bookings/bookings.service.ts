@@ -166,35 +166,44 @@ export class BookingsService {
     }
     await this.assertWithinHours(center, slotStart, slotEnd);
 
-    const offerings = dto.offeringIds?.length
-      ? await this.offeringsService.requireBookable(center.id, dto.offeringIds)
-      : [];
-    for (const offering of offerings) {
-      if (
-        offering.vehicleType &&
-        offering.vehicleType !== vehicle.vehicleType
-      ) {
-        throw new BadRequestException(
-          `${offering.name} is not offered for this vehicle type`,
-        );
-      }
-    }
-    const estimate = offerings.length
-      ? offerings.reduce((sum, o) => sum + Number(o.priceInr), 0)
-      : (dto.estimateInr ?? SELF_CHECKIN_ESTIMATE_INR);
-
-    const held = await this.bookingRepository.count({
-      where: {
-        serviceCenterId: center.id,
-        slotStart,
-        status: In(SLOT_HOLDING_STATUSES),
-      },
-    });
-    if (held >= center.slotCapacity) {
-      throw new BadRequestException('Slot is no longer available');
-    }
-
     const bookingId = await this.dataSource.transaction(async (manager) => {
+      const lockedCenter = await this.offeringsService.lockCenter(
+        manager,
+        center.id,
+      );
+      if (
+        lockedCenter.status !== ServiceCenterStatus.ACTIVE ||
+        !lockedCenter.bookingEnabled ||
+        !lockedCenter.supportedVehicleTypes.includes(vehicle.vehicleType)
+      )
+        throw new BadRequestException(
+          'This center is no longer available for this vehicle',
+        );
+      await this.assertWithinHours(lockedCenter, slotStart, slotEnd);
+      const offerings = await this.offeringsService.snapshotSelections(
+        manager,
+        lockedCenter,
+        vehicle.vehicleType,
+        dto.selections ?? [],
+        dto.offeringIds ?? [],
+      );
+      const estimate = offerings.length
+        ? offerings.reduce(
+            (paise, item) => paise + Math.round(Number(item.priceInr) * 100),
+            0,
+          ) / 100
+        : (dto.estimateInr ?? SELF_CHECKIN_ESTIMATE_INR);
+      const held = await manager
+        .getRepository(Booking)
+        .count({
+          where: {
+            serviceCenterId: center.id,
+            slotStart,
+            status: In(SLOT_HOLDING_STATUSES),
+          },
+        });
+      if (held >= lockedCenter.slotCapacity)
+        throw new BadRequestException('Slot is no longer available');
       const repo = manager.getRepository(Booking);
       const now = new Date();
       const booking = repo.create({
@@ -202,10 +211,10 @@ export class BookingsService {
         customerProfileId: profile.id,
         vehicleId: vehicle.id,
         mode: BookingMode.SELF_CHECKIN,
-        status: center.autoAccept
+        status: lockedCenter.autoAccept
           ? BookingStatus.AWAITING_ARRIVAL
           : BookingStatus.PENDING_CENTER,
-        confirmedAt: center.autoAccept ? now : null,
+        confirmedAt: lockedCenter.autoAccept ? now : null,
         slotStart,
         slotEnd,
         issueDescription: dto.issueDescription?.trim() || null,
@@ -220,12 +229,7 @@ export class BookingsService {
           offerings.map((offering) =>
             itemRepo.create({
               bookingId: saved.id,
-              serviceOfferingId: offering.id,
-              name: offering.name,
-              priceInr: offering.priceInr,
-              priceIsStarting: offering.priceIsStarting,
-              durationMinutes: offering.durationMinutes,
-              quantity: 1,
+              ...offering,
             }),
           ),
         );

@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
@@ -129,6 +130,7 @@ describe('In-center service (e2e)', () => {
     });
 
     const periodic = await asManager(http().post('/v1/center/offerings'))
+      .set('Idempotency-Key', randomUUID())
       .send({ name: 'Periodic service', priceInr: 1499, durationMinutes: 90 })
       .expect(201);
     await asCustomer(http().put('/v1/me/profile'))

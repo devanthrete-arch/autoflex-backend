@@ -1,3 +1,5 @@
+import { ServiceCenter } from '../src/modules/tenancy/entities/service-center.entity';
+import { randomUUID } from 'crypto';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
@@ -48,7 +50,10 @@ describe('Discovery and reservation (e2e)', () => {
   const asCustomer = (req: request.Test) =>
     req.set('Authorization', `Bearer ${customer}`);
   const asManager = (req: request.Test) =>
-    req.set('Authorization', `Bearer ${manager}`);
+    req
+      .set('Authorization', `Bearer ${manager}`)
+      .set('Idempotency-Key', randomUUID())
+      .set('If-Match', '1');
 
   const book = (body: Record<string, unknown>) =>
     asCustomer(http().post('/v1/bookings')).send({
@@ -69,6 +74,12 @@ describe('Discovery and reservation (e2e)', () => {
     const tenancy = await seedTestTenancy(dataSource);
     centerId = (await seedCenterListing(dataSource, tenancy.serviceCenter.id))
       .id;
+
+    await dataSource
+      .getRepository(ServiceCenter)
+      .update(centerId, {
+        supportedVehicleTypes: ['TWO_WHEELER', 'FOUR_WHEELER'] as any,
+      });
 
     customer = await fixture.signAccessToken({
       sub: TEST_CUSTOMER_IAM_USER_ID,

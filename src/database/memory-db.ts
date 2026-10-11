@@ -5,6 +5,31 @@ import { ENTITIES } from './entities';
 import { MIGRATIONS } from './migration-list';
 
 function registerPgMemFunctions(db: IMemoryDb): void {
+  for (const [name, fn] of Object.entries({
+    radians: (n: number) => (n * Math.PI) / 180,
+    sin: Math.sin,
+    cos: Math.cos,
+    acos: Math.acos,
+  })) {
+    db.public.registerFunction({
+      name,
+      args: [DataType.float],
+      returns: DataType.float,
+      implementation: fn,
+    });
+  }
+  for (const [name, fn] of Object.entries({
+    least: Math.min,
+    greatest: Math.max,
+  })) {
+    db.public.registerFunction({
+      name,
+      args: [DataType.float, DataType.float],
+      returns: DataType.float,
+      implementation: fn,
+    });
+  }
+
   // pg-mem timestamps have millisecond precision. Production uses PostgreSQL's
   // native formatter to retain all six fractional digits in queue cursors.
   db.public.registerFunction({

@@ -1,3 +1,4 @@
+import type { ServiceScope } from '../offerings/entities/service-package.entity';
 import { JobEventType } from '../../common/enums/job-event-type.enum';
 import { JobStatus } from '../../common/enums/job-status.enum';
 import {
@@ -14,6 +15,7 @@ import { JobMedia } from './entities/job-media.entity';
 import { ServiceJob } from './entities/service-job.entity';
 
 export interface LineItemView {
+  scope: ServiceScope[];
   id: string;
   kind: string;
   description: string;
@@ -162,6 +164,7 @@ export function toLineItemView(line: JobLineItem): LineItemView {
     id: line.id,
     kind: line.kind,
     description: line.description,
+    scope: Array.isArray(line.scope) ? line.scope : [],
     partType: line.partType,
     quantity: Number(line.quantity),
     unitPriceInr: inr(line.unitPriceInr),

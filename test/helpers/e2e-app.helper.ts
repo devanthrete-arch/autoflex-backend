@@ -17,6 +17,13 @@ export interface E2eContext {
 export async function createE2eApp(): Promise<E2eContext> {
   const { dataSource, memoryDb } = await createMemoryDataSource();
 
+  const app = await createApiApp(dataSource);
+  return { app, dataSource, memoryDb };
+}
+
+export async function createApiApp(
+  dataSource: DataSource,
+): Promise<INestApplication> {
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [
       ConfigModule.forRoot({ isGlobal: true }),
@@ -39,5 +46,5 @@ export async function createE2eApp(): Promise<E2eContext> {
   );
   await app.init();
 
-  return { app, dataSource, memoryDb };
+  return app;
 }
