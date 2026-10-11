@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ConflictException,
   ForbiddenException,
+  NotFoundException,
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -11,6 +12,8 @@ import { BookingStatus } from '../../common/enums/booking-status.enum';
 import { PaymentMode } from '../../common/enums/payment-mode.enum';
 import { ServiceCenterStatus } from '../../common/enums/service-center-status.enum';
 import { VehicleType } from '../../common/enums/vehicle-type.enum';
+import { GarageVehicleStatus } from '../../common/enums/garage-vehicle-status.enum';
+import { GarageVehicle } from '../customers/entities/garage-vehicle.entity';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { GarageService } from '../customers/garage.service';
 import { MeService } from '../customers/me.service';
@@ -32,6 +35,15 @@ describe('BookingsService', () => {
     save: jest.Mock;
   };
   let saved: Partial<Booking> | null;
+  let lockedVehicle: Partial<GarageVehicle> | null;
+  let previewCenter: typeof center | null;
+  let query: jest.Mock;
+  let transaction: jest.Mock;
+  let offerings: {
+    lockCenter: jest.Mock;
+    snapshotSelections: jest.Mock;
+    validateSelections: jest.Mock;
+  };
 
   const auth: AuthContext = {
     actorType: 'customer',
@@ -64,6 +76,21 @@ describe('BookingsService', () => {
 
   beforeEach(async () => {
     saved = null;
+    previewCenter = center;
+    query = jest.fn().mockResolvedValue([]);
+    offerings = {
+      lockCenter: jest.fn().mockResolvedValue(center),
+      snapshotSelections: jest.fn().mockResolvedValue([]),
+      validateSelections: jest
+        .fn()
+        .mockResolvedValue({ vehicleTypes: center.supportedVehicleTypes }),
+    };
+    lockedVehicle = {
+      id: 'vehicle-1',
+      customerProfileId: 'profile-1',
+      status: GarageVehicleStatus.ACTIVE,
+      vehicleType: VehicleType.TWO_WHEELER,
+    };
     bookingRepo = {
       find: jest.fn().mockResolvedValue([]),
       findOne: jest.fn().mockResolvedValue(null),
@@ -72,16 +99,33 @@ describe('BookingsService', () => {
       save: jest.fn(async (entity: Booking) => entity),
     };
     const manager = {
-      getRepository: () => ({
-        create: (entity: Partial<Booking>) => entity,
-        count: () => bookingRepo.count(),
-        findOne: jest.fn().mockResolvedValue(null),
-        save: jest.fn(async (entity: Partial<Booking>) => {
-          saved = { ...entity, id: 'booking-1' };
-          return saved;
-        }),
-      }),
+      query,
+      getRepository: (entity: unknown) =>
+        entity === GarageVehicle
+          ? {
+              findOne: jest.fn(async () => lockedVehicle),
+            }
+          : entity === ServiceCenter
+            ? { findOne: jest.fn(async () => previewCenter) }
+            : {
+                create: (entity: Partial<Booking>) => entity,
+                count: () => bookingRepo.count(),
+                findOne: jest.fn().mockResolvedValue(null),
+                save: jest.fn(async (entity: Partial<Booking>) => {
+                  saved = { ...entity, id: 'booking-1' };
+                  return saved;
+                }),
+              },
     };
+    transaction = jest.fn(
+      (
+        isolationOrWork: string | ((m: typeof manager) => unknown),
+        work?: (m: typeof manager) => unknown,
+      ) =>
+        typeof isolationOrWork === 'string'
+          ? work!(manager)
+          : isolationOrWork(manager),
+    );
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -98,6 +142,7 @@ describe('BookingsService', () => {
             getOwned: jest.fn().mockResolvedValue({
               id: 'vehicle-1',
               vehicleType: VehicleType.TWO_WHEELER,
+              status: GarageVehicleStatus.ACTIVE,
             }),
           },
         },
@@ -123,22 +168,50 @@ describe('BookingsService', () => {
         },
         {
           provide: OfferingsService,
-          useValue: {
-            lockCenter: jest.fn().mockResolvedValue(center),
-            snapshotSelections: jest.fn().mockResolvedValue([]),
-          },
+          useValue: offerings,
         },
         {
           provide: DataSource,
           useValue: {
-            transaction: (work: (m: typeof manager) => unknown) =>
-              work(manager),
+            transaction,
           },
         },
       ],
     }).compile();
 
     service = module.get(BookingsService);
+  });
+
+  it('previews using one read-only snapshot without acquiring the reservation lock', async () => {
+    const picks = { selections: [], vehicleType: VehicleType.TWO_WHEELER };
+    await expect(service.validateSelection(center.id, picks)).resolves.toEqual({
+      vehicleTypes: center.supportedVehicleTypes,
+    });
+    expect(transaction).toHaveBeenCalledWith(
+      'REPEATABLE READ',
+      expect.any(Function),
+    );
+    expect(query).toHaveBeenCalledWith('SET TRANSACTION READ ONLY');
+    expect(offerings.lockCenter).not.toHaveBeenCalled();
+    expect(offerings.validateSelections).toHaveBeenCalledWith(
+      expect.anything(),
+      center,
+      picks.selections,
+      picks.vehicleType,
+    );
+    expect(saved).toBeNull();
+    expect(bookingRepo.count).not.toHaveBeenCalled();
+  });
+
+  it('checks center availability in the preview snapshot rather than an earlier repository read', async () => {
+    for (const current of [null, { ...center, bookingEnabled: false }]) {
+      previewCenter = current;
+      await expect(
+        service.validateSelection(center.id, { selections: [] }),
+      ).rejects.toBeInstanceOf(NotFoundException);
+    }
+    expect(offerings.validateSelections).not.toHaveBeenCalled();
+    expect(offerings.lockCenter).not.toHaveBeenCalled();
   });
 
   it('creates SELF_CHECKIN as AWAITING_ARRIVAL when autoAccept is true', async () => {
@@ -155,6 +228,35 @@ describe('BookingsService', () => {
     expect(booking.estimateInr).toBe('2499.00');
     expect(booking.bookingNumber).toMatch(/^AF-\d{8}-[A-Z2-9]{4}$/);
     expect(booking.confirmedAt).toBeInstanceOf(Date);
+  });
+
+  it('rechecks archived status after the center lock and before reserving capacity', async () => {
+    lockedVehicle!.status = GarageVehicleStatus.ARCHIVED;
+    await expect(
+      service.create(auth, {
+        serviceCenterId: 'center-1',
+        vehicleId: 'vehicle-1',
+        mode: BookingMode.SELF_CHECKIN,
+        ...futureSlot,
+      }),
+    ).rejects.toMatchObject({
+      response: { code: 'BOOKING_VEHICLE_UNAVAILABLE' },
+    });
+    expect(saved).toBeNull();
+    expect(bookingRepo.count).not.toHaveBeenCalled();
+  });
+
+  it('refuses a vehicle that changed ownership before the reservation transaction', async () => {
+    lockedVehicle = null;
+    await expect(
+      service.create(auth, {
+        serviceCenterId: 'center-1',
+        vehicleId: 'vehicle-1',
+        mode: BookingMode.SELF_CHECKIN,
+        ...futureSlot,
+      }),
+    ).rejects.toMatchObject({ status: 404 });
+    expect(saved).toBeNull();
   });
 
   it('rejects non-SELF_CHECKIN modes', async () => {

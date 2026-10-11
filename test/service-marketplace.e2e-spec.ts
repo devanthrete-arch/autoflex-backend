@@ -5,6 +5,8 @@ import { DataSource } from 'typeorm';
 import { ENTITIES } from '../src/database/entities';
 import { MIGRATIONS } from '../src/database/migration-list';
 import { ServiceCatalogImporter } from '../src/modules/offerings/service-catalog.importer';
+import { OfferingsService } from '../src/modules/offerings/offerings.service';
+import { BOOKING_SELECTION_LIMITS } from '../src/modules/bookings/booking-selection-rate-limit.guard';
 import { ServiceOffering } from '../src/modules/offerings/entities/service-offering.entity';
 import { ServicePackage } from '../src/modules/offerings/entities/service-package.entity';
 import { ServiceDefinition } from '../src/modules/offerings/entities/service-definition.entity';
@@ -14,6 +16,9 @@ import {
 } from '../src/modules/marketplace/entities/service-category.entity';
 import { Booking } from '../src/modules/bookings/entities/booking.entity';
 import { BookingItem } from '../src/modules/bookings/entities/booking-item.entity';
+import { GarageVehicle } from '../src/modules/customers/entities/garage-vehicle.entity';
+import { GarageVehicleStatus } from '../src/common/enums/garage-vehicle-status.enum';
+import { GarageService } from '../src/modules/customers/garage.service';
 import { ServiceCenter } from '../src/modules/tenancy/entities/service-center.entity';
 import { EventsService } from '../src/modules/events/events.service';
 import { createJwtTestFixture } from '../src/test-utils/jwt-test.helper';
@@ -71,6 +76,14 @@ describe(`Service marketplace (${postgres ? 'PostgreSQL' : 'memory'} API)`, () =
     version: item.version,
     kind,
   });
+  const validate = (
+    selections: unknown[],
+    vehicleType?: string,
+    id = centerId,
+  ) =>
+    http()
+      .post(`/v1/centers/${id}/booking-selection`)
+      .send({ selections, ...(vehicleType ? { vehicleType } : {}) });
   beforeAll(async () => {
     process.env.IAM_CUSTOMER_DOMAIN_APPLICATION_ID = TEST_CUSTOMER_APP_ID;
     const fixture = await createJwtTestFixture();
@@ -346,6 +359,345 @@ describe(`Service marketplace (${postgres ? 'PostgreSQL' : 'memory'} API)`, () =
     await book([selection(bundle, 'PACKAGE'), selection(brake)]).expect(400);
     expect(await db.getRepository(Booking).count()).toBe(before);
   });
+  it('validates the cart without a vehicle or a reservation, including shared work and packages', async () => {
+    const before = await db.getRepository(Booking).count();
+    expect((await validate([]).expect(200)).body.vehicleTypes).toEqual([
+      'TWO_WHEELER',
+      'FOUR_WHEELER',
+    ]);
+    expect(
+      (await validate([selection(brake)]).expect(200)).body.vehicleTypes,
+    ).toEqual(['TWO_WHEELER']);
+    expect(
+      (await validate([selection(bundle, 'PACKAGE')]).expect(200)).body
+        .vehicleTypes,
+    ).toEqual(['TWO_WHEELER']);
+    const menu = (
+      await http()
+        .get(`/v1/marketplace/centers/${centerId}/offerings`)
+        .expect(200)
+    ).body;
+    const shared = menu.find((row: any) => row.name === 'Wheel balancing');
+    expect(shared.vehicleTypes).toEqual(['TWO_WHEELER', 'FOUR_WHEELER']);
+    expect(
+      (await validate([selection(shared)]).expect(200)).body.vehicleTypes,
+    ).toEqual(shared.vehicleTypes);
+    expect(await db.getRepository(Booking).count()).toBe(before);
+  });
+
+  pgIt(
+    'finishes an anonymous preview while a center writer still holds the booking lock',
+    async () => {
+      const runner = db.createQueryRunner();
+      await runner.connect();
+      await runner.startTransaction();
+      let preview: Promise<request.Response> | undefined;
+      const before = await db.getRepository(Booking).count();
+      try {
+        await runner.manager
+          .getRepository(ServiceCenter)
+          .update(centerId, { bookingEnabled: false });
+        // A locked preview times out here. The writer is intentionally not released until after the response.
+        preview = validate([selection(bundle, 'PACKAGE')])
+          .timeout({ response: 1500, deadline: 2000 })
+          .then((response) => response);
+        const response = await preview;
+        expect(response.status).toBe(200);
+        expect(response.body.vehicleTypes).toEqual(['TWO_WHEELER']);
+        expect(runner.isTransactionActive).toBe(true);
+        expect(await db.getRepository(Booking).count()).toBe(before);
+      } finally {
+        if (runner.isTransactionActive) await runner.rollbackTransaction();
+        await preview?.catch(() => undefined);
+        await runner.release();
+      }
+    },
+  );
+
+  pgIt(
+    'uses one read-only snapshot when a component edit commits between its service and package reads',
+    async () => {
+      const offerings = app.get(OfferingsService);
+      const resolve = offerings.validateSelections.bind(offerings);
+      const originalBattery = await db
+        .getRepository(ServiceOffering)
+        .findOneByOrFail({ id: battery.id });
+      const originalBundle = await db
+        .getRepository(ServicePackage)
+        .findOneByOrFail({ id: bundle.id });
+      const spy = jest
+        .spyOn(offerings, 'validateSelections')
+        .mockImplementationOnce(async (snapshot, center, selections, type) => {
+          expect(await snapshot.query('SHOW transaction_isolation')).toEqual([
+            { transaction_isolation: 'repeatable read' },
+          ]);
+          expect(await snapshot.query('SHOW transaction_read_only')).toEqual([
+            { transaction_read_only: 'on' },
+          ]);
+          const repository = snapshot.getRepository(ServiceOffering);
+          const find = repository.find.bind(repository);
+          const read = jest
+            .spyOn(repository, 'find')
+            .mockImplementationOnce(async (options) => {
+              const rows = await find(options);
+              await db.transaction(async (writer) => {
+                await writer.query("SET LOCAL lock_timeout = '1s'");
+                await offerings.lockCenter(writer, centerId);
+                await writer
+                  .getRepository(ServiceOffering)
+                  .update(originalBattery.id, {
+                    description: 'Scope committed during preview',
+                    version: originalBattery.version + 1,
+                  });
+                await writer
+                  .getRepository(ServicePackage)
+                  .update(originalBundle.id, {
+                    version: originalBundle.version + 1,
+                  });
+              });
+              return rows;
+            });
+          try {
+            return await resolve(snapshot, center, selections, type);
+          } finally {
+            read.mockRestore();
+          }
+        });
+      try {
+        // The first preview sees the old component AND package, rather than a mixture of versions.
+        await validate([selection(bundle, 'PACKAGE')]).expect(200);
+        spy.mockRestore();
+        // A new preview and the authoritative reservation see the newly committed version.
+        const before = await db.getRepository(Booking).count();
+        const next = await validate([selection(bundle, 'PACKAGE')]).expect(409);
+        expect(next.body.code).toBe('MENU_CHANGED');
+        await book([selection(bundle, 'PACKAGE')]).expect(409);
+        expect(await db.getRepository(Booking).count()).toBe(before);
+      } finally {
+        spy.mockRestore();
+        await db.transaction(async (writer) => {
+          await offerings.lockCenter(writer, centerId);
+          await writer
+            .getRepository(ServiceOffering)
+            .update(originalBattery.id, {
+              description: originalBattery.description,
+              version: originalBattery.version,
+            });
+          await writer
+            .getRepository(ServicePackage)
+            .update(originalBundle.id, { version: originalBundle.version });
+        });
+      }
+    },
+  );
+
+  it('rejects mixed services and packages in preflight and final reservation, including legacy bodies', async () => {
+    const createCarService = async (
+      name: string,
+    ): Promise<Pick<ServiceOffering, 'id' | 'version'>> =>
+      (
+        await command(http().post('/v1/center/offerings'))
+          .send({
+            name,
+            vehicleType: 'FOUR_WHEELER',
+            priceInr: 500,
+            durationMinutes: 30,
+          })
+          .expect(201)
+      ).body;
+    const foam = await createCarService('Foam cleaning');
+    const interior = await createCarService('Interior cleaning');
+    const carPackage: Pick<ServicePackage, 'id' | 'version'> = (
+      await command(http().post('/v1/center/packages'))
+        .send({
+          name: 'Car cleaning',
+          vehicleType: 'FOUR_WHEELER',
+          priceInr: 900,
+          priceIsStarting: false,
+          durationMinutes: 60,
+          isActive: true,
+          components: [
+            { offeringId: foam.id, quantity: 1 },
+            { offeringId: interior.id, quantity: 1 },
+          ],
+        })
+        .expect(201)
+    ).body;
+    const beforeBookings = await db.getRepository(Booking).count();
+    const beforeItems = await db.getRepository(BookingItem).count();
+    for (const picks of [
+      [selection(brake), selection(foam)],
+      [selection(bundle, 'PACKAGE'), selection(carPackage, 'PACKAGE')],
+    ]) {
+      expect((await validate(picks).expect(409)).body.code).toBe(
+        'MENU_VEHICLE_MISMATCH',
+      );
+      expect((await book(picks).expect(409)).body.code).toBe(
+        'MENU_UNAVAILABLE',
+      );
+    }
+    await http()
+      .post('/v1/bookings')
+      .set('Authorization', `Bearer ${customer}`)
+      .send({
+        serviceCenterId: centerId,
+        vehicleId,
+        mode: 'SELF_CHECKIN',
+        ...slot,
+        offeringIds: [brake.id, foam.id],
+      })
+      .expect(400);
+    expect(await db.getRepository(Booking).count()).toBe(beforeBookings);
+    expect(await db.getRepository(BookingItem).count()).toBe(beforeItems);
+    await db.getRepository(ServicePackage).delete(carPackage.id);
+    await db.getRepository(ServiceOffering).softDelete([foam.id, interior.id]);
+  });
+
+  it('checks definition restrictions on historical untyped rows instead of treating them as universal', async () => {
+    const row = await db.getRepository(ServiceOffering).save({
+      serviceCenterId: centerId,
+      serviceDefinitionId: definition(1),
+      vehicleType: null,
+      name: 'Historical alignment',
+      priceInr: '500.00',
+      durationMinutes: 30,
+    });
+    const menu = (
+      await http()
+        .get(`/v1/marketplace/centers/${centerId}/offerings`)
+        .expect(200)
+    ).body;
+    expect(menu.find((item: any) => item.id === row.id).vehicleTypes).toEqual([
+      'FOUR_WHEELER',
+    ]);
+    expect(
+      (await validate([selection(row)]).expect(200)).body.vehicleTypes,
+    ).toEqual(['FOUR_WHEELER']);
+    await validate([selection(row)], 'TWO_WHEELER').expect(409);
+    await book([selection(row)]).expect(409);
+    await db.getRepository(ServiceOffering).softDelete(row.id);
+  });
+
+  it('rejects stale, overlapping, cross-center, malformed and oversized selections on the server', async () => {
+    expect(
+      (await validate([{ ...selection(brake), version: 1 }]).expect(409)).body
+        .code,
+    ).toBe('MENU_CHANGED');
+    expect(
+      (
+        await validate([selection(bundle, 'PACKAGE'), selection(brake)]).expect(
+          400,
+        )
+      ).body.code,
+    ).toBe('SERVICE_OVERLAP');
+    await validate([selection(brake)], undefined, otherCenterId).expect(409);
+    await validate(Array.from({ length: 11 }, () => selection(brake))).expect(
+      400,
+    );
+    await validate([{ ...selection(brake), version: 0 }]).expect(400);
+    await validate([{ ...selection(brake), kind: 'OTHER' }]).expect(400);
+    await validate([], 'TRUCK').expect(400);
+    await http()
+      .post(`/v1/centers/${centerId}/booking-selection`)
+      .send({ selections: null })
+      .expect(400);
+    await http()
+      .post(`/v1/centers/${centerId}/booking-selection`)
+      .send({})
+      .expect(400);
+  });
+
+  it('normalizes valid UUID casing and still refuses duplicate work', async () => {
+    await validate([
+      { ...selection(brake), id: brake.id.toUpperCase() },
+    ]).expect(200);
+    expect(
+      (
+        await validate([
+          selection(brake),
+          { ...selection(brake), id: brake.id.toUpperCase() },
+        ]).expect(400)
+      ).body.code,
+    ).toBe('SERVICE_OVERLAP');
+  });
+
+  it('refuses a paused center even for the issue-only path', async () => {
+    await db
+      .getRepository(ServiceCenter)
+      .update(centerId, { bookingEnabled: false });
+    try {
+      await validate([]).expect(404);
+      await book([]).expect(404);
+    } finally {
+      await db
+        .getRepository(ServiceCenter)
+        .update(centerId, { bookingEnabled: true });
+    }
+  });
+
+  it('refuses archived vehicles at reservation without writing items or taking capacity', async () => {
+    const before = await db.getRepository(Booking).count();
+    await db
+      .getRepository(GarageVehicle)
+      .update(vehicleId, { status: GarageVehicleStatus.ARCHIVED });
+    try {
+      expect((await book([selection(brake)]).expect(409)).body.code).toBe(
+        'BOOKING_VEHICLE_UNAVAILABLE',
+      );
+      await book([]).expect(409);
+      expect(await db.getRepository(Booking).count()).toBe(before);
+    } finally {
+      await db
+        .getRepository(GarageVehicle)
+        .update(vehicleId, { status: GarageVehicleStatus.ACTIVE });
+    }
+  });
+
+  pgIt(
+    'refuses an archive committed after the initial vehicle read',
+    async () => {
+      const before = await db.getRepository(Booking).count();
+      const runner = db.createQueryRunner();
+      await runner.connect();
+      await runner.startTransaction();
+      const garage = app.get(GarageService);
+      const original = garage.getOwned.bind(garage);
+      let readVehicle!: () => void;
+      const read = new Promise<void>((resolve) => {
+        readVehicle = resolve;
+      });
+      const spy = jest
+        .spyOn(garage, 'getOwned')
+        .mockImplementationOnce(async (...args) => {
+          const vehicle = await original(...args);
+          readVehicle();
+          return vehicle;
+        });
+      let reservation: Promise<request.Response> | undefined;
+      try {
+        await runner.manager
+          .getRepository(GarageVehicle)
+          .update(vehicleId, { status: GarageVehicleStatus.ARCHIVED });
+        // A plain ownership read sees the old ACTIVE row while the archive remains uncommitted.
+        reservation = book([]).then((response) => response);
+        await read;
+        await runner.commitTransaction();
+        const response = await reservation;
+        expect(response.status).toBe(409);
+        expect(response.body.code).toBe('BOOKING_VEHICLE_UNAVAILABLE');
+        expect(await db.getRepository(Booking).count()).toBe(before);
+      } finally {
+        spy.mockRestore();
+        if (runner.isTransactionActive) await runner.rollbackTransaction();
+        await reservation;
+        await runner.release();
+        await db
+          .getRepository(GarageVehicle)
+          .update(vehicleId, { status: GarageVehicleStatus.ACTIVE });
+      }
+    },
+  );
+
   it('records the package price once and snapshots its component scope', async () => {
     booking = (await book([selection(bundle, 'PACKAGE')]).expect(201)).body;
     expect(booking.estimateInr).toBe('450.00');
@@ -1220,5 +1572,40 @@ describe(`Service marketplace (${postgres ? 'PostgreSQL' : 'memory'} API)`, () =
       .expect(200);
     expect(second.body.items).toHaveLength(13);
     expect(second.body.nextOffset).toBeNull();
+  });
+
+  it('limits anonymous preview bursts across centers before menu resolution, without blocking reservation or reads', async () => {
+    const service = app.get(OfferingsService);
+    const resolve = jest.spyOn(service, 'validateSelections');
+    try {
+      let limited: request.Response | undefined;
+      for (let n = 0; n <= BOOKING_SELECTION_LIMITS.maxRequests; n++) {
+        const response = await validate([]);
+        if (response.status === 429) {
+          limited = response;
+          break;
+        }
+        expect(response.status).toBe(200);
+      }
+      expect(limited?.body.code).toBe('BOOKING_PREVIEW_RATE_LIMITED');
+      const wait = Number(limited?.headers['retry-after']);
+      expect(wait).toBeGreaterThan(0);
+      expect(wait).toBeLessThanOrEqual(60);
+      expect(limited?.body.retryAfterSeconds).toBe(wait);
+      expect(limited?.headers['cache-control']).toBe('no-store');
+      const calls = resolve.mock.calls.length;
+      await validate([], undefined, otherCenterId)
+        .set('X-Forwarded-For', '203.0.113.99')
+        .expect(429);
+      await http()
+        .post(`/v1/centers/${centerId}/booking-selection`)
+        .send({ selections: null })
+        .expect(429);
+      expect(resolve).toHaveBeenCalledTimes(calls);
+      await http().get(`/v1/centers/${centerId}/booking-options`).expect(200);
+      await book([]).expect(201);
+    } finally {
+      resolve.mockRestore();
+    }
   });
 });

@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentAuth } from '../auth/decorators/current-auth.decorator';
@@ -26,9 +27,11 @@ import {
   DeclineBookingDto,
   ListCenterBookingsQueryDto,
   ListSlotsQueryDto,
+  ValidateBookingSelectionDto,
 } from './dto/create-booking.dto';
 import { BookingsService } from './bookings.service';
 import { CenterBookingsService } from './center-bookings.service';
+import { BookingSelectionRateLimitGuard } from './booking-selection-rate-limit.guard';
 
 @ApiTags('bookings')
 @Controller('v1')
@@ -40,6 +43,21 @@ export class BookingsController {
   @ApiOperation({ summary: 'Booking modes for a center' })
   bookingOptions(@Param('id', ParseUUIDPipe) id: string) {
     return this.bookingsService.bookingOptions(id);
+  }
+
+  @Public()
+  @Post('centers/:id/booking-selection')
+  @UseGuards(BookingSelectionRateLimitGuard)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary:
+      'Validate current menu selections before choosing a vehicle; does not reserve capacity',
+  })
+  validateSelection(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: ValidateBookingSelectionDto,
+  ) {
+    return this.bookingsService.validateSelection(id, dto);
   }
 
   @Public()
@@ -128,7 +146,9 @@ export class CenterBookingsController {
   @Get()
   @Roles('admin', 'manager', 'advisor')
   @Permissions('bookings:read')
-  @ApiOperation({ summary: 'Bookings for one IST date or an inclusive from/to range' })
+  @ApiOperation({
+    summary: 'Bookings for one IST date or an inclusive from/to range',
+  })
   list(
     @CurrentAuth() auth: AuthContext,
     @Query() query: ListCenterBookingsQueryDto,

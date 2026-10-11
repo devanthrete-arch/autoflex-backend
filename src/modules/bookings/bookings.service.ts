@@ -15,6 +15,7 @@ import {
   OPEN_BOOKING_STATUSES,
 } from '../../common/enums/booking-status.enum';
 import { PaymentMode } from '../../common/enums/payment-mode.enum';
+import { GarageVehicleStatus } from '../../common/enums/garage-vehicle-status.enum';
 import { ServiceCenterStatus } from '../../common/enums/service-center-status.enum';
 import {
   hmToMinutes,
@@ -25,6 +26,7 @@ import {
 } from '../../common/time/ist';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { GarageService } from '../customers/garage.service';
+import { GarageVehicle } from '../customers/entities/garage-vehicle.entity';
 import { MeService } from '../customers/me.service';
 import { assertBookingEligibility } from '../customers/booking-eligibility';
 import { OfferingsService } from '../offerings/offerings.service';
@@ -41,6 +43,7 @@ import {
   CreateAttachmentDto,
   CreateBookingDto,
   ListSlotsQueryDto,
+  ValidateBookingSelectionDto,
 } from './dto/create-booking.dto';
 import { BookingAttachment } from './entities/booking-attachment.entity';
 import { BookingItem } from './entities/booking-item.entity';
@@ -92,6 +95,33 @@ export class BookingsService {
       autoAccept: center.autoAccept,
       slotCapacity: center.slotCapacity,
     };
+  }
+
+  async validateSelection(centerId: string, dto: ValidateBookingSelectionDto) {
+    return this.dataSource.transaction('REPEATABLE READ', async (manager) => {
+      // One committed snapshot of the center, services and packages, without
+      // queuing public reads on the row lock used by reservations/menu edits.
+      await manager.query('SET TRANSACTION READ ONLY');
+      const center = await this.requireBookableCenter(
+        centerId,
+        manager.getRepository(ServiceCenter),
+      );
+      return this.offeringsService.validateSelections(
+        manager,
+        center,
+        dto.selections,
+        dto.vehicleType,
+      );
+    });
+  }
+
+  private assertActiveVehicle(vehicle: GarageVehicle) {
+    if (vehicle.status !== GarageVehicleStatus.ACTIVE)
+      throw new ConflictException({
+        code: 'BOOKING_VEHICLE_UNAVAILABLE',
+        message:
+          'This vehicle is archived. Restore it or choose another vehicle before booking.',
+      });
   }
 
   async listSlots(centerId: string, query: ListSlotsQueryDto) {
@@ -148,6 +178,7 @@ export class BookingsService {
     }
     const center = await this.requireBookableCenter(dto.serviceCenterId);
     const vehicle = await this.garageService.getOwned(auth, dto.vehicleId);
+    this.assertActiveVehicle(vehicle);
     if (!center.supportedVehicleTypes.includes(vehicle.vehicleType)) {
       throw new BadRequestException(
         'This center does not service this vehicle type',
@@ -171,10 +202,19 @@ export class BookingsService {
         manager,
         center.id,
       );
+      // Lock order is center, then vehicle. Archive/ownership changes must not race a reservation.
+      const currentVehicle = await manager
+        .getRepository(GarageVehicle)
+        .findOne({
+          where: { id: vehicle.id, customerProfileId: profile.id },
+          lock: { mode: 'pessimistic_write' },
+        });
+      if (!currentVehicle) throw new NotFoundException('Vehicle not found');
+      this.assertActiveVehicle(currentVehicle);
       if (
         lockedCenter.status !== ServiceCenterStatus.ACTIVE ||
         !lockedCenter.bookingEnabled ||
-        !lockedCenter.supportedVehicleTypes.includes(vehicle.vehicleType)
+        !lockedCenter.supportedVehicleTypes.includes(currentVehicle.vehicleType)
       )
         throw new BadRequestException(
           'This center is no longer available for this vehicle',
@@ -183,7 +223,7 @@ export class BookingsService {
       const offerings = await this.offeringsService.snapshotSelections(
         manager,
         lockedCenter,
-        vehicle.vehicleType,
+        currentVehicle.vehicleType,
         dto.selections ?? [],
         dto.offeringIds ?? [],
       );
@@ -193,15 +233,13 @@ export class BookingsService {
             0,
           ) / 100
         : (dto.estimateInr ?? SELF_CHECKIN_ESTIMATE_INR);
-      const held = await manager
-        .getRepository(Booking)
-        .count({
-          where: {
-            serviceCenterId: center.id,
-            slotStart,
-            status: In(SLOT_HOLDING_STATUSES),
-          },
-        });
+      const held = await manager.getRepository(Booking).count({
+        where: {
+          serviceCenterId: center.id,
+          slotStart,
+          status: In(SLOT_HOLDING_STATUSES),
+        },
+      });
       if (held >= lockedCenter.slotCapacity)
         throw new BadRequestException('Slot is no longer available');
       const repo = manager.getRepository(Booking);
@@ -385,8 +423,11 @@ export class BookingsService {
     }
   }
 
-  private async requireBookableCenter(id: string): Promise<ServiceCenter> {
-    const center = await this.centerRepository.findOne({ where: { id } });
+  private async requireBookableCenter(
+    id: string,
+    repository = this.centerRepository,
+  ): Promise<ServiceCenter> {
+    const center = await repository.findOne({ where: { id } });
     if (
       !center ||
       center.status !== ServiceCenterStatus.ACTIVE ||

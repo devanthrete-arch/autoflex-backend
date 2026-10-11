@@ -12,6 +12,7 @@ import {
   CenterBookingsController,
 } from './bookings.controller';
 import { BookingsService } from './bookings.service';
+import { BookingSelectionRateLimitGuard } from './booking-selection-rate-limit.guard';
 import { CenterBookingsService } from './center-bookings.service';
 import { BookingAttachment } from './entities/booking-attachment.entity';
 import { BookingItem } from './entities/booking-item.entity';
@@ -33,7 +34,11 @@ import { Booking } from './entities/booking.entity';
     NotificationsModule,
   ],
   controllers: [BookingsController, CenterBookingsController],
-  providers: [BookingsService, CenterBookingsService],
+  providers: [
+    BookingsService,
+    CenterBookingsService,
+    BookingSelectionRateLimitGuard,
+  ],
   exports: [BookingsService, CenterBookingsService],
 })
 export class BookingsModule {}

@@ -76,6 +76,15 @@ export async function createMemoryDataSource(): Promise<{
   memoryDb: IMemoryDb;
 }> {
   const memoryDb = newDb({ autoCreateForeignKeyIndices: true });
+  // pg-mem cannot parse these transaction settings and has no concurrent MVCC.
+  // Only the real PostgreSQL suite proves snapshot isolation/read-only behavior.
+  memoryDb.public.interceptQueries((sql) =>
+    /^SET TRANSACTION (ISOLATION LEVEL REPEATABLE READ|READ ONLY)$/i.test(
+      sql.trim(),
+    )
+      ? []
+      : null,
+  );
   registerPgMemFunctions(memoryDb);
   memoryDb.registerExtension('pgcrypto', (schema) => {
     schema.registerFunction({

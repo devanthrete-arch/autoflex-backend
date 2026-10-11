@@ -22,6 +22,7 @@ import { BookingMode } from '../../../common/enums/booking-mode.enum';
 import { BookingStatus } from '../../../common/enums/booking-status.enum';
 import { JobPriority } from '../../../common/enums/job-priority.enum';
 import { PaymentMode } from '../../../common/enums/payment-mode.enum';
+import { VehicleType } from '../../../common/enums/vehicle-type.enum';
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -29,6 +30,18 @@ export class MenuSelectionDto {
   @IsIn(['SERVICE', 'PACKAGE']) kind: 'SERVICE' | 'PACKAGE';
   @IsUUID() id: string;
   @IsInt() @Min(1) @Max(2147483647) version: number;
+}
+
+export class ValidateBookingSelectionDto {
+  @IsArray()
+  @ArrayMaxSize(10)
+  @ValidateNested({ each: true })
+  @Type(() => MenuSelectionDto)
+  selections: MenuSelectionDto[];
+
+  @IsOptional()
+  @IsEnum(VehicleType)
+  vehicleType?: VehicleType;
 }
 
 export class CreateBookingDto {

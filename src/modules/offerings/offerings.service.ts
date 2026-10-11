@@ -48,7 +48,9 @@ export function toOfferingView(o: ServiceOffering) {
     sortOrder: o.sortOrder,
   };
 }
-export type OfferingView = ReturnType<typeof toOfferingView>;
+export type OfferingView = ReturnType<typeof toOfferingView> & {
+  vehicleTypes?: VehicleType[];
+};
 export type MenuSelection = {
   kind: 'SERVICE' | 'PACKAGE';
   id: string;
@@ -135,18 +137,21 @@ export class OfferingsService {
     center: ServiceCenter,
     type?: VehicleType,
   ) {
-    const types = type ? [type] : center.supportedVehicleTypes;
-    return (
-      o.isActive &&
-      !o.deletedAt &&
-      (!o.serviceDefinitionId || o.serviceDefinition?.isActive) &&
-      types.some(
-        (t) =>
-          center.supportedVehicleTypes.includes(t) &&
-          (!o.vehicleType || o.vehicleType === t) &&
-          (!o.serviceDefinition ||
-            o.serviceDefinition.vehicleTypes.includes(t)),
-      )
+    const types = this.offeringVehicleTypes(o, center);
+    return type ? types.includes(type) : types.length > 0;
+  }
+  private offeringVehicleTypes(o: ServiceOffering, center: ServiceCenter) {
+    if (
+      !o.isActive ||
+      o.deletedAt ||
+      (o.serviceDefinitionId && !o.serviceDefinition?.isActive)
+    )
+      return [];
+    return center.supportedVehicleTypes.filter(
+      (type) =>
+        (!o.vehicleType || o.vehicleType === type) &&
+        (!o.serviceDefinition ||
+          o.serviceDefinition.vehicleTypes.includes(type)),
     );
   }
   async listPublic(
@@ -156,7 +161,10 @@ export class OfferingsService {
     const center = await this.center(centerId);
     return (await this.rows(centerId))
       .filter((o) => this.available(o, center, query.vehicleType))
-      .map(toOfferingView);
+      .map((o) => ({
+        ...toOfferingView(o),
+        vehicleTypes: this.offeringVehicleTypes(o, center),
+      }));
   }
   async listForCenter(auth: AuthContext): Promise<OfferingView[]> {
     return (await this.rows(this.authorize(auth))).map(toOfferingView);
@@ -192,6 +200,7 @@ export class OfferingsService {
       name: p.name,
       description: p.description,
       vehicleType: p.vehicleType,
+      vehicleTypes: available ? [p.vehicleType] : [],
       priceInr: inr(p.priceInr),
       priceIsStarting: p.priceIsStarting,
       durationMinutes: p.durationMinutes,
@@ -496,6 +505,49 @@ export class OfferingsService {
     selections: MenuSelection[],
     legacyIds: string[] = [],
   ): Promise<MenuSnapshot[]> {
+    return (
+      await this.resolveSelections(
+        manager,
+        center,
+        selections,
+        legacyIds,
+        vehicleType,
+      )
+    ).snapshots;
+  }
+
+  /** Preview uses a read snapshot; reservation repeats these checks under its center lock. */
+  async validateSelections(
+    manager: EntityManager,
+    center: ServiceCenter,
+    selections: MenuSelection[],
+    vehicleType?: VehicleType,
+  ) {
+    const result = await this.resolveSelections(
+      manager,
+      center,
+      selections,
+      [],
+      vehicleType,
+    );
+    if (!result.vehicleTypes.length)
+      throw new ConflictException({
+        code: 'MENU_VEHICLE_MISMATCH',
+        message:
+          'These selections cannot be serviced on one vehicle. Remove work for the other vehicle type.',
+      });
+    return { vehicleTypes: result.vehicleTypes };
+  }
+
+  private async resolveSelections(
+    manager: EntityManager,
+    center: ServiceCenter,
+    selections: MenuSelection[],
+    legacyIds: string[],
+    vehicleType?: VehicleType,
+  ) {
+    if (selections.length > 10 || legacyIds.length > 10)
+      throw new BadRequestException('Select up to 10 services or packages');
     const rows = await this.rows(center.id, manager);
     const packages = await manager
       .getRepository(ServicePackage)
@@ -504,25 +556,29 @@ export class OfferingsService {
       throw new BadRequestException('Send selections or offeringIds, not both');
     const wanted = selections.length
       ? selections
-      : [...new Set(legacyIds)].map((id) => ({
+      : [...new Set(legacyIds.map((id) => id.toLowerCase()))].map((id) => ({
           kind: 'SERVICE' as const,
           id,
           version: undefined,
         }));
     const activities = new Set<string>();
     const snapshots: MenuSnapshot[] = [];
+    let vehicleTypes = center.supportedVehicleTypes.filter(
+      (type) => !vehicleType || type === vehicleType,
+    );
     for (const pick of wanted) {
       const o =
         pick.kind === 'SERVICE'
-          ? rows.find((o) => o.id === pick.id)
-          : packages.find((p) => p.id === pick.id);
-      if (
-        !o ||
-        (o instanceof ServiceOffering
-          ? !this.available(o, center, vehicleType)
-          : !this.packageView(o, rows, center).available ||
-            o.vehicleType !== vehicleType)
-      )
+          ? rows.find((o) => o.id === pick.id.toLowerCase())
+          : packages.find((p) => p.id === pick.id.toLowerCase());
+      const types = !o
+        ? []
+        : o instanceof ServiceOffering
+          ? this.offeringVehicleTypes(o, center)
+          : this.packageView(o, rows, center).available
+            ? [o.vehicleType]
+            : [];
+      if (!o || !types.length || (vehicleType && !types.includes(vehicleType)))
         throw legacyIds.length
           ? new BadRequestException(
               'One or more services are not offered for this vehicle at this center',
@@ -538,6 +594,7 @@ export class OfferingsService {
           message:
             'Price or service scope changed. Review the current menu and confirm again.',
         });
+      vehicleTypes = vehicleTypes.filter((type) => types.includes(type));
       const scope =
         o instanceof ServiceOffering
           ? [this.scope(o)]
@@ -567,6 +624,6 @@ export class OfferingsService {
         scope,
       });
     }
-    return snapshots;
+    return { snapshots, vehicleTypes };
   }
 }
