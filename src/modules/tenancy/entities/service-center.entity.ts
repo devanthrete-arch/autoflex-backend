@@ -62,6 +62,17 @@ export class ServiceCenter {
   })
   heroImageUrl: string | null;
 
+  @Column({ name: 'photo_urls', type: 'jsonb', default: () => "'[]'" })
+  photoUrls: string[];
+
+  @Column({
+    name: 'google_maps_url',
+    type: 'varchar',
+    length: 1024,
+    nullable: true,
+  })
+  googleMapsUrl: string | null;
+
   @Column({ name: 'logo_url', type: 'varchar', length: 1024, nullable: true })
   logoUrl: string | null;
 

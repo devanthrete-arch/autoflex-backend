@@ -1,9 +1,10 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
-  IsEnum,
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
   IsIn,
   IsInt,
-  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
@@ -11,27 +12,32 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
-import { VehicleType } from '../../../common/enums/vehicle-type.enum';
-export class ListCentersQueryDto {
-  @IsOptional() @Type(() => Number) @IsNumber() @Min(-90) @Max(90) lat?: number;
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber()
-  @Min(-180)
-  @Max(180)
-  lng?: number;
-  @IsOptional()
-  @Type(() => Number)
-  @IsInt()
-  @Min(100)
-  @Max(100000)
-  radiusMeters?: number;
+import { DiscoveryAreaQueryDto } from './discovery-area-query.dto';
+export class ListCentersQueryDto extends DiscoveryAreaQueryDto {
   @IsOptional() @IsUUID() categoryId?: string;
   @IsOptional() @IsUUID() serviceId?: string;
-  @IsOptional() @IsIn(['nearest', 'top_rated']) sort?: 'nearest' | 'top_rated';
+  @IsOptional()
+  @Transform(({ value }) => {
+    const values = typeof value === 'string' ? [value] : value;
+    return Array.isArray(values)
+      ? [
+          ...new Set(
+            values.map((id) =>
+              typeof id === 'string' ? id.toLowerCase() : id,
+            ),
+          ),
+        ]
+      : values;
+  })
+  @IsArray()
+  @ArrayMinSize(1)
+  @ArrayMaxSize(10)
+  @IsUUID(undefined, { each: true })
+  serviceIds?: string[];
+  @IsOptional()
+  @IsIn(['nearest', 'farthest', 'top_rated'])
+  sort?: 'nearest' | 'farthest' | 'top_rated';
   @IsOptional() @IsString() @MaxLength(100) q?: string;
-  @IsOptional() @IsString() @MaxLength(100) city?: string;
-  @IsOptional() @IsEnum(VehicleType) vehicleType?: VehicleType;
   @IsOptional() @Type(() => Number) @IsInt() @Min(1) @Max(50) limit?: number;
   @IsOptional()
   @Type(() => Number)

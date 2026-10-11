@@ -78,6 +78,14 @@ export class MeService {
     auth: AuthContext,
     dto: UpsertProfileDto,
   ): Promise<ProfileView> {
+    const hasLatitude = dto.lastLat !== undefined;
+    const hasLongitude = dto.lastLng !== undefined;
+    if (hasLatitude !== hasLongitude)
+      throw new BadRequestException(
+        'Update or clear latitude and longitude together',
+      );
+    if (hasLatitude && (dto.lastLat === null) !== (dto.lastLng === null))
+      throw new BadRequestException('Clear both coordinates together');
     let profile = await this.profileRepository.findOne({
       where: { iamUserId: auth.userId },
     });
@@ -87,42 +95,46 @@ export class MeService {
         phone: auth.phone ? tryIndiaE164(auth.phone) : null,
       });
     }
-    if (dto.displayName !== undefined) profile.displayName = dto.displayName;
-    if (dto.phone !== undefined) profile.phone = toIndiaE164(dto.phone);
-    if (dto.locale !== undefined) profile.locale = dto.locale;
-    if (dto.avatarUrl !== undefined) profile.avatarUrl = dto.avatarUrl;
-    if (dto.selectedPlaceLabel !== undefined) {
-      profile.selectedPlaceLabel = dto.selectedPlaceLabel;
+    const changes: Partial<CustomerProfile> = {};
+    for (const field of [
+      'displayName',
+      'locale',
+      'avatarUrl',
+      'selectedPlaceLabel',
+      'lastLat',
+      'lastLng',
+      'city',
+      'state',
+      'postalCode',
+      'preferredChannel',
+      'whatsappConsent',
+      'emailConsent',
+      'serviceUpdates',
+      'maintenanceReminders',
+      'documentReminders',
+    ] as const) {
+      if (dto[field] !== undefined)
+        (changes as Record<string, unknown>)[field] = dto[field];
     }
-    if (dto.lastLat !== undefined) profile.lastLat = dto.lastLat;
-    if (dto.lastLng !== undefined) profile.lastLng = dto.lastLng;
-    if (dto.email !== undefined) profile.email = dto.email.toLowerCase();
-    if (dto.city !== undefined) profile.city = dto.city;
-    if (dto.state !== undefined) profile.state = dto.state;
-    if (dto.postalCode !== undefined) profile.postalCode = dto.postalCode;
-    if (dto.preferredChannel !== undefined) {
-      profile.preferredChannel = dto.preferredChannel;
-    }
-    if (dto.whatsappConsent !== undefined) {
-      profile.whatsappConsent = dto.whatsappConsent;
-    }
-    if (dto.emailConsent !== undefined) profile.emailConsent = dto.emailConsent;
-    if (dto.serviceUpdates !== undefined) {
-      profile.serviceUpdates = dto.serviceUpdates;
-    }
-    if (dto.maintenanceReminders !== undefined) {
-      profile.maintenanceReminders = dto.maintenanceReminders;
-    }
-    if (dto.documentReminders !== undefined) {
-      profile.documentReminders = dto.documentReminders;
-    }
+    if (dto.phone !== undefined) changes.phone = toIndiaE164(dto.phone);
+    if (dto.email !== undefined) changes.email = dto.email.toLowerCase();
     if (dto.dateOfBirth !== undefined) {
-      profile.dateOfBirth = assertDateOfBirth(dto.dateOfBirth);
+      changes.dateOfBirth = assertDateOfBirth(dto.dateOfBirth);
     }
-    if (!profile.phone && auth.phone) {
-      profile.phone = tryIndiaE164(auth.phone);
+    if (!profile.phone && changes.phone === undefined && auth.phone) {
+      changes.phone = tryIndiaE164(auth.phone);
     }
-    return presentProfile(await this.profileRepository.save(profile));
+    if (!profile.id)
+      return presentProfile(
+        await this.profileRepository.save(Object.assign(profile, changes)),
+      );
+    // Always include both supplied coordinates in one UPDATE, even when one did
+    // not change. ORM diff-saving could otherwise mix concurrent location pairs.
+    if (Object.keys(changes).length)
+      await this.profileRepository.update(profile.id, changes);
+    return presentProfile(
+      await this.profileRepository.findOneByOrFail({ id: profile.id }),
+    );
   }
 
   /** Returns the caller's profile, creating an empty one on first use. */

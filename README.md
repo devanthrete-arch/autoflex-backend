@@ -204,3 +204,13 @@ Migration `1730000000009` adds the shared activity catalog, versioned menu optio
 Admins/managers with `center:manage` configure the menu in the desk's **Services & packages** screen. Menu writes require an explicit `Idempotency-Key`; edits/removal also require `If-Match`. Shared catalog identity, exact service filtering, typed booking selections and package contents are documented in the [contracts](../development-documents/architecture/api-contracts-v1.md) and [runbook](../development-documents/architecture/service-marketplace-runbook.md).
 
 PostgreSQL integration verification uses the isolated fixed target on port 55429, never the normal workshop environment. See the runbook before running `AF029_POSTGRES_TEST=true npm run test:e2e -- --runInBand --testPathPatterns=service-marketplace`.
+
+### Customer discovery location
+
+`GET /v1/marketplace/discovery-config` returns the user-approved Bengaluru fallback and the 15 km GPS radius. Optional `DISCOVERY_DEFAULT_CITY`/`DISCOVERY_DEFAULT_LABEL` override it. Missing/blank city uses Bengaluru; invalid nonblank configuration returns `defaultLocation:null`.
+
+`GET /v1/marketplace/available-services` requires city, exact `postalCode`, or paired coordinates and returns paginated services actually offered in the whole eligible area. PIN may combine with coordinates/radius; city+PIN is rejected. Center search shares the predicates and accepts coordinate-only `nearest`/`farthest` sorts. Distances are straight-line, not travel estimates. The manager's master catalog stays global. Profile location writes require bounded numeric pairs or paired null clearing and can clear postal/state metadata.
+
+`GET /v1/marketplace/postal-locations/:postalCode` resolves a six-digit PIN through the third-party PostalPinCode directory into localities/district/state. The adapter has a five-second timeout, bounded success/not-found cache and request sharing. No coordinates or customer identity are sent/inferred. The customer picker offers PIN lookup or explicit browser location; failures preserve the current area and allow PIN retry, GPS or Skip recovery. City mode remains for configured defaults and saved history.
+
+Migration **1730000000010** adds center gallery `photo_urls` and `google_maps_url`; run migrations before restarting. The desk **More → Location and photos** editor is admin/manager + `center:manage`. It loads the full center profile and PATCHes explicit fields, accepting paired coordinate clears and up to eight gallery URLs. Maps links are validated and displayed, never scraped for coordinates. Existing menus/bookings are preserved. [PIN, distance and gallery delivery](../development-documents/architecture/af-029-pin-distance-gallery-delivery.md).

@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsDateString,
@@ -45,19 +45,23 @@ export class UpsertProfileDto {
   avatarUrl?: string | null;
 
   @IsOptional()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsString()
+  @MinLength(1)
   @MaxLength(255)
-  selectedPlaceLabel?: string;
+  selectedPlaceLabel?: string | null;
 
   @IsOptional()
-  @Type(() => Number)
   @IsNumber()
-  lastLat?: number;
+  @Min(-90)
+  @Max(90)
+  lastLat?: number | null;
 
   @IsOptional()
-  @Type(() => Number)
   @IsNumber()
-  lastLng?: number;
+  @Min(-180)
+  @Max(180)
+  lastLng?: number | null;
 
   @IsOptional()
   @IsEmail()
@@ -65,18 +69,20 @@ export class UpsertProfileDto {
   email?: string;
 
   @IsOptional()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsString()
+  @MinLength(1)
   @MaxLength(100)
-  city?: string;
+  city?: string | null;
 
   @IsOptional()
   @IsString()
   @MaxLength(100)
-  state?: string;
+  state?: string | null;
 
   @IsOptional()
   @Matches(INDIA_PIN)
-  postalCode?: string;
+  postalCode?: string | null;
 
   @IsOptional()
   @IsEnum(CommunicationChannel)

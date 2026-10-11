@@ -464,6 +464,572 @@ describe(`Service marketplace (${postgres ? 'PostgreSQL' : 'memory'} API)`, () =
     },
   );
   pgIt(
+    'matches any selected service without duplicating centers or counting unavailable work',
+    async () => {
+      const definitions = db.getRepository(ServiceDefinition);
+      const centers = db.getRepository(ServiceCenter);
+      const offerings = db.getRepository(ServiceOffering);
+      const [serviceA, serviceB] = await definitions.save(
+        ['A', 'B'].map((name) =>
+          definitions.create({
+            id: randomUUID(),
+            slug: `union-filter-${name.toLowerCase()}`,
+            name: `Union filter service ${name}`,
+            category: 'Filter tests',
+            description: 'Independent service used by the union filter test',
+            aliases: [],
+            vehicleTypes: ['TWO_WHEELER', 'FOUR_WHEELER'] as any,
+            isActive: true,
+          }),
+        ),
+      );
+      const [onlyA, onlyB, both] = await centers.save(
+        ['A only', 'B only', 'Both'].map((name) =>
+          centers.create({
+            iamDomainId: randomUUID(),
+            name,
+            city: 'Union filter test city',
+            supportedVehicleTypes: ['TWO_WHEELER', 'FOUR_WHEELER'] as any,
+          }),
+        ),
+      );
+      const offer = (center: ServiceCenter, service: ServiceDefinition) =>
+        offerings.create({
+          serviceCenterId: center.id,
+          serviceDefinitionId: service.id,
+          name: service.name,
+          vehicleType: 'TWO_WHEELER' as any,
+          priceInr: '300.00',
+          durationMinutes: 30,
+        });
+      const [offerA, offerB] = await offerings.save([
+        offer(onlyA, serviceA),
+        offer(onlyB, serviceB),
+        offer(both, serviceA),
+        offer(both, serviceB),
+        // Multiple priced variants of one service must not duplicate a center.
+        { ...offer(both, serviceA), name: 'Alternative A price' },
+      ]);
+      const query = new URLSearchParams({
+        city: onlyA.city!,
+        vehicleType: 'TWO_WHEELER',
+      });
+      query.append('serviceIds', serviceA.id);
+      query.append('serviceIds', serviceB.id);
+      const search = () =>
+        http().get(`/v1/marketplace/centers?${query.toString()}`).expect(200);
+      const ids = (response: request.Response) =>
+        response.body.items.map((center: any) => center.id).sort();
+      try {
+        const result = await search();
+        expect(ids(result)).toEqual([onlyA.id, onlyB.id, both.id].sort());
+        expect(result.body.nextOffset).toBeNull();
+        for (const [id, expected] of [
+          [onlyA.id, [serviceA.id]],
+          [onlyB.id, [serviceB.id]],
+          [both.id, [serviceA.id, serviceB.id]],
+        ] as const) {
+          const row = result.body.items.find((center: any) => center.id === id);
+          expect(
+            [
+              ...new Set(
+                row.matchingServices.map(
+                  (item: any) => item.serviceDefinitionId,
+                ),
+              ),
+            ].sort(),
+          ).toEqual([...expected].sort());
+        }
+
+        const legacy = await http()
+          .get('/v1/marketplace/centers')
+          .query({ city: onlyA.city, serviceId: serviceA.id })
+          .expect(200);
+        expect(ids(legacy)).toEqual([onlyA.id, both.id].sort());
+        const mixed = await http()
+          .get(
+            `/v1/marketplace/centers?city=${encodeURIComponent(onlyA.city!)}&serviceId=${serviceA.id}&serviceIds=${serviceB.id}&serviceIds=${serviceA.id}`,
+          )
+          .expect(200);
+        expect(ids(mixed)).toEqual(ids(result));
+
+        await offerings.update(offerB.id, { isActive: false });
+        expect(ids(await search())).toEqual([onlyA.id, both.id].sort());
+        await offerings.update(offerB.id, {
+          isActive: true,
+          vehicleType: 'FOUR_WHEELER' as any,
+        });
+        expect(ids(await search())).toEqual([onlyA.id, both.id].sort());
+
+        await definitions.update(serviceB.id, { isActive: false });
+        const withoutB = await search();
+        expect(ids(withoutB)).toEqual([onlyA.id, both.id].sort());
+        expect(
+          withoutB.body.items.flatMap((center: any) => center.matchingServices),
+        ).not.toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({ serviceDefinitionId: serviceB.id }),
+          ]),
+        );
+
+        await offerings.softDelete(offerA.id);
+        expect(ids(await search())).toEqual([both.id]);
+        await centers.softDelete(both.id);
+        expect(ids(await search())).toEqual([]);
+      } finally {
+        await centers.delete([onlyA.id, onlyB.id, both.id]);
+        await definitions.delete([serviceA.id, serviceB.id]);
+      }
+    },
+  );
+  pgIt(
+    'localizes services across the whole area with the same eligibility as center search',
+    async () => {
+      const definitions = db.getRepository(ServiceDefinition);
+      const centers = db.getRepository(ServiceCenter);
+      const offerings = db.getRepository(ServiceOffering);
+      const activityRows = await definitions.save(
+        Array.from({ length: 10 }, (_, index) =>
+          definitions.create({
+            id: randomUUID(),
+            slug: `area-filter-${index}`,
+            name: `Area filter service ${index}`,
+            category: 'Area filter tests',
+            description: 'Local availability regression',
+            aliases: [],
+            vehicleTypes:
+              index === 2
+                ? (['FOUR_WHEELER'] as any)
+                : (['TWO_WHEELER', 'FOUR_WHEELER'] as any),
+            isActive: index !== 3,
+          }),
+        ),
+      );
+      const city = 'Availability filter test city';
+      const centerRows = await centers.save(
+        [
+          'Alpha',
+          'Beta',
+          'No coordinates',
+          'Inactive',
+          'Deleted',
+          'Outside area',
+        ].map((name, index) =>
+          centers.create({
+            iamDomainId: randomUUID(),
+            name,
+            city,
+            latitude: index === 2 ? null : index === 5 ? 20 : 15.1234,
+            longitude: index === 2 ? null : 73.4567,
+            status: index === 3 ? ('INACTIVE' as any) : ('ACTIVE' as any),
+            supportedVehicleTypes: ['TWO_WHEELER', 'FOUR_WHEELER'] as any,
+          }),
+        ),
+      );
+      const [alpha, beta, noCoordinates, inactive, deleted, outside] =
+        centerRows;
+      const offer = (
+        center: ServiceCenter,
+        activity: ServiceDefinition,
+        extra: Partial<ServiceOffering> = {},
+      ) =>
+        offerings.create({
+          serviceCenterId: center.id,
+          serviceDefinitionId: activity.id,
+          name: activity.name,
+          priceInr: '300.00',
+          durationMinutes: 30,
+          ...extra,
+        });
+      const rows = await offerings.save([
+        offer(alpha, activityRows[0]),
+        offer(beta, activityRows[1]),
+        offer(beta, activityRows[0]),
+        offer(beta, activityRows[2]),
+        offer(beta, activityRows[3]),
+        offer(beta, activityRows[4], { isActive: false }),
+        offer(beta, activityRows[5]),
+        offer(inactive, activityRows[6]),
+        offer(deleted, activityRows[7]),
+        offer(outside, activityRows[8]),
+        offer(noCoordinates, activityRows[9]),
+        offer(beta, activityRows[1], {
+          name: 'Unmapped activity',
+          serviceDefinitionId: null,
+        }),
+      ]);
+      await offerings.softDelete(rows[6].id);
+      await centers.softDelete(deleted.id);
+      const ids = (response: request.Response) =>
+        response.body.items.map((item: any) => item.id).sort();
+      const available = (query: Record<string, string | number>) =>
+        http()
+          .get('/v1/marketplace/available-services')
+          .query(query)
+          .expect(200);
+      try {
+        const byCity = await available({
+          city: `  ${city.toUpperCase()}  `,
+          vehicleType: 'TWO_WHEELER',
+        });
+        // Outside the coordinate radius still belongs to this city.
+        expect(ids(byCity)).toEqual(
+          [0, 1, 8, 9].map((n) => activityRows[n].id).sort(),
+        );
+        const firstCenters = await http()
+          .get('/v1/marketplace/centers')
+          .query({ city, vehicleType: 'TWO_WHEELER', limit: 1 })
+          .expect(200);
+        expect(firstCenters.body.items[0].id).toBe(alpha.id);
+        expect(
+          firstCenters.body.items[0].matchingServices.some(
+            (item: any) => item.serviceDefinitionId === activityRows[1].id,
+          ),
+        ).toBe(false);
+        expect(ids(byCity)).toContain(activityRows[1].id);
+        const radius = await available({
+          lat: 15.1234,
+          lng: 73.4567,
+          radiusMeters: 1000,
+          vehicleType: 'TWO_WHEELER',
+        });
+        expect(ids(radius)).toEqual(
+          [activityRows[0].id, activityRows[1].id].sort(),
+        );
+        const carServices = await available({
+          city,
+          vehicleType: 'FOUR_WHEELER',
+        });
+        expect(ids(carServices)).toContain(activityRows[2].id);
+        expect(
+          (await available({ city: 'Area with no centers' })).body.items,
+        ).toEqual([]);
+
+        // Every advertised tile qualifies at least one center using the same area/type.
+        for (const item of radius.body.items) {
+          const matching = await http()
+            .get('/v1/marketplace/centers')
+            .query({
+              lat: 15.1234,
+              lng: 73.4567,
+              radiusMeters: 1000,
+              vehicleType: 'TWO_WHEELER',
+              serviceId: item.id,
+            })
+            .expect(200);
+          expect(matching.body.items.length).toBeGreaterThan(0);
+        }
+        await offerings.update(rows[1].id, {
+          vehicleType: 'FOUR_WHEELER' as any,
+        });
+        expect(
+          ids(
+            await available({
+              lat: 15.1234,
+              lng: 73.4567,
+              radiusMeters: 1000,
+              vehicleType: 'TWO_WHEELER',
+            }),
+          ),
+        ).toEqual([activityRows[0].id]);
+      } finally {
+        await centers.delete(centerRows.map((row) => row.id));
+        await definitions.delete(activityRows.map((row) => row.id));
+      }
+    },
+  );
+  pgIt(
+    'filters an exact PIN and orders known coordinate distances in either direction',
+    async () => {
+      const definitions = db.getRepository(ServiceDefinition);
+      const centers = db.getRepository(ServiceCenter);
+      const offerings = db.getRepository(ServiceOffering);
+      const postalCode = '734901';
+      const activities = await definitions.save(
+        Array.from({ length: 4 }, (_, index) =>
+          definitions.create({
+            id: randomUUID(),
+            slug: `pin-filter-${index}`,
+            name: `PIN filter service ${index}`,
+            category: 'PIN filter tests',
+            description: 'PIN and distance filter regression',
+            aliases: [],
+            vehicleTypes: ['TWO_WHEELER'] as any,
+            isActive: true,
+          }),
+        ),
+      );
+      const centerRows = await centers.save(
+        [
+          'Near',
+          'Far',
+          'No coordinates',
+          'Adjacent PIN',
+          'Inactive',
+          'Deleted',
+          'Outside radius',
+        ].map((name, index) =>
+          centers.create({
+            iamDomainId: randomUUID(),
+            name,
+            city: 'PIN filter city',
+            postalCode: index === 3 ? '734902' : postalCode,
+            latitude:
+              index === 2
+                ? null
+                : index === 1
+                  ? 15.2234
+                  : index === 6
+                    ? 16.1234
+                    : 15.1234,
+            longitude: index === 2 ? null : 73.4567,
+            status: index === 4 ? ('INACTIVE' as any) : ('ACTIVE' as any),
+            supportedVehicleTypes: ['TWO_WHEELER'] as any,
+            photoUrls:
+              index === 0 ? ['https://images.example.test/garage.jpg'] : [],
+            googleMapsUrl:
+              index === 0
+                ? 'https://www.google.com/maps/search/?api=1&query=15.1234,73.4567'
+                : null,
+          }),
+        ),
+      );
+      const [near, far, noCoordinates, adjacent, inactive, deleted, outside] =
+        centerRows;
+      const offer = (center: ServiceCenter, activity: ServiceDefinition) =>
+        offerings.create({
+          serviceCenterId: center.id,
+          serviceDefinitionId: activity.id,
+          name: activity.name,
+          priceInr: '100.00',
+          durationMinutes: 30,
+        });
+      await offerings.save([
+        offer(near, activities[0]),
+        offer(far, activities[0]),
+        offer(noCoordinates, activities[1]),
+        offer(outside, activities[2]),
+        offer(adjacent, activities[3]),
+        offer(inactive, activities[3]),
+        offer(deleted, activities[3]),
+      ]);
+      await centers.softDelete(deleted.id);
+      const ids = (response: request.Response) =>
+        response.body.items.map((row: any) => row.id);
+      try {
+        const pinOnly = await http()
+          .get('/v1/marketplace/centers')
+          .query({ postalCode: ` ${postalCode} ` })
+          .expect(200);
+        expect(ids(pinOnly).sort()).toEqual(
+          [near.id, far.id, noCoordinates.id, outside.id].sort(),
+        );
+        expect(
+          pinOnly.body.items.every((row: any) => row.distanceMeters === null),
+        ).toBe(true);
+        expect(
+          pinOnly.body.items.find((row: any) => row.id === near.id),
+        ).toMatchObject({
+          postalCode,
+          photoUrls: near.photoUrls,
+          googleMapsUrl: near.googleMapsUrl,
+        });
+        const detail = await http()
+          .get(`/v1/marketplace/centers/${near.id}`)
+          .expect(200);
+        expect(detail.body).toMatchObject({
+          postalCode,
+          photoUrls: near.photoUrls,
+          googleMapsUrl: near.googleMapsUrl,
+        });
+        const local = await http()
+          .get('/v1/marketplace/available-services')
+          .query({ postalCode, vehicleType: 'TWO_WHEELER' })
+          .expect(200);
+        expect(ids(local).sort()).toEqual(
+          activities
+            .slice(0, 3)
+            .map((row) => row.id)
+            .sort(),
+        );
+        const origin = {
+          postalCode,
+          lat: 15.1234,
+          lng: 73.4567,
+          radiusMeters: 15000,
+        };
+        const nearest = await http()
+          .get('/v1/marketplace/centers')
+          .query({ ...origin, sort: 'nearest' })
+          .expect(200);
+        const farthest = await http()
+          .get('/v1/marketplace/centers')
+          .query({ ...origin, sort: 'farthest' })
+          .expect(200);
+        expect(ids(nearest)).toEqual([near.id, far.id]);
+        expect(ids(farthest)).toEqual([far.id, near.id]);
+        expect(nearest.body.items[0].distanceMeters).toBeLessThan(
+          nearest.body.items[1].distanceMeters,
+        );
+        expect(nearest.body.items[1].distanceMeters).toBeGreaterThan(10000);
+        const first = await http()
+          .get('/v1/marketplace/centers')
+          .query({ ...origin, sort: 'farthest', limit: 1 })
+          .expect(200);
+        const second = await http()
+          .get('/v1/marketplace/centers')
+          .query({
+            ...origin,
+            sort: 'farthest',
+            limit: 1,
+            offset: first.body.nextOffset,
+          })
+          .expect(200);
+        expect(ids(first)).toEqual([far.id]);
+        expect(ids(second)).toEqual([near.id]);
+        expect(second.body.nextOffset).toBeNull();
+        const within = await http()
+          .get('/v1/marketplace/available-services')
+          .query(origin)
+          .expect(200);
+        expect(ids(within)).toEqual([activities[0].id]);
+      } finally {
+        await centers.delete(centerRows.map((row) => row.id));
+        await definitions.delete(activities.map((row) => row.id));
+      }
+    },
+  );
+  pgIt(
+    'paginates localized services beyond 200 without counting centers or repeated offerings',
+    async () => {
+      const definitions = db.getRepository(ServiceDefinition);
+      const centers = db.getRepository(ServiceCenter);
+      const offerings = db.getRepository(ServiceOffering);
+      const center = await centers.save({
+        iamDomainId: randomUUID(),
+        name: 'Availability pagination center',
+        city: 'Availability pagination city',
+        supportedVehicleTypes: ['TWO_WHEELER'] as any,
+      });
+      const activities = await definitions.save(
+        Array.from({ length: 201 }, (_, index) =>
+          definitions.create({
+            id: randomUUID(),
+            slug: `local-page-${index}`,
+            name: `Local service ${String(index).padStart(3, '0')}`,
+            category: 'Local page tests',
+            description: 'Paginated local availability',
+            aliases: [],
+            vehicleTypes: ['TWO_WHEELER'] as any,
+            isActive: true,
+          }),
+        ),
+      );
+      await offerings.save(
+        activities.map((activity) =>
+          offerings.create({
+            serviceCenterId: center.id,
+            serviceDefinitionId: activity.id,
+            name: activity.name,
+            priceInr: '100.00',
+            durationMinutes: 30,
+          }),
+        ),
+      );
+      try {
+        const first = await http()
+          .get('/v1/marketplace/available-services')
+          .query({ city: center.city })
+          .expect(200);
+        expect(first.body.items).toHaveLength(200);
+        expect(first.body.nextOffset).toBe(200);
+        const second = await http()
+          .get('/v1/marketplace/available-services')
+          .query({ city: center.city, offset: first.body.nextOffset })
+          .expect(200);
+        expect(second.body.items).toHaveLength(1);
+        expect(second.body.nextOffset).toBeNull();
+        expect(
+          [...first.body.items, ...second.body.items].map((row: any) => row.id),
+        ).toEqual(activities.map((row) => row.id));
+      } finally {
+        await centers.delete(center.id);
+        await definitions.delete(activities.map((row) => row.id));
+      }
+    },
+  );
+  it('requires a coherent bounded area for localized service availability', async () => {
+    for (const query of [
+      '',
+      '?city=',
+      '?city=%20',
+      '?lat=&lng=77',
+      '?lat=12&lng=%20',
+      '?lat=12',
+      '?lng=77',
+      '?radiusMeters=1000',
+      '?city=Bengaluru&lat=12&lng=77',
+      '?lat=91&lng=77',
+      '?lat=12&lng=181',
+      '?city=Bengaluru&limit=201',
+      '?city=Bengaluru&offset=-1',
+      '?city=Bengaluru&vehicleType=CAR',
+      '?postalCode=5600',
+      '?postalCode=012345',
+      '?city=Bengaluru&postalCode=560001',
+    ]) {
+      await http()
+        .get(`/v1/marketplace/available-services${query}`)
+        .expect(400);
+    }
+  });
+  it('publishes the approved default and refuses an invalid configured city', async () => {
+    const cityBefore = process.env.DISCOVERY_DEFAULT_CITY;
+    const labelBefore = process.env.DISCOVERY_DEFAULT_LABEL;
+    try {
+      delete process.env.DISCOVERY_DEFAULT_CITY;
+      delete process.env.DISCOVERY_DEFAULT_LABEL;
+      const unset = await http()
+        .get('/v1/marketplace/discovery-config')
+        .expect(200);
+      expect(unset.body).toEqual({
+        defaultLocation: {
+          mode: 'CITY',
+          city: 'Bengaluru',
+          label: 'Bengaluru',
+        },
+        radiusMeters: 15000,
+      });
+      process.env.DISCOVERY_DEFAULT_CITY = '  ';
+      expect(
+        (await http().get('/v1/marketplace/discovery-config').expect(200)).body,
+      ).toEqual(unset.body);
+      process.env.DISCOVERY_DEFAULT_CITY = '  Pune  ';
+      process.env.DISCOVERY_DEFAULT_LABEL = '  Pune, Maharashtra  ';
+      const configured = await http()
+        .get('/v1/marketplace/discovery-config')
+        .expect(200);
+      expect(configured.body).toEqual({
+        defaultLocation: {
+          mode: 'CITY',
+          city: 'Pune',
+          label: 'Pune, Maharashtra',
+        },
+        radiusMeters: 15000,
+      });
+      process.env.DISCOVERY_DEFAULT_CITY = 'x'.repeat(101);
+      expect(
+        (await http().get('/v1/marketplace/discovery-config').expect(200)).body
+          .defaultLocation,
+      ).toBeNull();
+    } finally {
+      if (cityBefore === undefined) delete process.env.DISCOVERY_DEFAULT_CITY;
+      else process.env.DISCOVERY_DEFAULT_CITY = cityBefore;
+      if (labelBefore === undefined) delete process.env.DISCOVERY_DEFAULT_LABEL;
+      else process.env.DISCOVERY_DEFAULT_LABEL = labelBefore;
+    }
+  });
+  pgIt(
     'rolls back a menu edit and receipt when audit storage fails',
     async () => {
       const spy = jest
@@ -602,6 +1168,33 @@ describe(`Service marketplace (${postgres ? 'PostgreSQL' : 'memory'} API)`, () =
     await http().get('/v1/marketplace/centers?serviceId=anything').expect(400);
     await http().get('/v1/marketplace/centers?sort=recommended').expect(400);
     await http().get('/v1/marketplace/centers?sort=nearest').expect(400);
+    await http()
+      .get('/v1/marketplace/centers?sort=farthest&postalCode=560001')
+      .expect(400);
+    await http().get('/v1/marketplace/centers?postalCode=bad').expect(400);
+    await http()
+      .get('/v1/marketplace/centers?city=Bengaluru&postalCode=560001')
+      .expect(400);
+    await http().get('/v1/marketplace/centers?serviceIds=anything').expect(400);
+    await http().get('/v1/marketplace/centers?serviceIds=').expect(400);
+    await http()
+      .get(`/v1/marketplace/centers?serviceIds=${definition(1)}&serviceIds=`)
+      .expect(400);
+    await http()
+      .get(
+        `/v1/marketplace/centers?serviceIds=${definition(1)},${definition(2)}`,
+      )
+      .expect(400);
+    const tooMany = new URLSearchParams();
+    for (let n = 1; n <= 11; n++) tooMany.append('serviceIds', definition(n));
+    await http()
+      .get(`/v1/marketplace/centers?${tooMany.toString()}`)
+      .expect(400);
+    const combined = new URLSearchParams({ serviceId: definition(11) });
+    for (let n = 1; n <= 10; n++) combined.append('serviceIds', definition(n));
+    await http()
+      .get(`/v1/marketplace/centers?${combined.toString()}`)
+      .expect(400);
   });
   it('pages through an activity catalog larger than 200 entries', async () => {
     const repo = db.getRepository(ServiceDefinition);

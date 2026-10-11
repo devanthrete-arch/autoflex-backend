@@ -6,6 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ConfigService } from '@nestjs/config';
 import { In, Repository } from 'typeorm';
 import { PromotionScope } from '../../common/enums/promotion-scope.enum';
 import { ServiceCenterStatus } from '../../common/enums/service-center-status.enum';
@@ -13,6 +14,14 @@ import { VehicleType } from '../../common/enums/vehicle-type.enum';
 import { ServiceCenter } from '../tenancy/entities/service-center.entity';
 import { TenancyService } from '../tenancy/tenancy.service';
 import { ListCentersQueryDto } from './dto/list-centers-query.dto';
+import { AvailableServicesQueryDto } from './dto/discovery-area-query.dto';
+import {
+  DEFAULT_DISCOVERY_RADIUS_METERS,
+  discoveryDistanceSql,
+  eligibleDiscoveryCenter,
+  eligibleDiscoveryOffering,
+  validateDiscoveryArea,
+} from './discovery-predicates';
 import { Promotion } from './entities/promotion.entity';
 import {
   ServiceCategory,
@@ -32,7 +41,53 @@ export class MarketplaceService {
     private readonly centerCategoryRepository: Repository<ServiceCenterCategory>,
     private readonly tenancyService: TenancyService,
     private readonly menus: OfferingsService,
+    private readonly config: ConfigService,
   ) {}
+
+  discoveryConfig() {
+    const city =
+      this.config.get<string>('DISCOVERY_DEFAULT_CITY')?.trim() || 'Bengaluru';
+    const label =
+      this.config.get<string>('DISCOVERY_DEFAULT_LABEL')?.trim() || city;
+    const configured =
+      !!city &&
+      city.length >= 2 &&
+      city.length <= 100 &&
+      !!label &&
+      label.length <= 255;
+    return {
+      defaultLocation: configured
+        ? { mode: 'CITY' as const, city, label }
+        : null,
+      radiusMeters: DEFAULT_DISCOVERY_RADIUS_METERS,
+    };
+  }
+
+  async availableServices(query: AvailableServicesQueryDto) {
+    validateDiscoveryArea(query, true);
+    const limit = query.limit ?? 200;
+    const offset = query.offset ?? 0;
+    const area = eligibleDiscoveryCenter(query);
+    const rows = await this.centerRepository.manager
+      .getRepository(ServiceDefinition)
+      .createQueryBuilder('d')
+      .where('d.is_active = true')
+      .andWhere(
+        `EXISTS (SELECT 1 FROM service_centers c JOIN service_offerings o ON o.service_center_id = c.id
+          WHERE ${area.where} AND ${eligibleDiscoveryOffering(query)} AND o.service_definition_id = d.id)`,
+        area.parameters,
+      )
+      .orderBy('d.category', 'ASC')
+      .addOrderBy('d.name', 'ASC')
+      .addOrderBy('d.id', 'ASC')
+      .skip(offset)
+      .take(limit + 1)
+      .getMany();
+    return {
+      items: rows.slice(0, limit),
+      nextOffset: rows.length > limit ? offset + limit : null,
+    };
+  }
 
   async listCategories(vehicleType?: string) {
     const qb = this.categoryRepository
@@ -60,34 +115,33 @@ export class MarketplaceService {
   }
 
   async listCenters(query: ListCentersQueryDto) {
-    if ((query.lat === undefined) !== (query.lng === undefined))
-      throw new BadRequestException('Provide both latitude and longitude');
-    if (query.radiusMeters !== undefined && query.lat === undefined)
-      throw new BadRequestException('A radius needs a location');
-    if (query.sort === 'nearest' && query.lat === undefined)
-      throw new BadRequestException('Nearest sorting needs a location');
+    const serviceIds = [
+      ...new Set([
+        ...(query.serviceIds ?? []),
+        ...(query.serviceId ? [query.serviceId.toLowerCase()] : []),
+      ]),
+    ];
+    if (serviceIds.length > 10)
+      throw new BadRequestException('Select up to 10 services');
+    validateDiscoveryArea(query);
+    if (
+      (query.sort === 'nearest' || query.sort === 'farthest') &&
+      query.lat === undefined
+    )
+      throw new BadRequestException(
+        'Distance sorting needs a coordinate location',
+      );
     const limit = query.limit ?? 20;
     const offset = query.offset ?? 0;
+    const area = eligibleDiscoveryCenter(query);
     const qb = this.centerRepository
       .createQueryBuilder('c')
-      .where('c.status = :status', { status: ServiceCenterStatus.ACTIVE });
-    if (query.vehicleType)
-      qb.andWhere('c.supported_vehicle_types @> :types', {
-        types: JSON.stringify([query.vehicleType]),
-      });
-    if (query.city?.trim())
-      qb.andWhere('LOWER(c.city) = :city', {
-        city: query.city.trim().toLowerCase(),
-      });
-    const usable = `o.service_center_id = c.id AND o.is_active = true AND o.deleted_at IS NULL
-      AND (o.service_definition_id IS NULL OR d.is_active = true)
-      AND (${[VehicleType.TWO_WHEELER, VehicleType.FOUR_WHEELER].map((type) => `(c.supported_vehicle_types @> '["${type}"]' AND (o.vehicle_type IS NULL OR o.vehicle_type = '${type}') AND (o.service_definition_id IS NULL OR d.vehicle_types @> '["${type}"]'))`).join(' OR ')})
-      ${query.vehicleType ? 'AND (o.vehicle_type IS NULL OR o.vehicle_type = :vehicleType) AND (o.service_definition_id IS NULL OR d.vehicle_types @> :types)' : ''}`;
-    qb.setParameter('vehicleType', query.vehicleType);
-    if (query.serviceId)
+      .where(area.where, area.parameters);
+    const usable = eligibleDiscoveryOffering(query);
+    if (serviceIds.length)
       qb.andWhere(
-        `EXISTS (SELECT 1 FROM service_offerings o LEFT JOIN service_definitions d ON d.id = o.service_definition_id WHERE ${usable} AND o.service_definition_id = :serviceId)`,
-        { serviceId: query.serviceId },
+        `EXISTS (SELECT 1 FROM service_offerings o LEFT JOIN service_definitions d ON d.id = o.service_definition_id WHERE ${usable} AND o.service_definition_id IN (:...serviceIds))`,
+        { serviceIds },
       );
     if (query.categoryId)
       qb.andWhere(
@@ -109,21 +163,14 @@ export class MarketplaceService {
         { term },
       );
     }
-    const distance =
-      '6371000 * acos(least(1.0, greatest(-1.0, sin(radians(:lat)) * sin(radians(c.latitude)) + cos(radians(:lat)) * cos(radians(c.latitude)) * cos(radians(c.longitude - :lng)))))';
+    const distance = discoveryDistanceSql();
     if (query.lat !== undefined) {
-      qb.andWhere(
-        'c.latitude IS NOT NULL AND c.longitude IS NOT NULL',
-      ).andWhere(`${distance} <= :radius`, {
-        lat: query.lat,
-        lng: query.lng,
-        radius: query.radiusMeters ?? 15000,
-      });
       qb.addSelect(distance, 'distance_meters');
     }
     if (query.sort === 'top_rated')
       qb.orderBy('c.rating_avg', 'DESC', 'NULLS LAST');
-    else if (query.lat !== undefined) qb.orderBy('distance_meters', 'ASC');
+    else if (query.lat !== undefined)
+      qb.orderBy('distance_meters', query.sort === 'farthest' ? 'DESC' : 'ASC');
     else qb.orderBy('c.name', 'ASC');
     qb.addOrderBy('c.id', 'ASC')
       .skip(offset)
@@ -160,9 +207,12 @@ export class MarketplaceService {
         });
         const term = query.q?.trim().toLowerCase();
         const matches = menu.filter((o) => {
-          if (query.serviceId && o.serviceDefinitionId !== query.serviceId)
+          if (
+            serviceIds.length &&
+            !serviceIds.includes(o.serviceDefinitionId ?? '')
+          )
             return false;
-          if (!term || query.serviceId) return true;
+          if (!term || serviceIds.length) return true;
           const d = definitions.find((d) => d.id === o.serviceDefinitionId);
           return [o.name, o.description, d?.name, ...(d?.aliases ?? [])].some(
             (v) => v?.toLowerCase().includes(term),
@@ -178,8 +228,11 @@ export class MarketplaceService {
               ? null
               : Math.round(Number(raw[i].distance_meters)),
           formattedAddress: c.formattedAddress,
+          postalCode: c.postalCode,
           heroImageUrl: c.heroImageUrl,
           logoUrl: c.logoUrl,
+          photoUrls: c.photoUrls,
+          googleMapsUrl: c.googleMapsUrl,
           ratingAvg: c.ratingAvg ? Number(c.ratingAvg) : null,
           ratingCount: c.ratingCount,
           isFavorited: false,
@@ -212,8 +265,11 @@ export class MarketplaceService {
       latitude: center.latitude,
       longitude: center.longitude,
       formattedAddress: center.formattedAddress,
+      postalCode: center.postalCode,
       heroImageUrl: center.heroImageUrl,
       logoUrl: center.logoUrl,
+      photoUrls: center.photoUrls,
+      googleMapsUrl: center.googleMapsUrl,
       ratingAvg: center.ratingAvg ? Number(center.ratingAvg) : null,
       ratingCount: center.ratingCount,
       hoursStart: center.hoursStart,

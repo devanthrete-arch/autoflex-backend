@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -17,8 +17,11 @@ import {
   Min,
   MinLength,
   ValidateNested,
+  ValidateBy,
+  ValidateIf,
 } from 'class-validator';
 import { VehicleType } from '../../../common/enums/vehicle-type.enum';
+import { isGoogleMapsUrl } from '../google-maps-url';
 
 const HH_MM = /^([01]\d|2[0-3]):[0-5]\d$/;
 const INDIA_PIN = /^[1-9]\d{5}$/;
@@ -50,50 +53,80 @@ export class UpdateCenterDto {
   @IsOptional()
   @IsString()
   @MaxLength(500)
-  addressLine1?: string;
+  addressLine1?: string | null;
 
   @IsOptional()
   @IsString()
   @MaxLength(500)
-  addressLine2?: string;
+  addressLine2?: string | null;
+
+  @IsOptional()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  @IsString()
+  @MinLength(2)
+  @MaxLength(100)
+  city?: string | null;
 
   @IsOptional()
   @IsString()
   @MaxLength(100)
-  city?: string;
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(100)
-  state?: string;
+  state?: string | null;
 
   @IsOptional()
   @Matches(INDIA_PIN)
-  postalCode?: string;
+  postalCode?: string | null;
 
   @IsOptional()
   @IsString()
   @MaxLength(512)
-  formattedAddress?: string;
+  formattedAddress?: string | null;
 
   @IsOptional()
-  @Type(() => Number)
   @IsNumber()
   @Min(-90)
   @Max(90)
-  latitude?: number;
+  latitude?: number | null;
 
   @IsOptional()
-  @Type(() => Number)
   @IsNumber()
   @Min(-180)
   @Max(180)
-  longitude?: number;
+  longitude?: number | null;
 
   @IsOptional()
-  @IsUrl({ require_tld: false })
+  @IsUrl({
+    require_tld: false,
+    protocols: ['https', 'http'],
+    require_protocol: true,
+    disallow_auth: true,
+  })
   @MaxLength(1024)
-  heroImageUrl?: string;
+  heroImageUrl?: string | null;
+
+  @ValidateIf((dto: UpdateCenterDto) => dto.photoUrls !== undefined)
+  @IsArray()
+  @ArrayMaxSize(8)
+  @ArrayUnique()
+  @IsUrl(
+    {
+      require_tld: false,
+      protocols: ['https', 'http'],
+      require_protocol: true,
+      disallow_auth: true,
+    },
+    { each: true },
+  )
+  @MaxLength(1024, { each: true })
+  photoUrls?: string[];
+
+  @ValidateBy({
+    name: 'googleMapsUrl',
+    validator: {
+      validate: isGoogleMapsUrl,
+      defaultMessage: () => 'googleMapsUrl must be a Google Maps HTTPS link',
+    },
+  })
+  googleMapsUrl?: string | null;
 
   @IsOptional()
   @IsUrl({ require_tld: false })

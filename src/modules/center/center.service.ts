@@ -34,6 +34,8 @@ export interface CenterView {
   latitude: number | null;
   longitude: number | null;
   heroImageUrl: string | null;
+  photoUrls: string[];
+  googleMapsUrl: string | null;
   logoUrl: string | null;
   ratingAvg: number | null;
   ratingCount: number;
@@ -69,6 +71,15 @@ export class CenterService {
 
   async update(auth: AuthContext, dto: UpdateCenterDto): Promise<CenterView> {
     const center = await this.requireCenter(auth);
+    const hasLat = dto.latitude !== undefined;
+    const hasLng = dto.longitude !== undefined;
+    if (
+      hasLat !== hasLng ||
+      (hasLat && (dto.latitude === null) !== (dto.longitude === null))
+    )
+      throw new BadRequestException(
+        'Set or clear latitude and longitude together',
+      );
     if (dto.slug !== undefined && dto.slug !== center.slug) {
       const taken = await this.centerRepository.findOne({
         where: { slug: dto.slug, id: Not(center.id) },
@@ -99,6 +110,9 @@ export class CenterService {
     if (dto.latitude !== undefined) center.latitude = dto.latitude;
     if (dto.longitude !== undefined) center.longitude = dto.longitude;
     if (dto.heroImageUrl !== undefined) center.heroImageUrl = dto.heroImageUrl;
+    if (dto.photoUrls !== undefined) center.photoUrls = dto.photoUrls;
+    if (dto.googleMapsUrl !== undefined)
+      center.googleMapsUrl = dto.googleMapsUrl;
     if (dto.logoUrl !== undefined) center.logoUrl = dto.logoUrl;
     if (dto.supportedVehicleTypes !== undefined) {
       center.supportedVehicleTypes = dto.supportedVehicleTypes;
@@ -117,7 +131,17 @@ export class CenterService {
     }
     center.hoursStart = hoursStart;
     center.hoursEnd = hoursEnd;
-    const saved = await this.centerRepository.save(center);
+    // A partial UPDATE writes both supplied coordinates even when one is unchanged.
+    // Diff-saving a full entity could mix pairs from concurrent profile edits.
+    const changes = Object.fromEntries(
+      Object.entries(dto).filter(([, value]) => value !== undefined),
+    ) as Partial<ServiceCenter>;
+    if (dto.publicPhone !== undefined) changes.publicPhone = center.publicPhone;
+    if (Object.keys(changes).length)
+      await this.centerRepository.update(center.id, changes);
+    const saved = await this.centerRepository.findOneByOrFail({
+      id: center.id,
+    });
     return this.toView(saved);
   }
 
@@ -205,6 +229,8 @@ export class CenterService {
       latitude: center.latitude,
       longitude: center.longitude,
       heroImageUrl: center.heroImageUrl,
+      photoUrls: center.photoUrls,
+      googleMapsUrl: center.googleMapsUrl,
       logoUrl: center.logoUrl,
       ratingAvg: center.ratingAvg ? Number(center.ratingAvg) : null,
       ratingCount: center.ratingCount,

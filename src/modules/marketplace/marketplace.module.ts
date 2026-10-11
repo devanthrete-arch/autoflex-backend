@@ -10,6 +10,7 @@ import {
 } from './entities/service-category.entity';
 import { MarketplaceController } from './marketplace.controller';
 import { MarketplaceService } from './marketplace.service';
+import { PostalLocationService } from './postal-location.service';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { MarketplaceService } from './marketplace.service';
     OfferingsModule,
   ],
   controllers: [MarketplaceController],
-  providers: [MarketplaceService],
+  providers: [MarketplaceService, PostalLocationService],
   exports: [MarketplaceService],
 })
 export class MarketplaceModule {}
