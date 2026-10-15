@@ -22,6 +22,7 @@ describe('AF-012 booking eligibility (e2e)', () => {
   let app: INestApplication<App>;
   let dataSource: DataSource;
   let backup: IBackup;
+  let takeBackup: () => IBackup;
   let customer: string;
   let profileId: string;
   let centerId: string;
@@ -33,7 +34,7 @@ describe('AF-012 booking eligibility (e2e)', () => {
   const profile = (dateOfBirth: string) =>
     auth(http().put('/v1/me/profile')).send({ dateOfBirth });
   const slots = () =>
-    http().get(`/v1/centers/${centerId}/slots`).query({ date: '2027-06-15' });
+    http().get(`/v1/centers/${centerId}/slots`).query({ date: '2026-10-10' });
 
   beforeAll(async () => {
     process.env.IAM_CUSTOMER_DOMAIN_APPLICATION_ID = TEST_CUSTOMER_APP_ID;
@@ -77,15 +78,17 @@ describe('AF-012 booking eligibility (e2e)', () => {
       serviceCenterId: centerId,
       vehicleId: vehicle.body.id,
       mode: 'SELF_CHECKIN',
-      slotStart: '2027-06-15T03:30:00.000Z',
-      slotEnd: '2027-06-15T04:30:00.000Z',
+      slotStart: '2026-10-10T03:30:00.000Z',
+      slotEnd: '2026-10-10T04:30:00.000Z',
       offeringIds: [offering.id],
     };
-    backup = ctx.memoryDb.backup();
+    takeBackup = () => ctx.memoryDb.backup();
+    backup = takeBackup();
   }, 60000);
 
   beforeEach(() => {
     backup.restore();
+    jest.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-10-08T00:00:00Z'));
     jest.spyOn(indiaTime, 'istToday').mockReturnValue('2026-10-08');
   });
   afterEach(() => jest.restoreAllMocks());
@@ -139,7 +142,10 @@ describe('AF-012 booking eligibility (e2e)', () => {
 
   it('allows booking on the 18th birthday and retries an earlier rejected idempotency key', async () => {
     await profile('2008-10-09').expect(200);
+    // pg-mem lacks rollback. Real PostgreSQL receipt rollback/retry is covered by AF-009.
+    const beforeFailure = takeBackup();
     await book().set('Idempotency-Key', 'birthday-retry').expect(422);
+    beforeFailure.restore();
     // The future slot was already after this birthday; only submission day changes eligibility.
     jest.spyOn(indiaTime, 'istToday').mockReturnValue('2026-10-09');
     const me = await auth(http().get('/v1/me/profile')).expect(200);

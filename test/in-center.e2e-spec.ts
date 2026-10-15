@@ -8,6 +8,7 @@ import { JobAssignment } from '../src/modules/jobs/entities/job-assignment.entit
 import { StaffProfile } from '../src/modules/tenancy/entities/staff-profile.entity';
 import { createJwtTestFixture } from '../src/test-utils/jwt-test.helper';
 import { createE2eApp } from './helpers/e2e-app.helper';
+import { seedReturningWalkIn } from './helpers/returning-walk-in.helper';
 import {
   seedCenterListing,
   seedTestTenancy,
@@ -47,6 +48,7 @@ describe('In-center service (e2e)', () => {
   let technicianId: string;
   let jobId: string;
   let publicToken: string;
+  let centerId: string;
   let version: number;
 
   const http = () => request(app.getHttpServer());
@@ -71,6 +73,8 @@ describe('In-center service (e2e)', () => {
   };
 
   beforeAll(async () => {
+    // Fixed test clock keeps existing June fixtures inside the server booking window.
+    jest.spyOn(Date, 'now').mockReturnValue(Date.parse('2027-06-12T00:00:00Z'));
     process.env.IAM_CUSTOMER_DOMAIN_APPLICATION_ID = TEST_CUSTOMER_APP_ID;
     const fixture = await createJwtTestFixture();
     process.env.LOCAL_JWKS_JSON = fixture.jwksJson;
@@ -79,9 +83,8 @@ describe('In-center service (e2e)', () => {
     app = ctx.app;
     dataSource = ctx.dataSource;
     const tenancy = await seedTestTenancy(dataSource);
-    const centerId = (
-      await seedCenterListing(dataSource, tenancy.serviceCenter.id)
-    ).id;
+    centerId = (await seedCenterListing(dataSource, tenancy.serviceCenter.id))
+      .id;
     const staffRepo = dataSource.getRepository(StaffProfile);
     technicianId = (
       await staffRepo.save(
@@ -173,6 +176,7 @@ describe('In-center service (e2e)', () => {
   }, 60000);
 
   afterAll(async () => {
+    jest.restoreAllMocks();
     await app?.close();
   });
 
@@ -604,15 +608,23 @@ describe('In-center service (e2e)', () => {
   describe('walk-in cancellation', () => {
     it('cancels with a reason and freezes the job', async () => {
       const created = await asManager(http().post('/v1/jobs'))
+        .set('Idempotency-Key', randomUUID())
         .send({
-          customerPhone: '+919000000001',
-          vehicleRegistration: 'ka-05 mn 4321',
+          ...(
+            await seedReturningWalkIn(dataSource, centerId, {
+              phone: '+919000000001',
+              registrationNumber: 'KA05MN4321',
+            })
+          ).selection,
           serviceType: 'Puncture repair',
         })
         .expect(201);
       expect(created.body.jobNumber).toMatch(/^JC-/);
-      expect(created.body.vehicle.registrationNumber).toBe('KA05MN4321');
-      version = created.body.version;
+      const detail = await asManager(
+        http().get(`/v1/jobs/${created.body.id}`),
+      ).expect(200);
+      expect(detail.body.vehicle.registrationNumber).toBe('KA05MN4321');
+      version = detail.body.version;
 
       await asManager(http().post(`/v1/jobs/${created.body.id}/cancel`))
         .send({ reason: 'x' })

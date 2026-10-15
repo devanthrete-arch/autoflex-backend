@@ -150,6 +150,7 @@ Job statuses: `CHECKED_IN`, `INSPECTION`, `AWAITING_APPROVAL`, `IN_PROGRESS`, `Q
 | `npm run migration:revert` | Revert last migration |
 | `npm run seed:dev` | Map one IAM domain and user (not the workshop roster) |
 | `npm run support:preflight` | Read support status counts and incompatible links before migration |
+| `npm run intake:preflight` | Read returning-intake conflict counts without personal identifiers; works before migration 0011 |
 | `npm run support:provision` | Provision a support profile for an existing IAM identity |
 
 ## Testing
@@ -214,3 +215,17 @@ PostgreSQL integration verification uses the isolated fixed target on port 55429
 `GET /v1/marketplace/postal-locations/:postalCode` resolves a six-digit PIN through the third-party PostalPinCode directory into localities/district/state. The adapter has a five-second timeout, bounded success/not-found cache and request sharing. No coordinates or customer identity are sent/inferred. The customer picker offers PIN lookup or explicit browser location; failures preserve the current area and allow PIN retry, GPS or Skip recovery. City mode remains for configured defaults and saved history.
 
 Migration **1730000000010** adds center gallery `photo_urls` and `google_maps_url`; run migrations before restarting. The desk **More → Location and photos** editor is admin/manager + `center:manage`. It loads the full center profile and PATCHes explicit fields, accepting paired coordinate clears and up to eight gallery URLs. Maps links are validated and displayed, never scraped for coordinates. Existing menus/bookings are preserved. [PIN, distance and gallery delivery](../development-documents/architecture/af-029-pin-distance-gallery-delivery.md).
+
+## Returning-customer intake (AF-006)
+
+Run `npm run intake:preflight`, then migrations before restarting the API. Migration **1730000000011** adds center customer/vehicle canonical keys, revisions and nullable vehicle type, preserving legacy conflicts and unknown types. Preflight reports counts read-only; it never merges, transfers or deletes records.
+
+Desk intake now uses protected exact customer lookup, explicit confirmation and saved vehicle selection. `POST /v1/jobs` requires selected IDs/revisions and one stable `Idempotency-Key`; it returns only `{id,jobNumber,status}`. Vehicle/job/event/audit/receipt commit together. Booking check-in attaches its job atomically and recovers a lost response through that attached job. Backend association, archive/type and active-job checks apply independently of the UI.
+
+New/unlinked reception registration, VAHAN RC verification and global ownership claims/transfers remain pending. A stored association is not verified legal ownership. [Runbook and recovery](../development-documents/architecture/returning-walk-in-runbook.md) · [Live blockers](../development-documents/architecture/af-006-returning-customer-walk-in-scope.md#13-live-execution-status-and-blockers--12-october-2026) · [Isolated regression instructions](./test/AF006.md).
+
+### Working hours and booking slots (AF-009)
+
+After migrations, run `npm run schedule:preflight` before enabling booking traffic in a new environment. This reads existing center schedules and future commitments without changing them. Migration `1730000000012` preserves legacy hours/bookings and defaults to zero advance notice and seven India calendar dates including today. Managers edit **More → Working hours & booking slots** in the desk app.
+
+Backend and customer enforce exact hourly arrival windows, holidays/breaks, notice, horizon and capacity. Schedule commands require a revision and idempotency key; customer booking keys are committed in the same transaction as the reservation. Existing visits are retained when hours/capacity change. Use PostgreSQL for transaction/rollback verification. See [AF-009 test guide](test/AF009.md); `npm run test:scheduling:postgres` targets the isolated test database documented there.

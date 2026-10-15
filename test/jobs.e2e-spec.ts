@@ -1,8 +1,10 @@
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
+import { randomUUID } from 'crypto';
 import { createJwtTestFixture } from '../src/test-utils/jwt-test.helper';
 import { createE2eApp } from './helpers/e2e-app.helper';
+import { seedReturningWalkIn } from './helpers/returning-walk-in.helper';
 import {
   seedTestTenancy,
   TEST_DOMAIN_ID,
@@ -41,6 +43,7 @@ describe('Jobs API (e2e)', () => {
   let otherTenantToken: string;
   let technicianToken: string;
   let createdJobId: string;
+  let selection: Awaited<ReturnType<typeof seedReturningWalkIn>>['selection'];
 
   beforeAll(async () => {
     const fixture = await createJwtTestFixture();
@@ -49,7 +52,15 @@ describe('Jobs API (e2e)', () => {
 
     const ctx = await createE2eApp();
     app = ctx.app;
-    await seedTestTenancy(ctx.dataSource);
+    const { serviceCenter } = await seedTestTenancy(ctx.dataSource);
+    ({ selection } = await seedReturningWalkIn(
+      ctx.dataSource,
+      serviceCenter.id,
+      {
+        name: 'Rahul Sharma',
+        registrationNumber: 'MH12AB1234',
+      },
+    ));
 
     accessToken = await fixture.signAccessToken({
       sub: TEST_IAM_USER_ID,
@@ -100,14 +111,13 @@ describe('Jobs API (e2e)', () => {
       .expect(404);
   });
 
-  it('creates a job with publicToken', async () => {
+  it('creates a selected returning walk-in with a narrow non-secret reference', async () => {
     const response = await request(app.getHttpServer())
       .post('/v1/jobs')
       .set('Authorization', `Bearer ${accessToken}`)
+      .set('Idempotency-Key', randomUUID())
       .send({
-        customerPhone: '+919876543210',
-        customerName: 'Rahul Sharma',
-        vehicleRegistration: 'MH12AB1234',
+        ...selection,
         serviceType: 'Periodic service',
         odometerKm: 12000,
       })

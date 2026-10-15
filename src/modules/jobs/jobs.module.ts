@@ -23,6 +23,9 @@ import { JobsController } from './jobs.controller';
 import { JobsService } from './jobs.service';
 import { JobTrackingController } from './job-tracking.controller';
 import { JobTrackingService } from './job-tracking.service';
+import { IntakeController } from './intake.controller';
+import { IntakeService } from './intake.service';
+import { IntakeRateLimitGuard } from './intake-rate-limit.guard';
 
 @Module({
   imports: [
@@ -39,6 +42,7 @@ import { JobTrackingService } from './job-tracking.service';
   ],
   controllers: [
     JobTrackingController,
+    IntakeController,
     JobsController,
     JobWorkController,
     CustomerJobsController,
@@ -46,6 +50,8 @@ import { JobTrackingService } from './job-tracking.service';
   ],
   providers: [
     JobTrackingService,
+    IntakeService,
+    IntakeRateLimitGuard,
     JobStoreService,
     JobsService,
     JobWorkflowService,
@@ -53,7 +59,7 @@ import { JobTrackingService } from './job-tracking.service';
     JobMediaService,
     CustomerJobsService,
   ],
-  exports: [JobsService, JobStoreService],
+  exports: [JobsService, JobStoreService, IntakeService],
 })
 export class JobsModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -63,6 +69,6 @@ export class JobsModule implements NestModule {
         res.setHeader('Referrer-Policy', 'no-referrer');
         next();
       })
-      .forRoutes(JobTrackingController);
+      .forRoutes(JobTrackingController, IntakeController, JobsController);
   }
 }

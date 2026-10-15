@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
@@ -28,6 +29,8 @@ describe('People, places and centers (e2e)', () => {
   const http = () => request(app.getHttpServer());
 
   beforeAll(async () => {
+    // Fixed test clock keeps existing June fixtures inside the server booking window.
+    jest.spyOn(Date, 'now').mockReturnValue(Date.parse('2027-06-12T00:00:00Z'));
     process.env.IAM_CUSTOMER_DOMAIN_APPLICATION_ID = TEST_CUSTOMER_APP_ID;
     const fixture = await createJwtTestFixture();
     process.env.LOCAL_JWKS_JSON = fixture.jwksJson;
@@ -69,6 +72,7 @@ describe('People, places and centers (e2e)', () => {
   }, 60000);
 
   afterAll(async () => {
+    jest.restoreAllMocks();
     await app?.close();
   });
 
@@ -408,7 +412,7 @@ describe('People, places and centers (e2e)', () => {
   describe('operating hours drive slots', () => {
     it('stores weekly hours and closes Sunday', async () => {
       const res = await http()
-        .put('/v1/center/hours')
+        .put('/v1/center/hours').set('If-Match', '1').set('Idempotency-Key', randomUUID())
         .set('Authorization', `Bearer ${manager}`)
         .send({
           days: [
@@ -436,7 +440,7 @@ describe('People, places and centers (e2e)', () => {
 
     it('rejects a day with open after close', async () => {
       await http()
-        .put('/v1/center/hours')
+        .put('/v1/center/hours').set('If-Match', '1').set('Idempotency-Key', randomUUID())
         .set('Authorization', `Bearer ${manager}`)
         .send({
           days: [
@@ -490,7 +494,7 @@ describe('People, places and centers (e2e)', () => {
           slotStart: '2027-06-14T09:30:00.000Z',
           slotEnd: '2027-06-14T10:30:00.000Z',
         })
-        .expect(400);
+        .expect(409);
     });
 
     it('shows weekly hours and structured address on the public listing', async () => {

@@ -1,14 +1,18 @@
+import type { Request } from 'express';
+import { commandMeta } from '../idempotency/transactional-receipt';
 import {
   Body,
   Controller,
   Delete,
   Get,
   HttpCode,
+  Header,
   HttpStatus,
   Param,
   ParseUUIDPipe,
   Post,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -32,6 +36,7 @@ import {
 import { BookingsService } from './bookings.service';
 import { CenterBookingsService } from './center-bookings.service';
 import { BookingSelectionRateLimitGuard } from './booking-selection-rate-limit.guard';
+import { TransactionalCommand } from '../idempotency/transactional-command.decorator';
 
 @ApiTags('bookings')
 @Controller('v1')
@@ -62,6 +67,7 @@ export class BookingsController {
 
   @Public()
   @Get('centers/:id/slots')
+  @Header('Cache-Control', 'no-store')
   @ApiOperation({ summary: 'Slots for one IST date with remaining capacity' })
   listSlots(
     @Param('id', ParseUUIDPipe) id: string,
@@ -73,9 +79,18 @@ export class BookingsController {
   @ApiBearerAuth()
   @RequireCustomer()
   @Post('bookings')
+  @TransactionalCommand()
   @ApiOperation({ summary: 'Reserve a SELF_CHECKIN slot' })
-  create(@CurrentAuth() auth: AuthContext, @Body() dto: CreateBookingDto) {
-    return this.bookingsService.create(auth, dto);
+  create(
+    @CurrentAuth() auth: AuthContext,
+    @Body() dto: CreateBookingDto,
+    @Req() req: Request,
+  ) {
+    return this.bookingsService.create(
+      auth,
+      dto,
+      commandMeta(req, dto, 201, true),
+    );
   }
 
   @ApiBearerAuth()
@@ -213,6 +228,7 @@ export class CenterBookingsController {
   }
 
   @Post(':id/check-in')
+  @TransactionalCommand()
   @Roles('admin', 'manager', 'advisor')
   @Permissions('bookings:manage', 'jobs:create')
   @ApiOperation({ summary: 'Vehicle arrived: open the job from this booking' })

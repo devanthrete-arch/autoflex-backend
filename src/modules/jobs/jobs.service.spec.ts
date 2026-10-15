@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   NotFoundException,
   UnprocessableEntityException,
@@ -16,6 +17,7 @@ import { StaffProfile } from '../tenancy/entities/staff-profile.entity';
 import { ServiceJob } from './entities/service-job.entity';
 import { JobStoreService } from './job-store.service';
 import { JobsService } from './jobs.service';
+import { IntakeService } from './intake.service';
 
 describe('JobsService', () => {
   let service: JobsService;
@@ -47,6 +49,21 @@ describe('JobsService', () => {
       providers: [
         JobsService,
         JobStoreService,
+        {
+          provide: IntakeService,
+          useValue: {
+            authorize: jest.fn((actor: AuthContext) => {
+              if (
+                actor.actorType !== 'staff' ||
+                !actor.serviceCenterId ||
+                !actor.staffProfileId ||
+                !actor.permissions.includes('jobs:create')
+              )
+                throw new ForbiddenException();
+              return actor.serviceCenterId;
+            }),
+          },
+        },
         {
           provide: getRepositoryToken(ServiceJob),
           useValue: {
@@ -102,19 +119,16 @@ describe('JobsService', () => {
     jobRepository = module.get(getRepositoryToken(ServiceJob));
   });
 
-  it('opens a walk-in job with a job number and CHECKED_IN status', async () => {
-    const job = await service.create(auth, {
-      customerPhone: '+919876543210',
-      vehicleRegistration: 'MH12 AB-1234',
-      serviceType: 'Periodic service',
-      vehicleType: VehicleType.TWO_WHEELER,
-    });
-
-    expect(job.id).toBe('job-1');
-    expect(job.status).toBe(JobStatus.CHECKED_IN);
-    expect(job.jobNumber).toMatch(/^JC-\d{8}-[A-Z2-9]{4}$/);
-    expect(job).not.toHaveProperty('publicToken');
-    expect(saved?.publicToken?.length).toBeGreaterThan(20);
+  it('rejects an unchecked legacy create without writing a job', async () => {
+    await expect(
+      service.create(auth, {
+        customerPhone: '+919876543210',
+        vehicleRegistration: 'MH12 AB-1234',
+        serviceType: 'Periodic service',
+        vehicleType: VehicleType.TWO_WHEELER,
+      }),
+    ).rejects.toThrow(BadRequestException);
+    expect(saved).toBeUndefined();
   });
 
   it('returns 404 for cross-tenant job access', async () => {

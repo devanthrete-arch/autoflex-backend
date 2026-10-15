@@ -16,7 +16,6 @@ import {
   VALID_JOB_TRANSITIONS,
 } from '../../common/enums/job-status.enum';
 import { JobLineKind, JobLineStatus } from '../../common/enums/job-work.enum';
-import { VehicleType } from '../../common/enums/vehicle-type.enum';
 import { inr, lineAmount } from '../../common/money';
 import { generateReference } from '../../common/reference-number';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
@@ -27,6 +26,15 @@ import { GarageVehicle } from '../customers/entities/garage-vehicle.entity';
 import { Vehicle } from '../customers/entities/vehicle.entity';
 import { EventsService } from '../events/events.service';
 import { StaffProfile } from '../tenancy/entities/staff-profile.entity';
+import {
+  CommandMeta,
+  withCommandReceipt,
+} from '../idempotency/transactional-receipt';
+import {
+  IntakeJobReference,
+  IntakeService,
+  WalkInReceipt,
+} from './intake.service';
 import { CreateJobDto } from './dto/create-job.dto';
 import { ListJobsQueryDto } from './dto/list-jobs-query.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
@@ -115,66 +123,160 @@ export class JobsService {
     private readonly dataSource: DataSource,
     private readonly store: JobStoreService,
     private readonly eventsService: EventsService,
+    private readonly intake: IntakeService,
   ) {}
 
-  async create(auth: AuthContext, dto: CreateJobDto): Promise<JobDetailView> {
-    const serviceCenterId = this.requireStaffCenter(auth);
-    if (dto.assignedTechnicianId) {
-      await this.assertStaffInCenter(dto.assignedTechnicianId, serviceCenterId);
-    }
-    if (dto.comebackOfJobId) {
-      const earlier = await this.store.get(
-        serviceCenterId,
-        dto.comebackOfJobId,
-      );
-      if (earlier.status !== JobStatus.COMPLETED) {
-        throw new UnprocessableEntityException(
-          'A comeback must refer to a completed job',
-        );
-      }
-    }
-
-    const customer = await this.findOrCreateCustomer(serviceCenterId, dto);
-    const vehicle = await this.findOrCreateVehicle(
-      serviceCenterId,
-      customer.id,
-      dto,
-    );
-
-    const saved = await this.dataSource.transaction(async (manager) => {
-      const job = await manager.getRepository(ServiceJob).save(
-        manager.getRepository(ServiceJob).create({
-          serviceCenterId,
-          customerId: customer.id,
-          vehicleId: vehicle.id,
-          vehicleType: dto.vehicleType ?? VehicleType.TWO_WHEELER,
-          status: JobStatus.CHECKED_IN,
-          serviceType: dto.serviceType,
-          odometerKm: dto.odometerKm ?? null,
-          fuelLevel: dto.fuelLevel ?? null,
-          estimatedReadyAt: dto.estimatedReadyAt ?? null,
-          assignedTechnicianId: dto.assignedTechnicianId ?? null,
-          priority: dto.priority,
-          budgetCeiling:
-            dto.budgetCeiling !== undefined ? String(dto.budgetCeiling) : null,
-          accessoriesChecklist: dto.accessoriesChecklist ?? null,
-          paymentMode: dto.paymentMode ?? null,
-          publicToken: this.generatePublicToken(),
-          jobNumber: generateReference('JC'),
-          customerRequest: dto.customerRequest ?? null,
-          waitingOnSite: dto.waitingOnSite ?? false,
-          comebackOfJobId: dto.comebackOfJobId ?? null,
-          comebackReason: dto.comebackReason ?? null,
-          warrantyIntent: dto.warrantyIntent ?? false,
-        }),
-      );
-      await this.afterOpen(auth, job, manager, {
-        comebackOfJobId: dto.comebackOfJobId,
+  async create(
+    auth: AuthContext,
+    dto: CreateJobDto,
+    meta?: CommandMeta,
+  ): Promise<IntakeJobReference> {
+    this.intake.authorize(auth);
+    if (
+      !meta?.key ||
+      !/^[A-Za-z0-9_.:-]{8,128}$/.test(meta.key) ||
+      !/^[a-f0-9]{64}$/.test(meta.hash)
+    )
+      throw new BadRequestException({
+        code: 'INVALID_INTAKE_INPUT',
+        message: 'A single valid Idempotency-Key is required',
       });
-      return job;
+    return this.dataSource.transaction(async (manager) => {
+      const center = await this.intake.lockCenter(manager, auth);
+      const value = await withCommandReceipt<WalkInReceipt>(
+        manager,
+        `staff:${auth.staffProfileId}`,
+        meta,
+        async () => {
+          this.validateIntakeVisit(dto);
+          const { customer, vehicle, vehicleType } =
+            await this.intake.resolveWalkIn(manager, auth, center, dto);
+          if (dto.assignedTechnicianId)
+            await this.assertStaffInCenter(
+              dto.assignedTechnicianId,
+              center.id,
+              manager,
+            );
+          if (dto.comebackOfJobId) {
+            const earlier = await manager.getRepository(ServiceJob).findOne({
+              where: { id: dto.comebackOfJobId, serviceCenterId: center.id },
+              lock: { mode: 'pessimistic_write' },
+            });
+            if (
+              !earlier ||
+              earlier.status !== JobStatus.COMPLETED ||
+              earlier.customerId !== customer.id ||
+              earlier.vehicleId !== vehicle.id
+            )
+              throw new UnprocessableEntityException({
+                code: 'COMEBACK_REFERENCE_INVALID',
+                message:
+                  'A comeback must refer to a completed visit for this customer and vehicle at this center',
+              });
+          }
+          const repo = manager.getRepository(ServiceJob);
+          const job = await repo.save(
+            repo.create({
+              serviceCenterId: center.id,
+              customerId: customer.id,
+              vehicleId: vehicle.id,
+              vehicleType,
+              status: JobStatus.CHECKED_IN,
+              serviceType: dto.serviceType.trim(),
+              odometerKm: dto.odometerKm ?? null,
+              fuelLevel: dto.fuelLevel?.trim() ?? null,
+              estimatedReadyAt: dto.estimatedReadyAt ?? null,
+              assignedTechnicianId: dto.assignedTechnicianId ?? null,
+              priority: dto.priority,
+              budgetCeiling:
+                dto.budgetCeiling !== undefined
+                  ? String(dto.budgetCeiling)
+                  : null,
+              accessoriesChecklist: dto.accessoriesChecklist ?? null,
+              paymentMode: dto.paymentMode?.trim() ?? null,
+              publicToken: this.generatePublicToken(),
+              jobNumber: generateReference('JC'),
+              customerRequest: dto.customerRequest?.trim() ?? null,
+              waitingOnSite: dto.waitingOnSite ?? false,
+              comebackOfJobId: dto.comebackOfJobId ?? null,
+              comebackReason: dto.comebackReason?.trim() ?? null,
+              warrantyIntent: dto.warrantyIntent ?? false,
+            }),
+          );
+          await this.afterOpen(auth, job, manager, {
+            comebackOfJobId: dto.comebackOfJobId,
+            customerId: customer.id,
+            vehicleId: vehicle.id,
+          });
+          return {
+            kind: 'RETURNING_WALK_IN',
+            serviceCenterId: center.id,
+            job: this.intake.reference(job),
+          };
+        },
+        async (receipt) => {
+          await this.intake.receiptReference(manager, auth, receipt);
+        },
+      );
+      // Also projects known legacy full-job receipts, without returning old PII/tokens.
+      return this.intake.receiptReference(manager, auth, value);
     });
+  }
 
-    return this.findOne(auth, saved.id);
+  private validateIntakeVisit(dto: CreateJobDto): void {
+    const invalid = () => {
+      throw new BadRequestException({
+        code: 'INVALID_INTAKE_INPUT',
+        message: 'Enter valid bounded visit details',
+      });
+    };
+    if (
+      typeof dto.serviceType !== 'string' ||
+      !dto.serviceType.trim() ||
+      dto.serviceType.length > 128
+    )
+      invalid();
+    for (const [key, max] of [
+      ['customerRequest', 2000],
+      ['comebackReason', 1000],
+      ['fuelLevel', 32],
+      ['paymentMode', 32],
+    ] as const) {
+      const value = dto[key];
+      if (
+        value !== undefined &&
+        (typeof value !== 'string' || value.length > max)
+      )
+        invalid();
+    }
+    if (
+      dto.odometerKm !== undefined &&
+      (!Number.isInteger(dto.odometerKm) ||
+        dto.odometerKm < 0 ||
+        dto.odometerKm > 2147483647)
+    )
+      invalid();
+    if (
+      dto.budgetCeiling !== undefined &&
+      (!Number.isFinite(dto.budgetCeiling) ||
+        dto.budgetCeiling < 0 ||
+        dto.budgetCeiling > 9999999999.99)
+    )
+      invalid();
+    if (
+      dto.estimatedReadyAt !== undefined &&
+      (!(dto.estimatedReadyAt instanceof Date) ||
+        !Number.isFinite(dto.estimatedReadyAt.getTime()))
+    )
+      invalid();
+    if (
+      dto.accessoriesChecklist !== undefined &&
+      (!dto.accessoriesChecklist ||
+        typeof dto.accessoriesChecklist !== 'object' ||
+        Array.isArray(dto.accessoriesChecklist) ||
+        JSON.stringify(dto.accessoriesChecklist).length > 8192)
+    )
+      invalid();
   }
 
   /**
@@ -185,117 +287,105 @@ export class JobsService {
   async openFromBooking(
     auth: AuthContext,
     input: OpenFromBookingInput,
+    transaction?: EntityManager,
   ): Promise<ServiceJob> {
-    const serviceCenterId = this.requireStaffCenter(auth);
-    if (input.assignedTechnicianId) {
+    this.intake.authorize(auth);
+    if (!transaction)
+      return this.dataSource.transaction((manager) =>
+        this.openFromBooking(auth, input, manager),
+      );
+    const manager = transaction;
+    const center = await this.intake.lockCenter(manager, auth);
+    const serviceCenterId = center.id;
+    if (!input.profile || !input.garageVehicle)
+      throw new UnprocessableEntityException({
+        code: 'ACCOUNT_LINK_REQUIRED',
+        message:
+          'The booking owner or vehicle is unavailable; resolve the account association',
+      });
+    const profile = await manager.getRepository(CustomerProfile).findOne({
+      where: { id: input.profile.id },
+      lock: { mode: 'pessimistic_write' },
+    });
+    const garageVehicle = await manager.getRepository(GarageVehicle).findOne({
+      where: { id: input.garageVehicle.id },
+      lock: { mode: 'pessimistic_write' },
+    });
+    if (!profile || !garageVehicle)
+      throw new UnprocessableEntityException({
+        code: 'ACCOUNT_LINK_REQUIRED',
+        message:
+          'The booking owner or vehicle is unavailable; resolve the account association',
+      });
+    if (input.assignedTechnicianId)
       await this.assertStaffInCenter(
         input.assignedTechnicianId,
         serviceCenterId,
+        manager,
       );
-    }
-    const { profile, garageVehicle } = input;
-    if (!profile.phone) {
-      throw new UnprocessableEntityException(
-        'The customer has no phone number on their profile',
-      );
-    }
-
-    let customer = await this.customerRepository.findOne({
-      where: { serviceCenterId, phone: profile.phone },
-    });
-    if (customer) {
-      customer.customerProfileId = profile.id;
-      customer.name = customer.name ?? profile.displayName;
-    } else {
-      customer = this.customerRepository.create({
-        serviceCenterId,
-        phone: profile.phone,
-        name: profile.displayName,
-        locale: profile.locale,
-        customerProfileId: profile.id,
-      });
-    }
-    customer = await this.customerRepository.save(customer);
-
-    const registrationNumber = garageVehicle.registrationNumber;
-    let vehicle = await this.vehicleRepository.findOne({
-      where: { serviceCenterId, registrationNumber },
-    });
-    vehicle ??= this.vehicleRepository.create({
-      serviceCenterId,
-      registrationNumber,
-    });
-    vehicle.customerId = customer.id;
-    vehicle.garageVehicleId = garageVehicle.id;
-    vehicle.make = garageVehicle.make;
-    vehicle.model = garageVehicle.model;
-    vehicle.variant = garageVehicle.variant;
-    vehicle.makeModel = [garageVehicle.make, garageVehicle.model]
-      .filter(Boolean)
-      .join(' ');
-    vehicle.chassisNumber =
-      garageVehicle.chassisNumber ?? vehicle.chassisNumber;
-    vehicle.engineNumber = garageVehicle.engineNumber ?? vehicle.engineNumber;
-    vehicle = await this.vehicleRepository.save(vehicle);
+    const { customer, vehicle } = await this.intake.resolveBooking(
+      manager,
+      auth,
+      center,
+      profile,
+      garageVehicle,
+    );
     const customerId = customer.id;
     const vehicleId = vehicle.id;
-
-    return this.dataSource.transaction(async (manager) => {
-      const jobs = manager.getRepository(ServiceJob);
-      const job = await jobs.save(
-        jobs.create({
-          serviceCenterId,
-          customerId,
-          vehicleId,
-          vehicleType: garageVehicle.vehicleType,
-          status: JobStatus.CHECKED_IN,
-          serviceType: input.serviceType,
-          odometerKm: input.odometerKm ?? null,
-          fuelLevel: input.fuelLevel ?? null,
-          estimatedReadyAt: input.estimatedReadyAt ?? null,
-          assignedTechnicianId: input.assignedTechnicianId ?? null,
-          priority: input.priority,
-          budgetCeiling:
-            input.budgetCeiling !== undefined
-              ? String(input.budgetCeiling)
-              : null,
-          accessoriesChecklist: input.accessoriesChecklist ?? null,
-          paymentMode: input.paymentMode,
-          publicToken: this.generatePublicToken(),
-          sourceBookingId: input.bookingId,
-          jobNumber: generateReference('JC'),
-          customerRequest: input.customerRequest ?? null,
-          waitingOnSite: input.waitingOnSite ?? false,
-        }),
-      );
-
-      const items = input.items ?? [];
-      if (items.length) {
-        const lines = manager.getRepository(JobLineItem);
-        await lines.save(
-          items.map((item) =>
-            lines.create({
-              jobId: job.id,
-              serviceCenterId,
-              kind: JobLineKind.LABOUR,
-              description: item.name,
-              scope: item.scope ?? [],
-              quantity: String(item.quantity),
-              unitPriceInr: String(item.priceInr),
-              amountInr: lineAmount(item.quantity, item.priceInr),
-              status: JobLineStatus.INCLUDED,
-              sourceBookingItemId: item.id,
-              createdByStaffProfileId: auth.staffProfileId,
-            }),
-          ),
-        );
-      }
-
-      await this.afterOpen(auth, job, manager, {
+    const jobs = manager.getRepository(ServiceJob);
+    const job = await jobs.save(
+      jobs.create({
+        serviceCenterId,
+        customerId,
+        vehicleId,
+        vehicleType: garageVehicle.vehicleType,
+        status: JobStatus.CHECKED_IN,
+        serviceType: input.serviceType,
+        odometerKm: input.odometerKm ?? null,
+        fuelLevel: input.fuelLevel ?? null,
+        estimatedReadyAt: input.estimatedReadyAt ?? null,
+        assignedTechnicianId: input.assignedTechnicianId ?? null,
+        priority: input.priority,
+        budgetCeiling:
+          input.budgetCeiling !== undefined
+            ? String(input.budgetCeiling)
+            : null,
+        accessoriesChecklist: input.accessoriesChecklist ?? null,
+        paymentMode: input.paymentMode,
+        publicToken: this.generatePublicToken(),
         sourceBookingId: input.bookingId,
-      });
-      return job;
+        jobNumber: generateReference('JC'),
+        customerRequest: input.customerRequest ?? null,
+        waitingOnSite: input.waitingOnSite ?? false,
+      }),
+    );
+
+    const items = input.items ?? [];
+    if (items.length) {
+      const lines = manager.getRepository(JobLineItem);
+      await lines.save(
+        items.map((item) =>
+          lines.create({
+            jobId: job.id,
+            serviceCenterId,
+            kind: JobLineKind.LABOUR,
+            description: item.name,
+            scope: item.scope ?? [],
+            quantity: String(item.quantity),
+            unitPriceInr: String(item.priceInr),
+            amountInr: lineAmount(item.quantity, item.priceInr),
+            status: JobLineStatus.INCLUDED,
+            sourceBookingItemId: item.id,
+            createdByStaffProfileId: auth.staffProfileId,
+          }),
+        ),
+      );
+    }
+
+    await this.afterOpen(auth, job, manager, {
+      sourceBookingId: input.bookingId,
     });
+    return job;
   }
 
   async findAll(
@@ -586,64 +676,14 @@ export class JobsService {
     return auth.serviceCenterId;
   }
 
-  private async findOrCreateCustomer(
-    serviceCenterId: string,
-    dto: CreateJobDto,
-  ): Promise<Customer> {
-    const existing = await this.customerRepository.findOne({
-      where: { serviceCenterId, phone: dto.customerPhone },
-    });
-
-    if (existing) {
-      if (dto.customerName && existing.name !== dto.customerName) {
-        existing.name = dto.customerName;
-        return this.customerRepository.save(existing);
-      }
-      return existing;
-    }
-
-    const customer = this.customerRepository.create({
-      serviceCenterId,
-      phone: dto.customerPhone,
-      name: dto.customerName ?? null,
-    });
-    return this.customerRepository.save(customer);
-  }
-
-  private async findOrCreateVehicle(
-    serviceCenterId: string,
-    customerId: string,
-    dto: CreateJobDto,
-  ): Promise<Vehicle> {
-    const registration = dto.vehicleRegistration
-      .replace(/[\s-]/g, '')
-      .toUpperCase();
-    const existing = await this.vehicleRepository.findOne({
-      where: { serviceCenterId, registrationNumber: registration },
-    });
-
-    if (existing) {
-      if (dto.vehicleMakeModel && existing.makeModel !== dto.vehicleMakeModel) {
-        existing.makeModel = dto.vehicleMakeModel;
-        return this.vehicleRepository.save(existing);
-      }
-      return existing;
-    }
-
-    const vehicle = this.vehicleRepository.create({
-      serviceCenterId,
-      customerId,
-      registrationNumber: registration,
-      makeModel: dto.vehicleMakeModel ?? null,
-    });
-    return this.vehicleRepository.save(vehicle);
-  }
-
   private async assertStaffInCenter(
     staffProfileId: string,
     serviceCenterId: string,
+    manager?: EntityManager,
   ): Promise<StaffProfile> {
-    const profile = await this.staffProfileRepository.findOne({
+    const profile = await (
+      manager?.getRepository(StaffProfile) ?? this.staffProfileRepository
+    ).findOne({
       where: { id: staffProfileId, serviceCenterId, isActive: true },
     });
     if (!profile) {

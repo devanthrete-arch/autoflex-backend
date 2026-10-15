@@ -21,6 +21,9 @@ import { BookingItem } from './booking-item.entity';
 
 @Entity('bookings')
 export class Booking {
+  @Column({ name: 'schedule_revision', type: 'integer', nullable: true })
+  scheduleRevision: number | null;
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

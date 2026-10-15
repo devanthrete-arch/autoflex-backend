@@ -5,6 +5,7 @@ import { randomUUID } from 'crypto';
 import { Server } from 'http';
 import { createJwtTestFixture } from '../src/test-utils/jwt-test.helper';
 import { createE2eApp } from './helpers/e2e-app.helper';
+import { seedReturningWalkIn } from './helpers/returning-walk-in.helper';
 import {
   seedTestTenancy,
   TEST_DOMAIN_ID,
@@ -50,7 +51,7 @@ describe('Tracking token replacement (e2e)', () => {
     const ctx = await createE2eApp();
     app = ctx.app;
     db = ctx.dataSource;
-    await seedTestTenancy(db);
+    const { serviceCenter } = await seedTestTenancy(db);
     const sign = (
       roles: string[],
       permissions: string[],
@@ -72,9 +73,13 @@ describe('Tracking token replacement (e2e)', () => {
     const job = await http()
       .post('/v1/jobs')
       .set('Authorization', `Bearer ${token}`)
+      .set('Idempotency-Key', randomUUID())
       .send({
-        customerPhone: '+919876543210',
-        vehicleRegistration: 'KA01TEST1',
+        ...(
+          await seedReturningWalkIn(db, serviceCenter.id, {
+            registrationNumber: 'KA01TEST1',
+          })
+        ).selection,
         serviceType: 'Service',
       })
       .expect(201);

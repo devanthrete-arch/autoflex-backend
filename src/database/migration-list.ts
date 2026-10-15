@@ -1,5 +1,7 @@
+import { BookingSchedule1730000000012 } from './migrations/1730000000012-BookingSchedule';
 import { ServiceMarketplace1730000000009 } from './migrations/1730000000009-ServiceMarketplace';
 import { CenterDiscoveryMedia1730000000010 } from './migrations/1730000000010-CenterDiscoveryMedia';
+import { ReturningWalkIn1730000000011 } from './migrations/1730000000011-ReturningWalkIn';
 import { MigrationInterface } from 'typeorm';
 import { InitialSchema1730000000000 } from './migrations/1730000000000-InitialSchema';
 import { KitVerticalSlice1730000000001 } from './migrations/1730000000001-KitVerticalSlice';
@@ -24,4 +26,6 @@ export const MIGRATIONS: (new () => MigrationInterface)[] = [
   SupportWorkQueue1730000000008,
   ServiceMarketplace1730000000009,
   CenterDiscoveryMedia1730000000010,
+  ReturningWalkIn1730000000011,
+  BookingSchedule1730000000012,
 ];

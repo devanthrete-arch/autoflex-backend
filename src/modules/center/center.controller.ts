@@ -1,4 +1,7 @@
-import { Body, Controller, Get, Patch, Put } from '@nestjs/common';
+import type { Request } from 'express';
+import { TransactionalCommand } from '../idempotency/transactional-command.decorator';
+import { commandMeta } from '../idempotency/transactional-receipt';
+import { Body, Controller, Get, Patch, Put, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentAuth } from '../auth/decorators/current-auth.decorator';
 import { Permissions } from '../auth/decorators/permissions.decorator';
@@ -23,14 +26,31 @@ export class CenterController {
   }
 
   @Patch()
+  @TransactionalCommand()
   @Roles('admin', 'manager')
   @Permissions('center:manage')
   @ApiOperation({ summary: 'Edit the center profile and booking settings' })
   update(
     @CurrentAuth() auth: AuthContext,
     @Body() dto: UpdateCenterDto,
+    @Req() req: Request,
   ): Promise<CenterView> {
-    return this.centerService.update(auth, dto);
+    return this.centerService.update(
+      auth,
+      dto,
+      commandMeta(
+        req,
+        dto,
+        200,
+        ![
+          'hoursStart',
+          'hoursEnd',
+          'slotCapacity',
+          'autoAccept',
+          'bookingEnabled',
+        ].some((key) => dto[key as keyof UpdateCenterDto] !== undefined),
+      ),
+    );
   }
 
   @Get('hours')
@@ -40,13 +60,15 @@ export class CenterController {
   }
 
   @Put('hours')
+  @TransactionalCommand()
   @Roles('admin', 'manager')
   @Permissions('center:manage')
   @ApiOperation({ summary: 'Set operating hours for one or more weekdays' })
   putHours(
     @CurrentAuth() auth: AuthContext,
     @Body() dto: PutHoursDto,
+    @Req() req: Request,
   ): Promise<DayHours[]> {
-    return this.centerService.putHours(auth, dto);
+    return this.centerService.putHours(auth, dto, commandMeta(req, dto));
   }
 }

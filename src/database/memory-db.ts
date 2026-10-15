@@ -45,6 +45,17 @@ function registerPgMemFunctions(db: IMemoryDb): void {
     implementation: (value: string) => [...value].length,
   });
   db.public.registerFunction({
+    name: 'regexp_replace',
+    args: [DataType.text, DataType.text, DataType.text, DataType.text],
+    returns: DataType.text,
+    implementation: (
+      value: string,
+      pattern: string,
+      replacement: string,
+      flags: string,
+    ) => value.replace(new RegExp(pattern, flags), replacement),
+  });
+  db.public.registerFunction({
     name: 'version',
     implementation: () => 'PostgreSQL 16.0',
   });
@@ -78,13 +89,23 @@ export async function createMemoryDataSource(): Promise<{
   const memoryDb = newDb({ autoCreateForeignKeyIndices: true });
   // pg-mem cannot parse these transaction settings and has no concurrent MVCC.
   // Only the real PostgreSQL suite proves snapshot isolation/read-only behavior.
-  memoryDb.public.interceptQueries((sql) =>
-    /^SET TRANSACTION (ISOLATION LEVEL REPEATABLE READ|READ ONLY)$/i.test(
-      sql.trim(),
+  memoryDb.public.interceptQueries((sql) => {
+    if (
+      /^SET TRANSACTION (ISOLATION LEVEL REPEATABLE READ|READ ONLY)$/i.test(
+        sql.trim(),
+      )
     )
-      ? []
-      : null,
-  );
+      return [];
+    // Native PostgreSQL tests prove these identity triggers. pg-mem cannot
+    // execute PL/pgSQL; service writes still set revisions/keys explicitly.
+    if (
+      /^(CREATE OR REPLACE FUNCTION|CREATE TRIGGER|DROP TRIGGER IF EXISTS|DROP FUNCTION IF EXISTS) af006_/i.test(
+        sql.trim(),
+      )
+    )
+      return [];
+    return null;
+  });
   registerPgMemFunctions(memoryDb);
   memoryDb.registerExtension('pgcrypto', (schema) => {
     schema.registerFunction({

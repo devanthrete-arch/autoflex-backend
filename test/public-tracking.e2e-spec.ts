@@ -2,6 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { DataSource } from 'typeorm';
+import { randomUUID } from 'crypto';
 import { JobStatus } from '../src/common/enums/job-status.enum';
 import { JobEventType } from '../src/common/enums/job-event-type.enum';
 import { ServiceJob } from '../src/modules/jobs/entities/service-job.entity';
@@ -11,6 +12,7 @@ import { Vehicle } from '../src/modules/customers/entities/vehicle.entity';
 import { CustomerJobsService } from '../src/modules/jobs/customer-jobs.service';
 import { createJwtTestFixture } from '../src/test-utils/jwt-test.helper';
 import { createE2eApp } from './helpers/e2e-app.helper';
+import { seedReturningWalkIn } from './helpers/returning-walk-in.helper';
 import {
   seedTestTenancy,
   TEST_DOMAIN_ID,
@@ -41,10 +43,13 @@ describe('Public job timeline (e2e)', () => {
     const created = await http()
       .post('/v1/jobs')
       .set('Authorization', `Bearer ${token}`)
+      .set('Idempotency-Key', randomUUID())
       .send({
-        customerPhone: '+919876543210',
-        customerName: 'Private customer name',
-        vehicleRegistration: 'KA01AB1234',
+        ...(
+          await seedReturningWalkIn(db, serviceCenter.id, {
+            name: 'Private customer name',
+          })
+        ).selection,
         serviceType: 'Periodic service',
         odometerKm: 12345,
         customerRequest: 'Private request body',

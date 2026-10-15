@@ -1,3 +1,9 @@
+import { OperatingHour } from '../tenancy/entities/operating-hour.entity';
+import { SchedulingService } from '../scheduling/scheduling.service';
+import {
+  CommandMeta,
+  withCommandReceipt,
+} from '../idempotency/transactional-receipt';
 import {
   BadRequestException,
   ConflictException,
@@ -8,7 +14,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Not, Repository } from 'typeorm';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { toIndiaE164 } from '../customers/me.service';
-import { OperatingHour } from '../tenancy/entities/operating-hour.entity';
 import { ServiceCenter } from '../tenancy/entities/service-center.entity';
 import { DayHours, TenancyService } from '../tenancy/tenancy.service';
 import { PutHoursDto, UpdateCenterDto } from './dto/center.dto';
@@ -44,6 +49,7 @@ export interface CenterView {
   autoAccept: boolean;
   bookingEnabled: boolean;
   slotCapacity: number;
+  scheduleRevision: number;
   hoursStart: string;
   hoursEnd: string;
   weeklyHours: DayHours[];
@@ -62,6 +68,7 @@ export class CenterService {
     private readonly centerRepository: Repository<ServiceCenter>,
     private readonly tenancyService: TenancyService,
     private readonly dataSource: DataSource,
+    private readonly scheduling: SchedulingService,
   ) {}
 
   async get(auth: AuthContext): Promise<CenterView> {
@@ -69,80 +76,162 @@ export class CenterService {
     return this.toView(center);
   }
 
-  async update(auth: AuthContext, dto: UpdateCenterDto): Promise<CenterView> {
-    const center = await this.requireCenter(auth);
-    const hasLat = dto.latitude !== undefined;
-    const hasLng = dto.longitude !== undefined;
-    if (
-      hasLat !== hasLng ||
-      (hasLat && (dto.latitude === null) !== (dto.longitude === null))
-    )
-      throw new BadRequestException(
-        'Set or clear latitude and longitude together',
+  async update(
+    auth: AuthContext,
+    dto: UpdateCenterDto,
+    meta: CommandMeta,
+  ): Promise<CenterView> {
+    return this.dataSource.transaction(async (manager) => {
+      const center = await this.scheduling.center(manager, auth, true);
+      const repo = manager.getRepository(ServiceCenter);
+      return withCommandReceipt(
+        manager,
+        `staff:${auth.staffProfileId}`,
+        meta,
+        async () => {
+          if (
+            [
+              'hoursStart',
+              'hoursEnd',
+              'slotCapacity',
+              'autoAccept',
+              'bookingEnabled',
+            ].some((key) => dto[key as keyof UpdateCenterDto] !== undefined)
+          ) {
+            if (
+              [
+                'hoursStart',
+                'hoursEnd',
+                'slotCapacity',
+                'autoAccept',
+                'bookingEnabled',
+              ].some(
+                (key) =>
+                  dto[key as keyof UpdateCenterDto] !== undefined &&
+                  dto[key as keyof UpdateCenterDto] === null,
+              )
+            )
+              throw new BadRequestException('Scheduling fields cannot be null');
+            const schedule = await this.scheduling.configuration(
+              center,
+              manager,
+            );
+            if (dto.hoursStart !== undefined || dto.hoursEnd !== undefined) {
+              if (center.scheduleRules)
+                throw new BadRequestException(
+                  'Use booking-schedule to edit configured working hours',
+                );
+              const overrides = await manager
+                .getRepository(OperatingHour)
+                .find({ where: { serviceCenterId: center.id } });
+              schedule.week = schedule.week.map((day) =>
+                overrides.some((row) => row.dayOfWeek === day.dayOfWeek)
+                  ? day
+                  : {
+                      ...day,
+                      intervals: [
+                        {
+                          open: dto.hoursStart ?? center.hoursStart,
+                          close: dto.hoursEnd ?? center.hoursEnd,
+                        },
+                      ],
+                    },
+              );
+            }
+            await this.scheduling.apply(
+              manager,
+              auth,
+              center,
+              {
+                ...schedule,
+                slotCapacity: dto.slotCapacity ?? center.slotCapacity,
+                autoAccept: dto.autoAccept ?? center.autoAccept,
+                bookingEnabled: dto.bookingEnabled ?? center.bookingEnabled,
+              },
+              meta,
+            );
+          }
+          const hasLat = dto.latitude !== undefined;
+          const hasLng = dto.longitude !== undefined;
+          if (
+            hasLat !== hasLng ||
+            (hasLat && (dto.latitude === null) !== (dto.longitude === null))
+          )
+            throw new BadRequestException(
+              'Set or clear latitude and longitude together',
+            );
+          if (dto.slug !== undefined && dto.slug !== center.slug) {
+            const taken = await repo.findOne({
+              where: { slug: dto.slug, id: Not(center.id) },
+            });
+            if (taken) {
+              throw new ConflictException('This slug is already in use');
+            }
+            center.slug = dto.slug;
+          }
+          const hoursStart = dto.hoursStart ?? center.hoursStart;
+          const hoursEnd = dto.hoursEnd ?? center.hoursEnd;
+          if (toMinutes(hoursStart) >= toMinutes(hoursEnd)) {
+            throw new BadRequestException('hoursStart must be before hoursEnd');
+          }
+          if (dto.displayName !== undefined)
+            center.displayName = dto.displayName;
+          if (dto.publicPhone !== undefined) {
+            center.publicPhone = toIndiaE164(dto.publicPhone);
+          }
+          if (dto.gstin !== undefined) center.gstin = dto.gstin;
+          if (dto.addressLine1 !== undefined)
+            center.addressLine1 = dto.addressLine1;
+          if (dto.addressLine2 !== undefined)
+            center.addressLine2 = dto.addressLine2;
+          if (dto.city !== undefined) center.city = dto.city;
+          if (dto.state !== undefined) center.state = dto.state;
+          if (dto.postalCode !== undefined) center.postalCode = dto.postalCode;
+          if (dto.formattedAddress !== undefined) {
+            center.formattedAddress = dto.formattedAddress;
+          }
+          if (dto.latitude !== undefined) center.latitude = dto.latitude;
+          if (dto.longitude !== undefined) center.longitude = dto.longitude;
+          if (dto.heroImageUrl !== undefined)
+            center.heroImageUrl = dto.heroImageUrl;
+          if (dto.photoUrls !== undefined) center.photoUrls = dto.photoUrls;
+          if (dto.googleMapsUrl !== undefined)
+            center.googleMapsUrl = dto.googleMapsUrl;
+          if (dto.logoUrl !== undefined) center.logoUrl = dto.logoUrl;
+          if (dto.supportedVehicleTypes !== undefined) {
+            center.supportedVehicleTypes = dto.supportedVehicleTypes;
+          }
+          if (dto.pickupDropEnabled !== undefined) {
+            center.pickupDropEnabled = dto.pickupDropEnabled;
+          }
+          if (dto.autoAccept !== undefined) center.autoAccept = dto.autoAccept;
+          if (dto.slotCapacity !== undefined)
+            center.slotCapacity = dto.slotCapacity;
+          if (dto.bookingEnabled !== undefined) {
+            center.bookingEnabled = dto.bookingEnabled;
+          }
+          if (dto.upiVpa !== undefined) center.upiVpa = dto.upiVpa;
+          if (dto.expressSkipEnabled !== undefined) {
+            center.expressSkipEnabled = dto.expressSkipEnabled;
+          }
+          center.hoursStart = hoursStart;
+          center.hoursEnd = hoursEnd;
+          // A partial UPDATE writes both supplied coordinates even when one is unchanged.
+          // Diff-saving a full entity could mix pairs from concurrent profile edits.
+          const changes = Object.fromEntries(
+            Object.entries(dto).filter(([, value]) => value !== undefined),
+          ) as Partial<ServiceCenter>;
+          if (dto.publicPhone !== undefined)
+            changes.publicPhone = center.publicPhone;
+          if (Object.keys(changes).length)
+            await repo.update(center.id, changes);
+          const saved = await repo.findOneByOrFail({
+            id: center.id,
+          });
+          return this.toView(saved);
+        },
       );
-    if (dto.slug !== undefined && dto.slug !== center.slug) {
-      const taken = await this.centerRepository.findOne({
-        where: { slug: dto.slug, id: Not(center.id) },
-      });
-      if (taken) {
-        throw new ConflictException('This slug is already in use');
-      }
-      center.slug = dto.slug;
-    }
-    const hoursStart = dto.hoursStart ?? center.hoursStart;
-    const hoursEnd = dto.hoursEnd ?? center.hoursEnd;
-    if (toMinutes(hoursStart) >= toMinutes(hoursEnd)) {
-      throw new BadRequestException('hoursStart must be before hoursEnd');
-    }
-    if (dto.displayName !== undefined) center.displayName = dto.displayName;
-    if (dto.publicPhone !== undefined) {
-      center.publicPhone = toIndiaE164(dto.publicPhone);
-    }
-    if (dto.gstin !== undefined) center.gstin = dto.gstin;
-    if (dto.addressLine1 !== undefined) center.addressLine1 = dto.addressLine1;
-    if (dto.addressLine2 !== undefined) center.addressLine2 = dto.addressLine2;
-    if (dto.city !== undefined) center.city = dto.city;
-    if (dto.state !== undefined) center.state = dto.state;
-    if (dto.postalCode !== undefined) center.postalCode = dto.postalCode;
-    if (dto.formattedAddress !== undefined) {
-      center.formattedAddress = dto.formattedAddress;
-    }
-    if (dto.latitude !== undefined) center.latitude = dto.latitude;
-    if (dto.longitude !== undefined) center.longitude = dto.longitude;
-    if (dto.heroImageUrl !== undefined) center.heroImageUrl = dto.heroImageUrl;
-    if (dto.photoUrls !== undefined) center.photoUrls = dto.photoUrls;
-    if (dto.googleMapsUrl !== undefined)
-      center.googleMapsUrl = dto.googleMapsUrl;
-    if (dto.logoUrl !== undefined) center.logoUrl = dto.logoUrl;
-    if (dto.supportedVehicleTypes !== undefined) {
-      center.supportedVehicleTypes = dto.supportedVehicleTypes;
-    }
-    if (dto.pickupDropEnabled !== undefined) {
-      center.pickupDropEnabled = dto.pickupDropEnabled;
-    }
-    if (dto.autoAccept !== undefined) center.autoAccept = dto.autoAccept;
-    if (dto.slotCapacity !== undefined) center.slotCapacity = dto.slotCapacity;
-    if (dto.bookingEnabled !== undefined) {
-      center.bookingEnabled = dto.bookingEnabled;
-    }
-    if (dto.upiVpa !== undefined) center.upiVpa = dto.upiVpa;
-    if (dto.expressSkipEnabled !== undefined) {
-      center.expressSkipEnabled = dto.expressSkipEnabled;
-    }
-    center.hoursStart = hoursStart;
-    center.hoursEnd = hoursEnd;
-    // A partial UPDATE writes both supplied coordinates even when one is unchanged.
-    // Diff-saving a full entity could mix pairs from concurrent profile edits.
-    const changes = Object.fromEntries(
-      Object.entries(dto).filter(([, value]) => value !== undefined),
-    ) as Partial<ServiceCenter>;
-    if (dto.publicPhone !== undefined) changes.publicPhone = center.publicPhone;
-    if (Object.keys(changes).length)
-      await this.centerRepository.update(center.id, changes);
-    const saved = await this.centerRepository.findOneByOrFail({
-      id: center.id,
     });
-    return this.toView(saved);
   }
 
   async getHours(auth: AuthContext): Promise<DayHours[]> {
@@ -150,49 +239,51 @@ export class CenterService {
     return this.tenancyService.getWeeklyHours(center);
   }
 
-  async putHours(auth: AuthContext, dto: PutHoursDto): Promise<DayHours[]> {
-    const center = await this.requireCenter(auth);
-    const seen = new Set<number>();
-    for (const day of dto.days) {
-      if (seen.has(day.dayOfWeek)) {
-        throw new BadRequestException(
-          `dayOfWeek ${day.dayOfWeek} appears more than once`,
-        );
-      }
-      seen.add(day.dayOfWeek);
-      if (day.isClosed) continue;
-      if (!day.openTime || !day.closeTime) {
-        throw new BadRequestException(
-          `dayOfWeek ${day.dayOfWeek} needs openTime and closeTime`,
-        );
-      }
-      if (toMinutes(day.openTime) >= toMinutes(day.closeTime)) {
-        throw new BadRequestException(
-          `dayOfWeek ${day.dayOfWeek}: openTime must be before closeTime`,
-        );
-      }
-    }
-
-    await this.dataSource.transaction(async (manager) => {
-      const repo = manager.getRepository(OperatingHour);
-      for (const day of dto.days) {
-        const existing = await repo.findOne({
-          where: { serviceCenterId: center.id, dayOfWeek: day.dayOfWeek },
-        });
-        const row =
-          existing ??
-          repo.create({
-            serviceCenterId: center.id,
-            dayOfWeek: day.dayOfWeek,
-          });
-        row.isClosed = day.isClosed;
-        row.openTime = day.isClosed ? null : day.openTime!;
-        row.closeTime = day.isClosed ? null : day.closeTime!;
-        await repo.save(row);
-      }
+  async putHours(
+    auth: AuthContext,
+    dto: PutHoursDto,
+    meta: CommandMeta,
+  ): Promise<DayHours[]> {
+    return this.dataSource.transaction(async (manager) => {
+      const center = await this.scheduling.center(manager, auth, true);
+      const result = await withCommandReceipt(
+        manager,
+        `staff:${auth.staffProfileId}`,
+        meta,
+        async () => {
+          if (
+            new Set(dto.days.map((day) => day.dayOfWeek)).size !==
+            dto.days.length
+          )
+            throw new BadRequestException('Duplicate weekday');
+          const schedule = await this.scheduling.configuration(center, manager);
+          for (const day of dto.days)
+            schedule.week[day.dayOfWeek] = {
+              dayOfWeek: day.dayOfWeek,
+              intervals: day.isClosed
+                ? []
+                : [{ open: day.openTime!, close: day.closeTime! }],
+            };
+          const saved = await this.scheduling.apply(
+            manager,
+            auth,
+            center,
+            schedule,
+            meta,
+          );
+          return {
+            days: saved.week.map((day) => ({
+              dayOfWeek: day.dayOfWeek,
+              intervals: day.intervals,
+              isClosed: !day.intervals.length,
+              openTime: day.intervals[0]?.open ?? null,
+              closeTime: day.intervals.at(-1)?.close ?? null,
+            })),
+          };
+        },
+      );
+      return result.days;
     });
-
-    return this.tenancyService.getWeeklyHours(center);
   }
 
   private async requireCenter(auth: AuthContext): Promise<ServiceCenter> {
@@ -239,6 +330,7 @@ export class CenterService {
       autoAccept: center.autoAccept,
       bookingEnabled: center.bookingEnabled,
       slotCapacity: center.slotCapacity,
+      scheduleRevision: center.scheduleRevision,
       hoursStart: center.hoursStart,
       hoursEnd: center.hoursEnd,
       weeklyHours: await this.tenancyService.getWeeklyHours(center),

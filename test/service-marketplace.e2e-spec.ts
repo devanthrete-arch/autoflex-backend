@@ -85,6 +85,8 @@ describe(`Service marketplace (${postgres ? 'PostgreSQL' : 'memory'} API)`, () =
       .post(`/v1/centers/${id}/booking-selection`)
       .send({ selections, ...(vehicleType ? { vehicleType } : {}) });
   beforeAll(async () => {
+    // Fixed test clock keeps existing June fixtures inside the server booking window.
+    jest.spyOn(Date, 'now').mockReturnValue(Date.parse('2027-06-12T00:00:00Z'));
     process.env.IAM_CUSTOMER_DOMAIN_APPLICATION_ID = TEST_CUSTOMER_APP_ID;
     const fixture = await createJwtTestFixture();
     process.env.LOCAL_JWKS_JSON = fixture.jwksJson;
@@ -171,6 +173,7 @@ describe(`Service marketplace (${postgres ? 'PostgreSQL' : 'memory'} API)`, () =
     vehicleId = vehicle.body.id;
   }, 60000);
   afterAll(async () => {
+    jest.restoreAllMocks();
     await app?.close();
     if (db?.isInitialized) await db.destroy();
   });

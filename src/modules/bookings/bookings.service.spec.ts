@@ -64,6 +64,9 @@ describe('BookingsService', () => {
     bookingEnabled: true,
     autoAccept: true,
     slotCapacity: 1,
+    bookingLeadMinutes: 0,
+    bookingAdvanceDays: 7,
+    scheduleRevision: 1,
     supportedVehicleTypes: [VehicleType.TWO_WHEELER],
     hoursStart: '09:00',
     hoursEnd: '17:00',
@@ -74,7 +77,9 @@ describe('BookingsService', () => {
     slotEnd: '2027-06-15T04:30:00.000Z',
   };
 
+  afterEach(() => jest.restoreAllMocks());
   beforeEach(async () => {
+    jest.spyOn(Date, 'now').mockReturnValue(Date.parse('2027-06-14T00:00:00Z'));
     saved = null;
     previewCenter = center;
     query = jest.fn().mockResolvedValue([]);

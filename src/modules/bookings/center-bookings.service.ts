@@ -1,11 +1,12 @@
 import {
   BadRequestException,
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, Repository } from 'typeorm';
+import { Between, EntityManager, Repository } from 'typeorm';
 import { BookingParty } from '../../common/enums/booking-party.enum';
 import {
   BookingStatus,
@@ -21,6 +22,7 @@ import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { GarageVehicle } from '../customers/entities/garage-vehicle.entity';
 import { ServiceJob } from '../jobs/entities/service-job.entity';
 import { JobsService } from '../jobs/jobs.service';
+import { IntakeService } from '../jobs/intake.service';
 import { NotificationCategory } from '../../common/enums/ownership.enum';
 import { NotificationsService } from '../notifications/notifications.service';
 import { CenterBookingView, toCenterBookingView } from './booking-view';
@@ -70,6 +72,7 @@ export class CenterBookingsService {
     private readonly garageVehicleRepository: Repository<GarageVehicle>,
     private readonly jobsService: JobsService,
     private readonly notifications: NotificationsService,
+    private readonly intake: IntakeService,
   ) {}
 
   async list(
@@ -123,9 +126,10 @@ export class CenterBookingsService {
   async confirm(auth: AuthContext, id: string): Promise<CenterBookingView> {
     const booking = await this.getInCenter(auth, id);
     this.assertStatus(booking, [BookingStatus.PENDING_CENTER]);
+    const previous = booking.status;
     booking.status = BookingStatus.AWAITING_ARRIVAL;
     booking.confirmedAt = new Date();
-    await this.saveAndNotify(booking, {
+    await this.saveAndNotify(booking, previous, {
       templateKey: 'booking.confirmed',
       title: 'Booking confirmed',
       body: `${centerName(booking)} confirmed your visit for ${slotLabel(booking.slotStart)}.`,
@@ -140,11 +144,12 @@ export class CenterBookingsService {
   ): Promise<CenterBookingView> {
     const booking = await this.getInCenter(auth, id);
     this.assertStatus(booking, OPEN_BOOKING_STATUSES);
+    const previous = booking.status;
     booking.status = BookingStatus.CANCELLED;
     booking.cancelledAt = new Date();
     booking.cancelledBy = BookingParty.CENTER;
     booking.cancellationReason = dto.reason.trim();
-    await this.saveAndNotify(booking, {
+    await this.saveAndNotify(booking, previous, {
       templateKey: 'booking.declined',
       title: 'Booking declined',
       body: `${centerName(booking)} can't take your visit on ${slotLabel(booking.slotStart)}: ${booking.cancellationReason}`,
@@ -154,10 +159,24 @@ export class CenterBookingsService {
 
   private async saveAndNotify(
     booking: Booking,
+    previous: BookingStatus,
     message: { templateKey: string; title: string; body: string },
   ): Promise<void> {
     await this.bookingRepository.manager.transaction(async (manager) => {
-      await manager.getRepository(Booking).save(booking);
+      const updated = await manager.getRepository(Booking).update(
+        { id: booking.id, status: previous },
+        {
+          status: booking.status,
+          confirmedAt: booking.confirmedAt,
+          cancelledAt: booking.cancelledAt,
+          cancelledBy: booking.cancelledBy,
+          cancellationReason: booking.cancellationReason,
+        },
+      );
+      if (!updated.affected)
+        throw new ConflictException(
+          'This booking changed; reload before continuing',
+        );
       if (!booking.customerProfile) return;
       await this.notifications.notifyProfile(manager, booking.customerProfile, {
         ...message,
@@ -182,8 +201,14 @@ export class CenterBookingsService {
         'A booking can be marked no-show once its slot starts',
       );
     }
-    booking.status = BookingStatus.NO_SHOW;
-    await this.bookingRepository.save(booking);
+    const updated = await this.bookingRepository.update(
+      { id: booking.id, status: booking.status },
+      { status: BookingStatus.NO_SHOW },
+    );
+    if (!updated.affected)
+      throw new ConflictException(
+        'This booking changed; reload before marking no-show',
+      );
     return this.getOne(auth, id);
   }
 
@@ -192,83 +217,103 @@ export class CenterBookingsService {
     id: string,
     dto: CheckInBookingDto,
   ): Promise<CheckInResult> {
-    const booking = await this.getInCenter(auth, id);
-    this.assertStatus(booking, [
-      BookingStatus.AWAITING_ARRIVAL,
-      BookingStatus.CONFIRMED,
-    ]);
-
-    const claimed = await this.bookingRepository.update(
-      { id: booking.id, status: booking.status },
-      { status: BookingStatus.CHECKED_IN, checkedInAt: new Date() },
-    );
-    if (!claimed.affected) {
-      throw new ConflictException('This booking was just updated; reload it');
-    }
-
-    const serviceType =
-      dto.serviceType ??
-      (booking.items?.length
-        ? booking.items
-            .map((item) => item.name)
-            .join(', ')
-            .slice(0, 128)
-        : 'General service');
-
-    let job: ServiceJob;
-    try {
-      job = await this.jobsService.openFromBooking(auth, {
-        bookingId: booking.id,
-        profile: booking.customerProfile,
-        garageVehicle: booking.vehicle,
-        serviceType,
-        paymentMode: booking.paymentMode,
-        items: booking.items,
-        customerRequest: booking.issueDescription,
-        odometerKm: dto.odometerKm,
-        fuelLevel: dto.fuelLevel,
-        accessoriesChecklist: dto.accessoriesChecklist,
-        assignedTechnicianId: dto.assignedTechnicianId,
-        estimatedReadyAt: dto.estimatedReadyAt,
-        priority: dto.priority,
-        budgetCeiling:
-          dto.budgetCeiling ??
-          (Number(booking.estimateInr) > 0
-            ? Number(booking.estimateInr)
-            : undefined),
+    this.intake.authorize(auth);
+    if (!auth.permissions.includes('bookings:manage'))
+      throw new ForbiddenException();
+    return this.bookingRepository.manager.transaction(async (manager) => {
+      await this.intake.lockCenter(manager, auth);
+      const repo = manager.getRepository(Booking);
+      const locked = await repo.findOne({
+        where: { id, serviceCenterId: auth.serviceCenterId! },
+        lock: { mode: 'pessimistic_write' },
       });
-    } catch (error) {
-      await this.bookingRepository.update(
-        { id: booking.id },
-        { status: booking.status, checkedInAt: null },
+      if (!locked) throw new NotFoundException();
+      const booking = await this.getInCenter(auth, id, manager);
+      // The attached job is the recovery record, including after later closure.
+      // Never create another job when an earlier check-in response was lost.
+      if (booking.status === BookingStatus.CHECKED_IN) {
+        if (!booking.serviceJobId)
+          throw new ConflictException(
+            'Check-in needs reconciliation; the booking has no attached job',
+          );
+        const existing = await manager.getRepository(ServiceJob).findOne({
+          where: {
+            id: booking.serviceJobId,
+            sourceBookingId: booking.id,
+            serviceCenterId: auth.serviceCenterId!,
+          },
+        });
+        if (!existing) throw new NotFoundException();
+        return {
+          booking: toCenterBookingView(booking),
+          job: this.intake.reference(existing),
+        };
+      }
+      this.assertStatus(booking, [
+        BookingStatus.AWAITING_ARRIVAL,
+        BookingStatus.CONFIRMED,
+      ]);
+      const serviceType =
+        dto.serviceType ??
+        (booking.items?.length
+          ? booking.items
+              .map((item) => item.name)
+              .join(', ')
+              .slice(0, 128)
+          : 'General service');
+      const job = await this.jobsService.openFromBooking(
+        auth,
+        {
+          bookingId: booking.id,
+          profile: booking.customerProfile,
+          garageVehicle: booking.vehicle,
+          serviceType,
+          paymentMode: booking.paymentMode,
+          items: booking.items,
+          customerRequest: booking.issueDescription,
+          odometerKm: dto.odometerKm,
+          fuelLevel: dto.fuelLevel,
+          accessoriesChecklist: dto.accessoriesChecklist,
+          assignedTechnicianId: dto.assignedTechnicianId,
+          estimatedReadyAt: dto.estimatedReadyAt,
+          priority: dto.priority,
+          budgetCeiling:
+            dto.budgetCeiling ??
+            (Number(booking.estimateInr) > 0
+              ? Number(booking.estimateInr)
+              : undefined),
+        },
+        manager,
       );
-      throw error;
-    }
-
-    await this.bookingRepository.update(
-      { id: booking.id },
-      { serviceJobId: job.id },
-    );
-
-    const garageVehicle = booking.vehicle;
-    if (
-      dto.odometerKm !== undefined &&
-      dto.odometerKm > (garageVehicle.currentOdometerKm ?? -1)
-    ) {
-      await this.garageVehicleRepository.update(
-        { id: garageVehicle.id },
-        { currentOdometerKm: dto.odometerKm },
+      const attached = await repo.update(
+        { id: booking.id, status: booking.status },
+        {
+          status: BookingStatus.CHECKED_IN,
+          checkedInAt: new Date(),
+          serviceJobId: job.id,
+        },
       );
-    }
-
-    return {
-      booking: await this.getOne(auth, id),
-      job: {
-        id: job.id,
-        jobNumber: job.jobNumber,
-        status: job.status,
-      },
-    };
+      if (!attached.affected)
+        throw new ConflictException(
+          'The booking changed; retry check-in after reloading',
+        );
+      if (dto.odometerKm !== undefined) {
+        await manager
+          .getRepository(GarageVehicle)
+          .createQueryBuilder()
+          .update()
+          .set({ currentOdometerKm: dto.odometerKm })
+          .where(
+            'id = :id AND (current_odometer_km IS NULL OR current_odometer_km < :odometer)',
+            { id: booking.vehicleId, odometer: dto.odometerKm },
+          )
+          .execute();
+      }
+      return {
+        booking: toCenterBookingView(await this.getInCenter(auth, id, manager)),
+        job: this.intake.reference(job),
+      };
+    });
   }
 
   private assertStatus(booking: Booking, allowed: BookingStatus[]): void {
@@ -279,8 +324,14 @@ export class CenterBookingsService {
     }
   }
 
-  private async getInCenter(auth: AuthContext, id: string): Promise<Booking> {
-    const booking = await this.bookingRepository.findOne({
+  private async getInCenter(
+    auth: AuthContext,
+    id: string,
+    manager?: EntityManager,
+  ): Promise<Booking> {
+    const booking = await (
+      manager?.getRepository(Booking) ?? this.bookingRepository
+    ).findOne({
       where: { id, serviceCenterId: auth.serviceCenterId! },
       relations: CENTER_RELATIONS,
     });

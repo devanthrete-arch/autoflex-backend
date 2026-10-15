@@ -64,6 +64,8 @@ describe('Discovery and reservation (e2e)', () => {
     });
 
   beforeAll(async () => {
+    // Fixed test clock keeps existing June fixtures inside the server booking window.
+    jest.spyOn(Date, 'now').mockReturnValue(Date.parse('2027-06-12T00:00:00Z'));
     process.env.IAM_CUSTOMER_DOMAIN_APPLICATION_ID = TEST_CUSTOMER_APP_ID;
     const fixture = await createJwtTestFixture();
     process.env.LOCAL_JWKS_JSON = fixture.jwksJson;
@@ -75,11 +77,9 @@ describe('Discovery and reservation (e2e)', () => {
     centerId = (await seedCenterListing(dataSource, tenancy.serviceCenter.id))
       .id;
 
-    await dataSource
-      .getRepository(ServiceCenter)
-      .update(centerId, {
-        supportedVehicleTypes: ['TWO_WHEELER', 'FOUR_WHEELER'] as any,
-      });
+    await dataSource.getRepository(ServiceCenter).update(centerId, {
+      supportedVehicleTypes: ['TWO_WHEELER', 'FOUR_WHEELER'] as any,
+    });
 
     customer = await fixture.signAccessToken({
       sub: TEST_CUSTOMER_IAM_USER_ID,
@@ -125,6 +125,7 @@ describe('Discovery and reservation (e2e)', () => {
   }, 60000);
 
   afterAll(async () => {
+    jest.restoreAllMocks();
     await app?.close();
   });
 
@@ -222,7 +223,7 @@ describe('Discovery and reservation (e2e)', () => {
     });
 
     it('honours slot capacity', async () => {
-      await book(SLOT_9).expect(400);
+      await book(SLOT_9).expect(409);
 
       let slots = await http()
         .get(`/v1/centers/${centerId}/slots`)
@@ -306,6 +307,7 @@ describe('Discovery and reservation (e2e)', () => {
 
     it('holds requests for approval when auto-accept is off', async () => {
       await asManager(http().patch('/v1/center'))
+        .set('If-Match', '2')
         .send({ autoAccept: false })
         .expect(200);
       const res = await book({
@@ -469,10 +471,21 @@ describe('Discovery and reservation (e2e)', () => {
       expect(mine.body.status).toBe('CHECKED_IN');
     });
 
-    it('does not check in twice or cancel after check-in', async () => {
-      await asManager(http().post(`/v1/center/bookings/${pendingId}/check-in`))
+    it('recovers the existing check-in without creating twice or allowing cancellation', async () => {
+      const original = await dataSource
+        .getRepository(Booking)
+        .findOneByOrFail({ id: pendingId });
+      const count = await dataSource.getRepository(ServiceJob).count();
+      const recovered = await asManager(
+        http().post(`/v1/center/bookings/${pendingId}/check-in`),
+      )
         .send({})
-        .expect(409);
+        .expect(201);
+      expect(recovered.body.job.id).toBe(original.serviceJobId);
+      expect(recovered.body.booking.checkedInAt).toBe(
+        original.checkedInAt!.toISOString(),
+      );
+      expect(await dataSource.getRepository(ServiceJob).count()).toBe(count);
       await asCustomer(http().post(`/v1/bookings/${pendingId}/cancel`))
         .send({})
         .expect(409);

@@ -1,6 +1,7 @@
+import { intervalsForDate, type HoursInterval } from '../scheduling/schedule';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { ServiceCenterStatus } from '../../common/enums/service-center-status.enum';
 import { istDayOfWeek } from '../../common/time/ist';
 import { OperatingHour } from './entities/operating-hour.entity';
@@ -17,6 +18,7 @@ export interface DayHours {
   openTime: string | null;
   closeTime: string | null;
   isClosed: boolean;
+  intervals?: HoursInterval[];
 }
 
 export { istDayOfWeek };
@@ -36,8 +38,21 @@ export class TenancyService {
    * Seven entries, Sunday first. Days without a stored row use the center's
    * default `hoursStart`/`hoursEnd`.
    */
-  async getWeeklyHours(center: ServiceCenter): Promise<DayHours[]> {
-    const rows = await this.operatingHourRepository.find({
+  async getWeeklyHours(
+    center: ServiceCenter,
+    manager?: EntityManager,
+  ): Promise<DayHours[]> {
+    if (center.scheduleRules)
+      return center.scheduleRules.week.map((day) => ({
+        dayOfWeek: day.dayOfWeek,
+        intervals: day.intervals,
+        isClosed: !day.intervals.length,
+        openTime: day.intervals[0]?.open ?? null,
+        closeTime: day.intervals.at(-1)?.close ?? null,
+      }));
+    const rows = await (
+      manager?.getRepository(OperatingHour) ?? this.operatingHourRepository
+    ).find({
       where: { serviceCenterId: center.id },
     });
     const byDay = new Map(rows.map((row) => [row.dayOfWeek, row]));
@@ -63,8 +78,19 @@ export class TenancyService {
   async getHoursForDate(
     center: ServiceCenter,
     date: string,
+    manager?: EntityManager,
   ): Promise<DayHours> {
-    const week = await this.getWeeklyHours(center);
+    if (center.scheduleRules) {
+      const intervals = intervalsForDate(center.scheduleRules, date);
+      return {
+        dayOfWeek: istDayOfWeek(date),
+        intervals,
+        isClosed: !intervals.length,
+        openTime: intervals[0]?.open ?? null,
+        closeTime: intervals.at(-1)?.close ?? null,
+      };
+    }
+    const week = await this.getWeeklyHours(center, manager);
     return week[istDayOfWeek(date)];
   }
 

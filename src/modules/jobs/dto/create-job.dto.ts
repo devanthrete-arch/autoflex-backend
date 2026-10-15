@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
+  IsDate,
   IsEnum,
   IsInt,
   IsNotEmpty,
@@ -12,16 +13,64 @@ import {
   IsUUID,
   MaxLength,
   Min,
+  Max,
+  ValidateNested,
 } from 'class-validator';
 import { JobPriority } from '../../../common/enums/job-priority.enum';
 import { VehicleType } from '../../../common/enums/vehicle-type.enum';
 
+export class NewIntakeVehicleDto {
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(32)
+  registrationNumber: string;
+
+  @IsEnum(VehicleType)
+  vehicleType: VehicleType;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  makeModel?: string;
+}
+
+/** Legacy identity fields are transport-only for exact stored receipt replays. */
 export class CreateJobDto {
+  @IsOptional()
+  @IsUUID()
+  customerId?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(2147483647)
+  customerRevision?: number;
+
+  @IsOptional()
+  @IsUUID()
+  vehicleId?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(2147483647)
+  vehicleRevision?: number;
+
+  @IsOptional()
+  @IsEnum(VehicleType)
+  confirmedVehicleType?: VehicleType;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => NewIntakeVehicleDto)
+  newVehicle?: NewIntakeVehicleDto;
+
   @ApiProperty({ example: '+919876543210' })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
-  customerPhone: string;
+  customerPhone?: string;
 
   @ApiPropertyOptional({ example: 'Rahul Sharma' })
   @IsOptional()
@@ -30,10 +79,11 @@ export class CreateJobDto {
   customerName?: string;
 
   @ApiProperty({ example: 'MH12AB1234' })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @MaxLength(32)
-  vehicleRegistration: string;
+  vehicleRegistration?: string;
 
   @ApiPropertyOptional({ example: 'Honda Activa 6G' })
   @IsOptional()
@@ -57,6 +107,7 @@ export class CreateJobDto {
   @Type(() => Number)
   @IsInt()
   @Min(0)
+  @Max(2147483647)
   odometerKm?: number;
 
   @ApiPropertyOptional({ example: 'Half' })
@@ -75,6 +126,7 @@ export class CreateJobDto {
   @Type(() => Number)
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
+  @Max(9999999999.99)
   budgetCeiling?: number;
 
   @ApiPropertyOptional({ type: 'object', additionalProperties: true })
@@ -91,6 +143,7 @@ export class CreateJobDto {
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Date)
+  @IsDate()
   estimatedReadyAt?: Date;
 
   @ApiPropertyOptional()

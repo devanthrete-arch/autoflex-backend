@@ -1,3 +1,14 @@
+import {
+  assertCalendarDate,
+  assertCanonicalSlot,
+  bookingWindow,
+  canonicalSlots,
+  slotRefusal,
+} from '../scheduling/schedule';
+import {
+  CommandMeta,
+  withCommandReceipt,
+} from '../idempotency/transactional-receipt';
 import { randomUUID } from 'crypto';
 import {
   BadRequestException,
@@ -7,7 +18,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, DataSource, In, Repository } from 'typeorm';
+import {
+  DataSource,
+  EntityManager,
+  In,
+  LessThan,
+  MoreThan,
+  Repository,
+} from 'typeorm';
 import { BookingMode } from '../../common/enums/booking-mode.enum';
 import { BookingParty } from '../../common/enums/booking-party.enum';
 import {
@@ -17,13 +35,7 @@ import {
 import { PaymentMode } from '../../common/enums/payment-mode.enum';
 import { GarageVehicleStatus } from '../../common/enums/garage-vehicle-status.enum';
 import { ServiceCenterStatus } from '../../common/enums/service-center-status.enum';
-import {
-  hmToMinutes,
-  istDayRange,
-  istInstant,
-  istToday,
-  toIstParts,
-} from '../../common/time/ist';
+import { istDayRange, istToday, toIstParts } from '../../common/time/ist';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { GarageService } from '../customers/garage.service';
 import { GarageVehicle } from '../customers/entities/garage-vehicle.entity';
@@ -49,7 +61,6 @@ import { BookingAttachment } from './entities/booking-attachment.entity';
 import { BookingItem } from './entities/booking-item.entity';
 import { Booking } from './entities/booking.entity';
 
-const SLOT_MINUTES = 60;
 const SELF_CHECKIN_ESTIMATE_INR = 2499;
 const MAX_ATTACHMENTS = 5;
 
@@ -125,157 +136,192 @@ export class BookingsService {
   }
 
   async listSlots(centerId: string, query: ListSlotsQueryDto) {
-    const center = await this.requireBookableCenter(centerId);
     const date = query.date ?? istToday();
-    const hours = await this.tenancyService.getHoursForDate(center, date);
-    if (hours.isClosed || !hours.openTime || !hours.closeTime) {
-      return { date, closed: true, slots: [] };
-    }
-    const { start: dayStart, end: dayEnd } = istDayRange(date);
-    const held = await this.bookingRepository.find({
-      where: {
-        serviceCenterId: centerId,
-        status: In(SLOT_HOLDING_STATUSES),
-        slotStart: Between(dayStart, dayEnd),
-      },
-    });
-    const heldBySlot = new Map<number, number>();
-    for (const booking of held) {
-      const key = booking.slotStart.getTime();
-      heldBySlot.set(key, (heldBySlot.get(key) ?? 0) + 1);
-    }
-
-    const now = Date.now();
-    const slots: {
-      start: string;
-      end: string;
-      available: boolean;
-      remaining: number;
-    }[] = [];
-    const open = hmToMinutes(hours.openTime);
-    const close = hmToMinutes(hours.closeTime);
-    for (let m = open; m + SLOT_MINUTES <= close; m += SLOT_MINUTES) {
-      const start = istInstant(date, m);
-      const end = new Date(start.getTime() + SLOT_MINUTES * 60 * 1000);
-      const remaining = Math.max(
-        0,
-        center.slotCapacity - (heldBySlot.get(start.getTime()) ?? 0),
+    assertCalendarDate(date);
+    return this.dataSource.transaction('REPEATABLE READ', async (manager) => {
+      await manager.query('SET TRANSACTION READ ONLY');
+      const center = await this.requireBookableCenter(
+        centerId,
+        manager.getRepository(ServiceCenter),
       );
-      slots.push({
-        start: start.toISOString(),
-        end: end.toISOString(),
-        available: remaining > 0 && start.getTime() > now,
-        remaining,
+      const hours = await this.tenancyService.getHoursForDate(
+        center,
+        date,
+        manager,
+      );
+      const intervals =
+        hours.intervals ??
+        (hours.isClosed || !hours.openTime || !hours.closeTime
+          ? []
+          : [{ open: hours.openTime, close: hours.closeTime }]);
+      const { start, end } = istDayRange(date);
+      const held = await manager.getRepository(Booking).find({
+        where: {
+          serviceCenterId: centerId,
+          status: In(SLOT_HOLDING_STATUSES),
+          slotStart: LessThan(end),
+          slotEnd: MoreThan(start),
+        },
       });
-    }
-
-    return { date, closed: false, slots };
+      const now = Date.now();
+      const policy = {
+        leadMinutes: center.bookingLeadMinutes,
+        advanceDays: center.bookingAdvanceDays,
+      };
+      const slots = canonicalSlots(date, intervals).map((slot) => {
+        const remaining = Math.max(
+          0,
+          center.slotCapacity -
+            held.filter(
+              (row) => +row.slotStart < +slot.end && +row.slotEnd > +slot.start,
+            ).length,
+        );
+        const reason =
+          slotRefusal(policy, slot.start, now) ?? (remaining ? null : 'FULL');
+        return {
+          start: slot.start.toISOString(),
+          end: slot.end.toISOString(),
+          remaining,
+          available: !reason,
+          reason,
+        };
+      });
+      return {
+        date,
+        closed: !intervals.length,
+        slots,
+        scheduleRevision: center.scheduleRevision,
+        timeZone: 'Asia/Kolkata',
+        slotMinutes: 60,
+        leadMinutes: policy.leadMinutes,
+        ...bookingWindow(policy.advanceDays, now),
+        serverNow: new Date(now).toISOString(),
+      };
+    });
   }
 
-  async create(auth: AuthContext, dto: CreateBookingDto): Promise<BookingView> {
+  async create(
+    auth: AuthContext,
+    dto: CreateBookingDto,
+    meta?: CommandMeta,
+  ): Promise<BookingView> {
     if (dto.mode !== BookingMode.SELF_CHECKIN) {
       throw new BadRequestException('Only SELF_CHECKIN is available in v1');
     }
-    const center = await this.requireBookableCenter(dto.serviceCenterId);
-    const vehicle = await this.garageService.getOwned(auth, dto.vehicleId);
-    this.assertActiveVehicle(vehicle);
-    if (!center.supportedVehicleTypes.includes(vehicle.vehicleType)) {
-      throw new BadRequestException(
-        'This center does not service this vehicle type',
-      );
-    }
     const profile = await this.meService.ensureProfile(auth);
-    assertBookingEligibility(profile.dateOfBirth);
-
     const slotStart = new Date(dto.slotStart);
     const slotEnd = new Date(dto.slotEnd);
-    if (!(slotStart.getTime() < slotEnd.getTime())) {
-      throw new BadRequestException('Invalid slot');
-    }
-    if (slotStart.getTime() <= Date.now()) {
-      throw new BadRequestException('This slot has already started');
-    }
-    await this.assertWithinHours(center, slotStart, slotEnd);
-
-    const bookingId = await this.dataSource.transaction(async (manager) => {
+    const receipt = await this.dataSource.transaction(async (manager) => {
       const lockedCenter = await this.offeringsService.lockCenter(
         manager,
-        center.id,
+        dto.serviceCenterId,
       );
-      // Lock order is center, then vehicle. Archive/ownership changes must not race a reservation.
-      const currentVehicle = await manager
-        .getRepository(GarageVehicle)
-        .findOne({
-          where: { id: vehicle.id, customerProfileId: profile.id },
-          lock: { mode: 'pessimistic_write' },
+      const reserve = async () => {
+        assertBookingEligibility(profile.dateOfBirth);
+        await this.garageService.getOwned(auth, dto.vehicleId);
+        // Lock order is center, then vehicle. Archive/ownership changes must not race a reservation.
+        const currentVehicle = await manager
+          .getRepository(GarageVehicle)
+          .findOne({
+            where: { id: dto.vehicleId, customerProfileId: profile.id },
+            lock: { mode: 'pessimistic_write' },
+          });
+        if (!currentVehicle) throw new NotFoundException('Vehicle not found');
+        this.assertActiveVehicle(currentVehicle);
+        if (
+          lockedCenter.status !== ServiceCenterStatus.ACTIVE ||
+          !lockedCenter.bookingEnabled
+        )
+          throw new NotFoundException();
+        if (
+          !lockedCenter.supportedVehicleTypes.includes(
+            currentVehicle.vehicleType,
+          )
+        )
+          throw new BadRequestException(
+            'This center is no longer available for this vehicle',
+          );
+        await this.assertWithinHours(lockedCenter, slotStart, slotEnd, manager);
+        const offerings = await this.offeringsService.snapshotSelections(
+          manager,
+          lockedCenter,
+          currentVehicle.vehicleType,
+          dto.selections ?? [],
+          dto.offeringIds ?? [],
+        );
+        const estimate = offerings.length
+          ? offerings.reduce(
+              (paise, item) => paise + Math.round(Number(item.priceInr) * 100),
+              0,
+            ) / 100
+          : (dto.estimateInr ?? SELF_CHECKIN_ESTIMATE_INR);
+        const held = await manager.getRepository(Booking).count({
+          where: {
+            serviceCenterId: lockedCenter.id,
+            slotStart: LessThan(slotEnd),
+            slotEnd: MoreThan(slotStart),
+            status: In(SLOT_HOLDING_STATUSES),
+          },
         });
-      if (!currentVehicle) throw new NotFoundException('Vehicle not found');
-      this.assertActiveVehicle(currentVehicle);
-      if (
-        lockedCenter.status !== ServiceCenterStatus.ACTIVE ||
-        !lockedCenter.bookingEnabled ||
-        !lockedCenter.supportedVehicleTypes.includes(currentVehicle.vehicleType)
-      )
-        throw new BadRequestException(
-          'This center is no longer available for this vehicle',
-        );
-      await this.assertWithinHours(lockedCenter, slotStart, slotEnd);
-      const offerings = await this.offeringsService.snapshotSelections(
-        manager,
-        lockedCenter,
-        currentVehicle.vehicleType,
-        dto.selections ?? [],
-        dto.offeringIds ?? [],
-      );
-      const estimate = offerings.length
-        ? offerings.reduce(
-            (paise, item) => paise + Math.round(Number(item.priceInr) * 100),
-            0,
-          ) / 100
-        : (dto.estimateInr ?? SELF_CHECKIN_ESTIMATE_INR);
-      const held = await manager.getRepository(Booking).count({
-        where: {
-          serviceCenterId: center.id,
+        if (held >= lockedCenter.slotCapacity)
+          throw new ConflictException({
+            code: 'BOOKING_SLOT_UNAVAILABLE',
+            reason: 'FULL',
+            message: 'Slot is no longer available',
+          });
+        const repo = manager.getRepository(Booking);
+        const now = new Date();
+        const bookingNumber = await this.uniqueBookingNumber(repo, now);
+        // Recheck the real clock after all lock waits and menu/capacity reads.
+        await this.assertWithinHours(lockedCenter, slotStart, slotEnd, manager);
+        const booking = repo.create({
+          serviceCenterId: lockedCenter.id,
+          scheduleRevision: lockedCenter.scheduleRevision,
+          customerProfileId: profile.id,
+          vehicleId: dto.vehicleId,
+          mode: BookingMode.SELF_CHECKIN,
+          status: lockedCenter.autoAccept
+            ? BookingStatus.AWAITING_ARRIVAL
+            : BookingStatus.PENDING_CENTER,
+          confirmedAt: lockedCenter.autoAccept ? now : null,
           slotStart,
-          status: In(SLOT_HOLDING_STATUSES),
-        },
-      });
-      if (held >= lockedCenter.slotCapacity)
-        throw new BadRequestException('Slot is no longer available');
-      const repo = manager.getRepository(Booking);
-      const now = new Date();
-      const booking = repo.create({
-        serviceCenterId: center.id,
-        customerProfileId: profile.id,
-        vehicleId: vehicle.id,
-        mode: BookingMode.SELF_CHECKIN,
-        status: lockedCenter.autoAccept
-          ? BookingStatus.AWAITING_ARRIVAL
-          : BookingStatus.PENDING_CENTER,
-        confirmedAt: lockedCenter.autoAccept ? now : null,
-        slotStart,
-        slotEnd,
-        issueDescription: dto.issueDescription?.trim() || null,
-        paymentMode: dto.paymentMode ?? PaymentMode.PAY_AT_CENTER,
-        estimateInr: estimate.toFixed(2),
-        bookingNumber: await this.uniqueBookingNumber(repo, now),
-      });
-      const saved = await repo.save(booking);
-      if (offerings.length) {
-        const itemRepo = manager.getRepository(BookingItem);
-        await itemRepo.save(
-          offerings.map((offering) =>
-            itemRepo.create({
-              bookingId: saved.id,
-              ...offering,
-            }),
-          ),
-        );
-      }
-      return saved.id;
+          slotEnd,
+          issueDescription: dto.issueDescription?.trim() || null,
+          paymentMode: dto.paymentMode ?? PaymentMode.PAY_AT_CENTER,
+          estimateInr: estimate.toFixed(2),
+          bookingNumber,
+        });
+        const saved = await repo.save(booking);
+        if (offerings.length) {
+          const itemRepo = manager.getRepository(BookingItem);
+          await itemRepo.save(
+            offerings.map((offering) =>
+              itemRepo.create({
+                bookingId: saved.id,
+                ...offering,
+              }),
+            ),
+          );
+        }
+        return { id: saved.id };
+      };
+      return meta
+        ? withCommandReceipt(
+            manager,
+            `customer:${auth.userId}`,
+            meta,
+            reserve,
+            async (value) => {
+              const booking = await manager.getRepository(Booking).findOne({
+                where: { id: value.id, customerProfileId: profile.id },
+              });
+              if (!booking) throw new NotFoundException();
+            },
+          )
+        : reserve();
     });
 
-    return toBookingView(await this.loadDetail(bookingId));
+    return toBookingView(await this.loadDetail(receipt.id));
   }
 
   async listForCustomer(auth: AuthContext) {
@@ -308,11 +354,19 @@ export class BookingsService {
         'The slot has started; ask the center to cancel',
       );
     }
-    booking.status = BookingStatus.CANCELLED;
-    booking.cancelledAt = new Date();
-    booking.cancelledBy = BookingParty.CUSTOMER;
-    booking.cancellationReason = dto.reason?.trim() || null;
-    await this.bookingRepository.save(booking);
+    const result = await this.bookingRepository.update(
+      { id: booking.id, status: booking.status },
+      {
+        status: BookingStatus.CANCELLED,
+        cancelledAt: new Date(),
+        cancelledBy: BookingParty.CUSTOMER,
+        cancellationReason: dto.reason?.trim() || null,
+      },
+    );
+    if (!result.affected)
+      throw new ConflictException(
+        'This booking changed; reload before cancelling',
+      );
     return toBookingView(await this.loadDetail(id));
   }
 
@@ -407,20 +461,29 @@ export class BookingsService {
     center: ServiceCenter,
     slotStart: Date,
     slotEnd: Date,
+    manager: EntityManager,
   ): Promise<void> {
-    const start = toIstParts(slotStart);
-    const end = toIstParts(slotEnd);
-    const hours = await this.tenancyService.getHoursForDate(center, start.date);
-    if (hours.isClosed || !hours.openTime || !hours.closeTime) {
-      throw new BadRequestException('The center is closed on this day');
-    }
-    const endMinutes = end.date === start.date ? end.minutes : 24 * 60;
-    if (
-      start.minutes < hmToMinutes(hours.openTime) ||
-      endMinutes > hmToMinutes(hours.closeTime)
-    ) {
-      throw new BadRequestException('Slot is outside the center hours');
-    }
+    if (!Number.isFinite(+slotStart) || !Number.isFinite(+slotEnd))
+      throw new BadRequestException('Invalid slot');
+    const hours = await this.tenancyService.getHoursForDate(
+      center,
+      toIstParts(slotStart).date,
+      manager,
+    );
+    const intervals =
+      hours.intervals ??
+      (hours.isClosed || !hours.openTime || !hours.closeTime
+        ? []
+        : [{ open: hours.openTime, close: hours.closeTime }]);
+    assertCanonicalSlot(
+      {
+        leadMinutes: center.bookingLeadMinutes,
+        advanceDays: center.bookingAdvanceDays,
+      },
+      intervals,
+      slotStart,
+      slotEnd,
+    );
   }
 
   private async requireBookableCenter(

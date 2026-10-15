@@ -2,8 +2,10 @@ import { INestApplication } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import request from 'supertest';
 import { App } from 'supertest/types';
+import { randomUUID } from 'crypto';
 import { createJwtTestFixture } from '../src/test-utils/jwt-test.helper';
 import { createE2eApp } from './helpers/e2e-app.helper';
+import { seedReturningWalkIn } from './helpers/returning-walk-in.helper';
 import {
   seedCenterListing,
   seedTestTenancy,
@@ -22,6 +24,8 @@ describe('Customer kit slice (e2e)', () => {
   let centerId: string;
 
   beforeAll(async () => {
+    // Fixed test clock keeps existing June fixtures inside the server booking window.
+    jest.spyOn(Date, 'now').mockReturnValue(Date.parse('2027-06-12T00:00:00Z'));
     process.env.IAM_CUSTOMER_DOMAIN_APPLICATION_ID = TEST_CUSTOMER_APP_ID;
 
     const fixture = await createJwtTestFixture();
@@ -56,6 +60,7 @@ describe('Customer kit slice (e2e)', () => {
   }, 60000);
 
   afterAll(async () => {
+    jest.restoreAllMocks();
     await app?.close();
   });
 
@@ -159,10 +164,14 @@ describe('Customer kit slice (e2e)', () => {
     const response = await request(app.getHttpServer())
       .post('/v1/jobs')
       .set('Authorization', `Bearer ${staffToken}`)
+      .set('Idempotency-Key', randomUUID())
       .send({
-        customerPhone: '+919876543210',
-        customerName: 'Rahul Sharma',
-        vehicleRegistration: 'KA05CD9999',
+        ...(
+          await seedReturningWalkIn(dataSource, centerId, {
+            name: 'Rahul Sharma',
+            registrationNumber: 'KA05CD9999',
+          })
+        ).selection,
         serviceType: 'Periodic service',
         odometerKm: 8000,
       })

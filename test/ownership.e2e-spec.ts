@@ -1,3 +1,4 @@
+import { addDays, istToday } from '../src/common/time/ist';
 import { randomUUID } from 'crypto';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
@@ -8,6 +9,7 @@ import { Payment } from '../src/modules/billing/entities/payment.entity';
 import { JobLineItem } from '../src/modules/jobs/entities/job-line-item.entity';
 import { createJwtTestFixture } from '../src/test-utils/jwt-test.helper';
 import { createE2eApp } from './helpers/e2e-app.helper';
+import { seedReturningWalkIn } from './helpers/returning-walk-in.helper';
 import {
   seedCenterListing,
   seedTestTenancy,
@@ -22,8 +24,8 @@ const OTHER_CUSTOMER_IAM_USER_ID = '88888888-8888-4888-8888-888888888888';
 
 /** Wednesday 2027-06-16, 11:00–12:00 IST. */
 const SLOT = {
-  slotStart: '2027-06-16T05:30:00.000Z',
-  slotEnd: '2027-06-16T06:30:00.000Z',
+  slotStart: `${addDays(istToday(), 1)}T05:30:00.000Z`,
+  slotEnd: `${addDays(istToday(), 1)}T06:30:00.000Z`,
 };
 
 const CHECKLIST = {
@@ -45,6 +47,7 @@ describe('Ownership after service (e2e)', () => {
   let version: number;
   let padsLineId: string;
   let invoiceId: string;
+  let centerId: string;
 
   const http = () => request(app.getHttpServer());
   const as = (token: string) => (req: request.Test) =>
@@ -86,6 +89,7 @@ describe('Ownership after service (e2e)', () => {
     app = ctx.app;
     dataSource = ctx.dataSource;
     const tenancy = await seedTestTenancy(dataSource);
+    centerId = tenancy.serviceCenter.id;
     await seedCenterListing(dataSource, tenancy.serviceCenter.id);
 
     const customerClaims = {
@@ -126,6 +130,7 @@ describe('Ownership after service (e2e)', () => {
     });
 
     await asManager(http().patch('/v1/center'))
+      .set('If-Match', '1').set('Idempotency-Key', randomUUID())
       .send({ autoAccept: false })
       .expect(200);
     const offering = await asManager(http().post('/v1/center/offerings'))
@@ -169,6 +174,7 @@ describe('Ownership after service (e2e)', () => {
   }, 60000);
 
   afterAll(async () => {
+    jest.restoreAllMocks();
     await app?.close();
   });
 
@@ -471,14 +477,19 @@ describe('Ownership after service (e2e)', () => {
 
     it('runs the express path end to end on a walk-in', async () => {
       const created = await asManager(http().post('/v1/jobs'))
+        .set('Idempotency-Key', randomUUID())
         .send({
-          customerPhone: '+919000000001',
-          vehicleRegistration: 'KA05MN4321',
+          ...(
+            await seedReturningWalkIn(dataSource, centerId, {
+              phone: '+919000000001',
+              registrationNumber: 'KA05MN4321',
+            })
+          ).selection,
           serviceType: 'Oil change',
         })
         .expect(201);
       const walkIn = created.body.id as string;
-      version = created.body.version;
+      await refresh(walkIn);
       await asManager(http().post(`/v1/jobs/${walkIn}/line-items`))
         .send({ kind: 'LABOUR', description: 'Oil change', unitPriceInr: 350 })
         .expect(201);

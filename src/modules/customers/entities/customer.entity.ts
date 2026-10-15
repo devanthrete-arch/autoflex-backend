@@ -33,6 +33,17 @@ export class Customer {
   @Column({ type: 'varchar', length: 20 })
   phone: string;
 
+  @Column({
+    name: 'phone_canonical',
+    type: 'varchar',
+    length: 20,
+    nullable: true,
+  })
+  phoneCanonical: string | null;
+
+  @Column({ type: 'integer', default: 1 })
+  revision: number;
+
   @Column({ type: 'varchar', length: 255, nullable: true })
   name: string | null;
 

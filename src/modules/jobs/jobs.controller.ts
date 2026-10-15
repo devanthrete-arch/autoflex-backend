@@ -10,6 +10,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Req,
   Query,
 } from '@nestjs/common';
 import {
@@ -18,6 +19,11 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import type { Request } from 'express';
+import { BadRequestException } from '@nestjs/common';
+import { TransactionalCommand } from '../idempotency/transactional-command.decorator';
+import { commandMeta } from '../idempotency/transactional-receipt';
+import type { IntakeJobReference } from './intake.service';
 import { IfMatchVersion } from '../../common/decorators/if-match-version.decorator';
 import { CurrentAuth } from '../auth/decorators/current-auth.decorator';
 import { Permissions } from '../auth/decorators/permissions.decorator';
@@ -44,14 +50,25 @@ export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
 
   @Post()
+  @TransactionalCommand()
   @Roles('admin', 'manager', 'advisor')
   @Permissions('jobs:create')
   @ApiOperation({ summary: 'Open a walk-in job card' })
   create(
     @CurrentAuth() auth: AuthContext,
     @Body() dto: CreateJobDto,
-  ): Promise<JobDetailView> {
-    return this.jobsService.create(auth, dto);
+    @Req() req: Request,
+  ): Promise<IntakeJobReference> {
+    const count = req.rawHeaders.filter(
+      (value, index) =>
+        index % 2 === 0 && value.toLowerCase() === 'idempotency-key',
+    ).length;
+    if (count !== 1)
+      throw new BadRequestException({
+        code: 'INVALID_INTAKE_INPUT',
+        message: 'Send exactly one Idempotency-Key',
+      });
+    return this.jobsService.create(auth, dto, commandMeta(req, dto, 201, true));
   }
 
   @Get()

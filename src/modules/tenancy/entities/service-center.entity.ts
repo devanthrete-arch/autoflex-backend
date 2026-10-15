@@ -1,3 +1,4 @@
+import type { ScheduleRules } from '../../scheduling/schedule';
 import {
   Column,
   CreateDateColumn,
@@ -99,6 +100,18 @@ export class ServiceCenter {
 
   @Column({ name: 'hours_end', type: 'varchar', length: 8, default: '17:00' })
   hoursEnd: string;
+
+  @Column({ name: 'schedule_revision', type: 'integer', default: 1 })
+  scheduleRevision: number;
+
+  @Column({ name: 'booking_lead_minutes', type: 'integer', default: 0 })
+  bookingLeadMinutes: number;
+
+  @Column({ name: 'booking_advance_days', type: 'integer', default: 7 })
+  bookingAdvanceDays: number;
+
+  @Column({ name: 'schedule_rules', type: 'jsonb', nullable: true })
+  scheduleRules: ScheduleRules | null;
 
   /** Bookings the center accepts per slot. */
   @Column({ name: 'slot_capacity', type: 'integer', default: 1 })

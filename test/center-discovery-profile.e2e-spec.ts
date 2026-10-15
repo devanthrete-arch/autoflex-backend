@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
+import { App } from 'supertest/types';
 import { DataSource } from 'typeorm';
 import { ServiceCenter } from '../src/modules/tenancy/entities/service-center.entity';
 import { createJwtTestFixture } from '../src/test-utils/jwt-test.helper';
@@ -16,7 +17,7 @@ const photo = 'https://images.example.test/workshop.jpg';
 const maps = 'https://www.google.com/maps/search/?api=1&query=12.9716,77.5946';
 
 describe('Center discovery profile (e2e)', () => {
-  let app: INestApplication;
+  let app: INestApplication<App>;
   let db: DataSource;
   let centerId: string;
   let otherCenterId: string;
@@ -32,7 +33,7 @@ describe('Center discovery profile (e2e)', () => {
     http()
       .patch('/v1/center')
       .set('Authorization', `Bearer ${token}`)
-      .send(body);
+      .send(body as string | object);
   const stored = (id = centerId) =>
     db.getRepository(ServiceCenter).findOneByOrFail({ id });
 
@@ -218,7 +219,10 @@ describe('Center discovery profile (e2e)', () => {
       ),
     ],
     ['FTP', ['ftp://images.example.test/workshop.jpg']],
-    ['embedded credentials', ['https://user:secret@images.example.test/workshop.jpg']],
+    [
+      'embedded credentials',
+      ['https://user:secret@images.example.test/workshop.jpg'],
+    ],
     ['data URL', ['data:image/png;base64,aGVsbG8=']],
     ['JavaScript URL', ['javascript:alert(1)']],
     ['relative URL', ['/workshop.jpg']],
