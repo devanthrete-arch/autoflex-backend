@@ -419,11 +419,11 @@ export function toCustomerJobView(job: ServiceJob): CustomerJobView {
           phone: center.publicPhone,
         }
       : null,
-    vehicle: job.vehicle
+    vehicle: job.intakeSnapshot
       ? {
-          registrationNumber: job.vehicle.registrationNumber,
-          makeModel: job.vehicle.makeModel,
-          garageVehicleId: job.vehicle.garageVehicleId,
+          registrationNumber: job.intakeSnapshot.vehicleRegistration,
+          makeModel: job.intakeSnapshot.vehicleLabel,
+          garageVehicleId: job.intakeSnapshot.garageVehicleId,
         }
       : null,
     bookingId: job.sourceBookingId,

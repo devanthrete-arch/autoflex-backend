@@ -23,6 +23,15 @@ import { JobLineItem } from './job-line-item.entity';
 import { JobMedia } from './job-media.entity';
 import { ServiceCenter } from '../../tenancy/entities/service-center.entity';
 import { StaffProfile } from '../../tenancy/entities/staff-profile.entity';
+import { JobCustomerAccess } from './job-customer-access.entity';
+
+export interface IntakeSnapshot {
+  customerName: string | null;
+  customerPhone: string;
+  vehicleRegistration: string;
+  vehicleLabel: string | null;
+  garageVehicleId: string | null;
+}
 
 @Entity('service_jobs')
 export class ServiceJob {
@@ -43,6 +52,16 @@ export class ServiceJob {
   @ManyToOne(() => Customer, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'customer_id' })
   customer: Customer;
+
+  /** Original invoice recipient; grant changes never silently change the debtor. */
+  @Column({ name: 'billing_customer_profile_id', type: 'uuid', nullable: true })
+  billingCustomerProfileId: string | null;
+
+  @Column({ name: 'intake_snapshot', type: 'jsonb', nullable: true })
+  intakeSnapshot: IntakeSnapshot | null;
+
+  @OneToMany(() => JobCustomerAccess, (access) => access.job)
+  customerAccess: JobCustomerAccess[];
 
   @Column({ name: 'vehicle_id', type: 'uuid' })
   vehicleId: string;

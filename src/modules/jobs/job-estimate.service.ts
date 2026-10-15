@@ -29,7 +29,12 @@ import { JobApproval } from './entities/job-approval.entity';
 import { JobLineItem } from './entities/job-line-item.entity';
 import { ServiceJob } from './entities/service-job.entity';
 import { JobStoreService } from './job-store.service';
-import { LineItemView, toLineItemView } from './job-view';
+import { CustomerJobView, LineItemView, toLineItemView } from './job-view';
+import { lockVisitDecisionAccess } from './visit-access';
+import {
+  CommandMeta,
+  withCommandReceipt,
+} from '../idempotency/transactional-receipt';
 
 /** Agreed scope can change only before work starts. */
 const SCOPE_EDITABLE = [JobStatus.CHECKED_IN, JobStatus.INSPECTION];
@@ -218,16 +223,51 @@ export class JobEstimateService {
     });
   }
 
-  /** The owner's own decision in the app; `job` is already ownership-checked. */
+  /** Reauthorize both new decisions and receipt recovery within the transaction. */
   async decideAsCustomer(
     job: ServiceJob,
     approvalId: string,
     customerProfileId: string,
     dto: DecideApprovalDto,
-  ): Promise<void> {
-    await this.decide(job, approvalId, dto, {
-      customerProfileId,
-      channel: DecisionChannel.APP,
+    meta?: CommandMeta,
+    actorId?: string,
+    project?: (manager: EntityManager) => Promise<CustomerJobView>,
+  ): Promise<CustomerJobView> {
+    if (!project) throw new Error('Customer decision projection is required');
+    return this.dataSource.transaction(async (manager) => {
+      const authorize = async () => {
+        await lockVisitDecisionAccess(manager, job.id, customerProfileId);
+        if (
+          !(await manager.getRepository(ServiceJob).findOneBy({ id: job.id }))
+        )
+          throw new NotFoundException();
+      };
+      await withCommandReceipt(
+        manager,
+        `customer:${actorId ?? customerProfileId}`,
+        meta ?? { hash: '', status: 200 },
+        async () => {
+          await authorize();
+          await this.decide(
+            job,
+            approvalId,
+            dto,
+            {
+              customerProfileId,
+              channel: DecisionChannel.APP,
+            },
+            manager,
+          );
+          return { id: job.id, approvalId };
+        },
+        async (receipt) => {
+          await authorize();
+          if (receipt.id !== job.id) throw new NotFoundException();
+        },
+      );
+      // Materialize the authorized response while profile/grant locks are held.
+      // A revocation immediately after commit cannot turn success into 404.
+      return project(manager);
     });
   }
 
@@ -282,6 +322,7 @@ export class JobEstimateService {
     approvalId: string,
     dto: DecideApprovalDto,
     decider: Decider,
+    transaction?: EntityManager,
   ): Promise<void> {
     if ((dto.approved === undefined) === (dto.decisions === undefined)) {
       throw new BadRequestException(
@@ -330,7 +371,7 @@ export class JobEstimateService {
           : JobApprovalStatus.PARTIALLY_APPROVED;
     const now = new Date();
 
-    await this.dataSource.transaction(async (manager) => {
+    const apply = async (manager: EntityManager) => {
       const approval = await this.claimPending(manager, job, approvalId, {
         status,
         decidedAt: now,
@@ -413,7 +454,9 @@ export class JobEstimateService {
           manager,
         );
       }
-    });
+    };
+    if (transaction) await apply(transaction);
+    else await this.dataSource.transaction(apply);
   }
 
   /**

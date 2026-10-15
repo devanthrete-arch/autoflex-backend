@@ -4,7 +4,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, FindOptionsRelations, Repository } from 'typeorm';
+import {
+  EntityManager,
+  FindOptionsRelations,
+  IsNull,
+  Repository,
+} from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { JobStatus } from '../../common/enums/job-status.enum';
 import { ServiceJob } from './entities/service-job.entity';
@@ -70,7 +75,7 @@ export class JobStoreService {
       ? manager.getRepository(ServiceJob)
       : this.repository;
     const result = await repository.update(
-      { id: job.id, version: job.version },
+      { id: job.id, version: job.version, deletedAt: IsNull() },
       { ...changes, version: job.version + 1 },
     );
     if (!result.affected) {

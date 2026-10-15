@@ -10,7 +10,7 @@ import { DataSource, In, LessThan } from 'typeorm';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import { Booking } from '../bookings/entities/booking.entity';
 import { ServiceJob } from '../jobs/entities/service-job.entity';
-import { Customer } from '../customers/entities/customer.entity';
+import { JobCustomerAccess } from '../jobs/entities/job-customer-access.entity';
 import { CustomerProfile } from '../customers/entities/customer-profile.entity';
 import { SupportAgentProfile } from '../support-identity/support-agent-profile.entity';
 import {
@@ -95,13 +95,13 @@ export class SupportOperatorService {
       )
         .leftJoin(ServiceJob, 'job', 'job.id = r.job_id')
         .leftJoin(
-          Customer,
-          'linked_customer',
-          'linked_customer.id = job.customer_id AND linked_customer.customer_profile_id = r.customer_profile_id',
+          JobCustomerAccess,
+          'visit_access',
+          'visit_access.job_id = job.id AND visit_access.customer_profile_id = r.customer_profile_id AND visit_access.can_view = true AND visit_access.revoked_at IS NULL AND customer.deleted_at IS NULL',
         );
       const text = `%${query.q.replace(/[\\%_]/g, (value) => `\\${value}`)}%`;
       qb.andWhere(
-        '(r.reference_number ILIKE :text OR r.subject ILIKE :text OR customer.display_name ILIKE :text OR customer.phone ILIKE :text OR booking.booking_number ILIKE :text OR (linked_customer.id IS NOT NULL AND job.job_number ILIKE :text))',
+        '(r.reference_number ILIKE :text OR r.subject ILIKE :text OR customer.display_name ILIKE :text OR customer.phone ILIKE :text OR booking.booking_number ILIKE :text OR (visit_access.id IS NOT NULL AND job.job_number ILIKE :text))',
         { text },
       );
     }
@@ -208,7 +208,7 @@ export class SupportOperatorService {
       try {
         cursor = JSON.parse(
           Buffer.from(query.cursor, 'base64url').toString('utf8'),
-        );
+        ) as typeof cursor;
         if (
           cursor.fingerprint !== fingerprint ||
           !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
@@ -252,7 +252,7 @@ export class SupportOperatorService {
         'cursor_date',
       )
       .limit(normalized.limit + 1)
-      .getRawAndEntities();
+      .getRawAndEntities<{ cursor_date: string }>();
     const page = rows.slice(0, normalized.limit);
     const last = page[page.length - 1];
     const customerIds = [...new Set(page.map((row) => row.customerProfileId))];

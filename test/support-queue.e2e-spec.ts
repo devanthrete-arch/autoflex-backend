@@ -1,4 +1,6 @@
 import { INestApplication } from '@nestjs/common';
+import { recordVisitAccess } from '../src/modules/jobs/visit-access';
+import { JobCustomerAccess } from '../src/modules/jobs/entities/job-customer-access.entity';
 import { ConfigService } from '@nestjs/config';
 import { createHash, randomUUID } from 'crypto';
 import request from 'supertest';
@@ -415,6 +417,12 @@ describe('Central support queue (e2e)', () => {
           }),
       );
     }
+    // Direct database fixtures explicitly establish access just like job intake.
+    for (const job of jobs) {
+      const local = await ds.getRepository(Customer).findOneByOrFail({ id: job.customerId });
+      const vehicle = await ds.getRepository(Vehicle).findOneByOrFail({ id: job.vehicleId });
+      await recordVisitAccess(ds.manager, job, local, vehicle, 'WALK_IN');
+    }
     const garage = await ds
       .getRepository(GarageVehicle)
       .save({
@@ -460,6 +468,31 @@ describe('Central support queue (e2e)', () => {
       expect(detail.body.linkedContext.job.registration).toBe('KA01AB1111');
       expect(detail.body.linkedContext.job.publicToken).toBeUndefined();
     }
+    await ds
+      .getRepository(JobCustomerAccess)
+      .update(
+        { jobId: jobs[1].id, customerProfileId: profile.id },
+        { revokedAt: new Date() },
+      );
+    const byJobNumber = await as(
+      agent,
+      http().get(`/v1/support/requests?q=${jobs[1].jobNumber}`),
+    ).expect(200);
+    expect(
+      byJobNumber.body.items.map((item: { id: string }) => item.id),
+    ).not.toContain(other.id);
+    const byTicket = await as(
+      agent,
+      http().get(`/v1/support/requests?q=${other.referenceNumber}`),
+    ).expect(200);
+    expect(
+      byTicket.body.items.map((item: { id: string }) => item.id),
+    ).toContain(other.id);
+    const revokedContext = await as(
+      agent,
+      http().get(`/v1/support/requests/${other.id}`),
+    ).expect(200);
+    expect(revokedContext.body.linkedContext.state).toBe('NEEDS_REVIEW');
     await ds
       .getRepository(SupportRequest)
       .update(valid.id, { jobId: jobs[1].id });

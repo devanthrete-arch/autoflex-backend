@@ -1,4 +1,5 @@
 import { BookingSchedule1730000000012 } from './migrations/1730000000012-BookingSchedule';
+import { VisitCustomerAccess1730000000013 } from './migrations/1730000000013-VisitCustomerAccess';
 import { ServiceMarketplace1730000000009 } from './migrations/1730000000009-ServiceMarketplace';
 import { CenterDiscoveryMedia1730000000010 } from './migrations/1730000000010-CenterDiscoveryMedia';
 import { ReturningWalkIn1730000000011 } from './migrations/1730000000011-ReturningWalkIn';
@@ -28,4 +29,5 @@ export const MIGRATIONS: (new () => MigrationInterface)[] = [
   CenterDiscoveryMedia1730000000010,
   ReturningWalkIn1730000000011,
   BookingSchedule1730000000012,
+  VisitCustomerAccess1730000000013,
 ];

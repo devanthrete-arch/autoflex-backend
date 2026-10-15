@@ -5,6 +5,17 @@ import { ENTITIES } from './entities';
 import { MIGRATIONS } from './migration-list';
 
 function registerPgMemFunctions(db: IMemoryDb): void {
+  db.public.registerFunction({
+    name: 'jsonb_build_object',
+    argsVariadic: DataType.text,
+    returns: DataType.jsonb,
+    allowNullArguments: true,
+    implementation: (...args: (string | null)[]) => {
+      const result: Record<string, string | null> = {};
+      for (let i = 0; i < args.length; i += 2) result[args[i]!] = args[i + 1];
+      return result;
+    },
+  });
   for (const [name, fn] of Object.entries({
     radians: (n: number) => (n * Math.PI) / 180,
     sin: Math.sin,

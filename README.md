@@ -151,6 +151,8 @@ Job statuses: `CHECKED_IN`, `INSPECTION`, `AWAITING_APPROVAL`, `IN_PROGRESS`, `Q
 | `npm run seed:dev` | Map one IAM domain and user (not the workshop roster) |
 | `npm run support:preflight` | Read support status counts and incompatible links before migration |
 | `npm run intake:preflight` | Read returning-intake conflict counts without personal identifiers; works before migration 0011 |
+| `npm run visit-access:preflight` | Read legacy/access/snapshot counts before or after migration 0013 |
+| `npm run test:visit-access:postgres` | AF-006 visit-access migration, race and rollback tests on isolated port 55416 |
 | `npm run support:provision` | Provision a support profile for an existing IAM identity |
 
 ## Testing
@@ -223,6 +225,12 @@ Run `npm run intake:preflight`, then migrations before restarting the API. Migra
 Desk intake now uses protected exact customer lookup, explicit confirmation and saved vehicle selection. `POST /v1/jobs` requires selected IDs/revisions and one stable `Idempotency-Key`; it returns only `{id,jobNumber,status}`. Vehicle/job/event/audit/receipt commit together. Booking check-in attaches its job atomically and recovers a lost response through that attached job. Backend association, archive/type and active-job checks apply independently of the UI.
 
 New/unlinked reception registration, VAHAN RC verification and global ownership claims/transfers remain pending. A stored association is not verified legal ownership. [Runbook and recovery](../development-documents/architecture/returning-walk-in-runbook.md) · [Live blockers](../development-documents/architecture/af-006-returning-customer-walk-in-scope.md#13-live-execution-status-and-blockers--12-october-2026) · [Isolated regression instructions](./test/AF006.md).
+
+### Stable visit access before registration (AF-006)
+
+Migration **1730000000013** adds explicit per-visit view/decision grants and intake/original-billing-recipient snapshots. New walk-in/check-in transactions write them atomically. Customer jobs, decisions and support use active grants; changing a center contact cannot transfer history or invoice responsibility. Customer approval retries reauthorize within their receipt transaction; the response is projected before releasing grant locks, and the customer app sends a stable key. New bills require the saved recipient and intake phone/plate. Notifications follow the original authorized recipient; IAM signup and external delivery are separate work.
+
+Run `npm run visit-access:preflight` before migration and again after cutover. Stop/drain old API writers and back up before applying migrations; mixed old/new writers can create grantless jobs. Do not bulk-link history to repair a missing grant. Migration 0013 was applied to the local workshop on 15 October after a backup; the post-migration preflight found two active grants and no grantless jobs or missing snapshots/recipients. Other environments still need their own backup, preflight and coordinated cutover. [Delivery and remaining blockers](../development-documents/architecture/af-006-visit-access-delivery.md) · [Tests](./test/AF006.md#stable-visit-access-and-reception-prerequisites).
 
 ### Working hours and booking slots (AF-009)
 

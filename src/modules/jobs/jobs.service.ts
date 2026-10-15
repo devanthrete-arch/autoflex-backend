@@ -43,6 +43,7 @@ import { JobAssignment } from './entities/job-assignment.entity';
 import { JobLineItem } from './entities/job-line-item.entity';
 import { ServiceJob } from './entities/service-job.entity';
 import { JobStoreService, STAFF_JOB_RELATIONS } from './job-store.service';
+import { recordVisitAccess } from './visit-access';
 import {
   JobDetailView,
   JobSummaryView,
@@ -203,6 +204,7 @@ export class JobsService {
               warrantyIntent: dto.warrantyIntent ?? false,
             }),
           );
+          await recordVisitAccess(manager, job, customer, vehicle, 'WALK_IN');
           await this.afterOpen(auth, job, manager, {
             comebackOfJobId: dto.comebackOfJobId,
             customerId: customer.id,
@@ -360,6 +362,7 @@ export class JobsService {
       }),
     );
 
+    await recordVisitAccess(manager, job, customer, vehicle, 'BOOKING_CHECKIN');
     const items = input.items ?? [];
     if (items.length) {
       const lines = manager.getRepository(JobLineItem);

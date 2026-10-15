@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { JobApprovalStatus } from '../../common/enums/job-work.enum';
 import { JobEventType } from '../../common/enums/job-event-type.enum';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
@@ -8,6 +8,8 @@ import { MeService } from '../customers/me.service';
 import { DecideApprovalDto } from './dto/job-work.dto';
 import { ServiceJob } from './entities/service-job.entity';
 import { JobEstimateService } from './job-estimate.service';
+import { visitAccessWhere } from './visit-access';
+import { CommandMeta } from '../idempotency/transactional-receipt';
 import {
   computeTotals,
   CustomerJobView,
@@ -43,7 +45,7 @@ const CUSTOMER_RELATIONS = {
   invoices: true,
 } as const;
 
-/** Jobs reach the owner through the center customer linked to their profile. */
+/** Private visits are authorized by explicit grants captured at intake. */
 @Injectable()
 export class CustomerJobsService {
   constructor(
@@ -56,7 +58,7 @@ export class CustomerJobsService {
   async list(auth: AuthContext): Promise<CustomerJobSummary[]> {
     const profile = await this.meService.ensureProfile(auth);
     const jobs = await this.jobRepository.find({
-      where: { customer: { customerProfileId: profile.id } },
+      where: visitAccessWhere(profile.id),
       relations: {
         serviceCenter: true,
         vehicle: true,
@@ -75,8 +77,8 @@ export class CustomerJobsService {
       centerName: job.serviceCenter
         ? (job.serviceCenter.displayName ?? job.serviceCenter.name)
         : null,
-      vehicleRegistration: job.vehicle?.registrationNumber ?? null,
-      garageVehicleId: job.vehicle?.garageVehicleId ?? null,
+      vehicleRegistration: job.intakeSnapshot?.vehicleRegistration ?? null,
+      garageVehicleId: job.intakeSnapshot?.garageVehicleId ?? null,
       estimatedReadyAt: job.estimatedReadyAt,
       awaitingDecision: (job.approvals ?? []).some(
         (approval) => approval.status === JobApprovalStatus.PENDING,
@@ -99,15 +101,22 @@ export class CustomerJobsService {
     jobId: string,
     approvalId: string,
     dto: DecideApprovalDto,
+    meta?: CommandMeta,
   ): Promise<CustomerJobView> {
+    const profile = await this.meService.ensureProfile(auth);
     const job = await this.getOwned(auth, jobId);
-    await this.estimateService.decideAsCustomer(
+    return this.estimateService.decideAsCustomer(
       job,
       approvalId,
-      job.customer.customerProfileId!,
+      profile.id,
       dto,
+      meta,
+      auth.userId,
+      async (manager) =>
+        toCustomerJobView(
+          await this.getOwnedForProfile(profile.id, jobId, manager),
+        ),
     );
-    return this.get(auth, jobId);
   }
 
   async track(publicToken: string): Promise<PublicTrackingView> {
@@ -163,13 +172,26 @@ export class CustomerJobsService {
     jobId: string,
   ): Promise<ServiceJob> {
     const profile = await this.meService.ensureProfile(auth);
-    const job = await this.jobRepository.findOne({
-      where: { id: jobId, customer: { customerProfileId: profile.id } },
+    return this.getOwnedForProfile(profile.id, jobId);
+  }
+
+  private async getOwnedForProfile(
+    profileId: string,
+    jobId: string,
+    manager?: EntityManager,
+  ): Promise<ServiceJob> {
+    const repository = manager?.getRepository(ServiceJob) ?? this.jobRepository;
+    const job = await repository.findOne({
+      where: { id: jobId, ...visitAccessWhere(profileId) },
       relations: CUSTOMER_RELATIONS,
     });
     if (!job) {
       throw new NotFoundException();
     }
+    // Visit access does not make a delegate the invoice's recipient.
+    job.invoices = (job.invoices ?? []).filter(
+      (invoice) => invoice.customerProfileId === profileId,
+    );
     return job;
   }
 }

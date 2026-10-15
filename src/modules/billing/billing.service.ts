@@ -323,6 +323,18 @@ export class BillingService {
     if (existing && toPaise(existing.totalInr) === total && closing) {
       return existing;
     }
+    // Preserve an already issued bill, while refusing any new/reissued bill
+    // whose legacy visit lacks an attributable customer and plate snapshot.
+    if (
+      !job.billingCustomerProfileId ||
+      !job.intakeSnapshot?.customerPhone?.trim() ||
+      !job.intakeSnapshot.vehicleRegistration?.trim()
+    ) {
+      throw new UnprocessableEntityException({
+        code: 'VISIT_BILLING_IDENTITY_REQUIRED',
+        message: 'Review the visit customer and vehicle before issuing a bill',
+      });
+    }
     if (existing) {
       await invoices.update(
         { id: existing.id },
@@ -345,7 +357,7 @@ export class BillingService {
         serviceCenterId: job.serviceCenterId,
         jobId: job.id,
         customerId: job.customerId,
-        customerProfileId: job.customer.customerProfileId,
+        customerProfileId: job.billingCustomerProfileId,
         invoiceNumber: generateReference('INV'),
         status: InvoiceStatus.DUE,
         subtotalInr: fromPaise(subtotal),
@@ -360,10 +372,10 @@ export class BillingService {
           address: address || center.formattedAddress,
         },
         buyer: {
-          name: job.customer.name,
-          phone: job.customer.phone,
-          vehicleRegistration: job.vehicle?.registrationNumber ?? null,
-          vehicleLabel: job.vehicle?.makeModel ?? null,
+          name: job.intakeSnapshot?.customerName ?? null,
+          phone: job.intakeSnapshot?.customerPhone ?? null,
+          vehicleRegistration: job.intakeSnapshot?.vehicleRegistration ?? null,
+          vehicleLabel: job.intakeSnapshot?.vehicleLabel ?? null,
         },
         notes: dto.notes?.trim() || null,
         issuedAt: new Date(),

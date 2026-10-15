@@ -26,6 +26,7 @@ import { JobAssignment } from '../modules/jobs/entities/job-assignment.entity';
 import { JobLineItem } from '../modules/jobs/entities/job-line-item.entity';
 import { JobMedia } from '../modules/jobs/entities/job-media.entity';
 import { ServiceJob } from '../modules/jobs/entities/service-job.entity';
+import { JobCustomerAccess } from '../modules/jobs/entities/job-customer-access.entity';
 import { Promotion } from '../modules/marketplace/entities/promotion.entity';
 import {
   ServiceCategory,
@@ -60,6 +61,7 @@ export const ENTITIES = [
   GarageVehicle,
   CustomerAddress,
   ServiceJob,
+  JobCustomerAccess,
   ServiceJobEvent,
   AuditLog,
   JobAssignment,

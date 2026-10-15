@@ -12,6 +12,7 @@ import {
 import { CustomerProfile } from '../customers/entities/customer-profile.entity';
 import { ServiceJobEvent } from '../events/entities/service-job-event.entity';
 import { ServiceJob } from '../jobs/entities/service-job.entity';
+import { JobCustomerAccess } from '../jobs/entities/job-customer-access.entity';
 import { CustomerNotification } from './entities/customer-notification.entity';
 import { NotificationDelivery } from './entities/notification-delivery.entity';
 
@@ -79,14 +80,21 @@ export class NotificationsService {
     const message = this.messageFor(event, job);
     if (!message) return;
 
-    const profile = job.customer?.customerProfileId
-      ? await manager
-          .getRepository(CustomerProfile)
-          .findOne({ where: { id: job.customer.customerProfileId } })
-      : null;
+    if (!job.billingCustomerProfileId) return;
+    const grant = await manager.getRepository(JobCustomerAccess).findOne({
+      where: {
+        jobId: job.id,
+        customerProfileId: job.billingCustomerProfileId,
+        canView: true,
+        revokedAt: IsNull(),
+      },
+      relations: { profile: true },
+    });
+    const profile = grant?.profile;
+    if (!profile || profile.deletedAt) return;
     await this.dispatch(manager, message, {
       profile,
-      phone: job.customer?.phone ?? null,
+      phone: profile.phone,
       waitingOnSite: job.waitingOnSite,
     });
   }

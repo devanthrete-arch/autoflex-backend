@@ -28,6 +28,8 @@
     "mint:customer-jwt": "ts-node -r tsconfig-paths/register src/scripts/mint-customer-jwt.ts",
     "support:preflight": "ts-node --transpile-only -r tsconfig-paths/register src/scripts/support-preflight.cli.ts",
     "intake:preflight": "ts-node --transpile-only -r tsconfig-paths/register src/scripts/intake-preflight.cli.ts",
+    "visit-access:preflight": "ts-node --transpile-only -r tsconfig-paths/register src/scripts/visit-access-preflight.cli.ts",
+    "test:visit-access:postgres": "AF006_ACCESS_POSTGRES_TEST=true jest --config ./test/jest-e2e.json --runInBand --testPathPatterns=visit-access",
     "support:provision": "ts-node --transpile-only -r tsconfig-paths/register src/scripts/support-provision.cli.ts",
     "test:support:postgres": "AF010_POSTGRES_TEST=true jest --config ./test/jest-e2e.json --runInBand --testPathPatterns=support-postgres",
     "services:import": "ts-node --transpile-only -r tsconfig-paths/register src/catalog/import-services.cli.ts",

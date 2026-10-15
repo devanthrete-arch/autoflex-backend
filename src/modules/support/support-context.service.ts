@@ -6,6 +6,7 @@ import { ServiceJob } from '../jobs/entities/service-job.entity';
 import { SupportRequest } from './support-request.entity';
 import { InvoiceStatus } from '../../common/enums/ownership.enum';
 import { JobLineStatus } from '../../common/enums/job-work.enum';
+import { visitAccessWhere } from '../jobs/visit-access';
 
 @Injectable()
 export class SupportContextService {
@@ -17,26 +18,22 @@ export class SupportContextService {
     manager: EntityManager = this.dataSource.manager,
   ) {
     const booking = bookingId
-      ? await manager
-          .getRepository(Booking)
-          .findOne({
-            where: { id: bookingId, customerProfileId: profileId },
-            relations: { serviceCenter: true, vehicle: true },
-          })
+      ? await manager.getRepository(Booking).findOne({
+          where: { id: bookingId, customerProfileId: profileId },
+          relations: { serviceCenter: true, vehicle: true },
+        })
       : null;
     const job = jobId
-      ? await manager
-          .getRepository(ServiceJob)
-          .findOne({
-            where: { id: jobId, customer: { customerProfileId: profileId } },
-            relations: {
-              customer: true,
-              serviceCenter: true,
-              vehicle: true,
-              invoices: true,
-              lineItems: true,
-            },
-          })
+      ? await manager.getRepository(ServiceJob).findOne({
+          where: { id: jobId, ...visitAccessWhere(profileId) },
+          relations: {
+            customer: true,
+            serviceCenter: true,
+            vehicle: true,
+            invoices: true,
+            lineItems: true,
+          },
+        })
       : null;
     if (
       (bookingId && !booking) ||
@@ -48,15 +45,21 @@ export class SupportContextService {
         message:
           'Choose a booking and service belonging to the same visit on your account',
       });
+    if (job)
+      job.invoices = job.invoices.filter(
+        (invoice) => invoice.customerProfileId === profileId,
+      );
     return { booking, job };
   }
   async summary(row: SupportRequest) {
     try {
-      let { booking, job } = await this.ownedLinks(
+      const links = await this.ownedLinks(
         row.customerProfileId,
         row.jobId,
         row.bookingId,
       );
+      const { booking } = links;
+      let { job } = links;
       if (booking?.serviceJobId && !job)
         job = (
           await this.ownedLinks(
@@ -88,8 +91,8 @@ export class SupportContextService {
               reference: job.jobNumber,
               status: job.status,
               centerName: job.serviceCenter.name,
-              vehicleLabel: job.vehicle.makeModel,
-              registration: job.vehicle.registrationNumber,
+              vehicleLabel: job.intakeSnapshot?.vehicleLabel ?? null,
+              registration: job.intakeSnapshot?.vehicleRegistration ?? null,
               currentAmountInr: job.lineItems
                 .filter((line) =>
                   [JobLineStatus.INCLUDED, JobLineStatus.APPROVED].includes(

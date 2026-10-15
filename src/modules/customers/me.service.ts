@@ -1,10 +1,11 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { AuthContext } from '../auth/interfaces/auth-context.interface';
 import {
   ageYears,
@@ -88,13 +89,10 @@ export class MeService {
       throw new BadRequestException('Clear both coordinates together');
     let profile = await this.profileRepository.findOne({
       where: { iamUserId: auth.userId },
+      withDeleted: true,
     });
-    if (!profile) {
-      profile = this.profileRepository.create({
-        iamUserId: auth.userId,
-        phone: auth.phone ? tryIndiaE164(auth.phone) : null,
-      });
-    }
+    if (profile?.deletedAt)
+      throw new ForbiddenException('This customer account is unavailable');
     const changes: Partial<CustomerProfile> = {};
     for (const field of [
       'displayName',
@@ -121,27 +119,50 @@ export class MeService {
     if (dto.dateOfBirth !== undefined) {
       changes.dateOfBirth = assertDateOfBirth(dto.dateOfBirth);
     }
+    if (!profile) {
+      // Concurrent first use must resolve the same IAM subject. An existing
+      // (including deleted) profile is never overwritten by the insert.
+      await this.profileRepository
+        .createQueryBuilder()
+        .insert()
+        .values({
+          iamUserId: auth.userId,
+          phone: auth.phone ? tryIndiaE164(auth.phone) : null,
+          ...changes,
+        })
+        .orIgnore()
+        .execute();
+      profile = await this.profileRepository.findOneOrFail({
+        where: { iamUserId: auth.userId },
+        withDeleted: true,
+      });
+      if (profile.deletedAt)
+        throw new ForbiddenException('This customer account is unavailable');
+    }
     if (!profile.phone && changes.phone === undefined && auth.phone) {
       changes.phone = tryIndiaE164(auth.phone);
     }
-    if (!profile.id)
-      return presentProfile(
-        await this.profileRepository.save(Object.assign(profile, changes)),
-      );
     // Always include both supplied coordinates in one UPDATE, even when one did
     // not change. ORM diff-saving could otherwise mix concurrent location pairs.
-    if (Object.keys(changes).length)
-      await this.profileRepository.update(profile.id, changes);
-    return presentProfile(
-      await this.profileRepository.findOneByOrFail({ id: profile.id }),
-    );
+    if (Object.keys(changes).length) {
+      const result = await this.profileRepository.update(
+        { id: profile.id, deletedAt: IsNull() },
+        changes,
+      );
+      if (result.affected !== 1)
+        throw new ForbiddenException('This customer account is unavailable');
+    }
+    const current = await this.profileRepository.findOneBy({ id: profile.id });
+    if (!current)
+      throw new ForbiddenException('This customer account is unavailable');
+    return presentProfile(current);
   }
 
   /** Returns the caller's profile, creating an empty one on first use. */
   async ensureProfile(auth: AuthContext): Promise<CustomerProfile> {
     if (auth.customerProfileId) {
       const profile = await this.profileRepository.findOne({
-        where: { id: auth.customerProfileId },
+        where: { id: auth.customerProfileId, iamUserId: auth.userId },
       });
       if (profile) return profile;
     }

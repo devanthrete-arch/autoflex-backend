@@ -8,7 +8,9 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Req,
 } from '@nestjs/common';
+import type { Request } from 'express';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentAuth } from '../auth/decorators/current-auth.decorator';
 import { Public } from '../auth/decorators/public.decorator';
@@ -18,6 +20,8 @@ import { CustomerJobsService } from './customer-jobs.service';
 import type { CustomerJobSummary } from './customer-jobs.service';
 import { DecideApprovalDto } from './dto/job-work.dto';
 import type { CustomerJobView, PublicTrackingView } from './job-view';
+import { TransactionalCommand } from '../idempotency/transactional-command.decorator';
+import { commandMeta } from '../idempotency/transactional-receipt';
 
 @ApiTags('me')
 @ApiBearerAuth()
@@ -42,6 +46,7 @@ export class CustomerJobsController {
   }
 
   @Post(':id/approvals/:approvalId/decision')
+  @TransactionalCommand()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Approve or decline requested extra work' })
   decide(
@@ -49,8 +54,15 @@ export class CustomerJobsController {
     @Param('id', ParseUUIDPipe) id: string,
     @Param('approvalId', ParseUUIDPipe) approvalId: string,
     @Body() dto: DecideApprovalDto,
+    @Req() request: Request,
   ): Promise<CustomerJobView> {
-    return this.customerJobs.decide(auth, id, approvalId, dto);
+    return this.customerJobs.decide(
+      auth,
+      id,
+      approvalId,
+      dto,
+      commandMeta(request, dto, 200, true),
+    );
   }
 }
 
