@@ -226,6 +226,16 @@ Desk intake now uses protected exact customer lookup, explicit confirmation and 
 
 New/unlinked reception registration, VAHAN RC verification and global ownership claims/transfers remain pending. A stored association is not verified legal ownership. [Runbook and recovery](../development-documents/architecture/returning-walk-in-runbook.md) · [Live blockers](../development-documents/architecture/af-006-returning-customer-walk-in-scope.md#13-live-execution-status-and-blockers--12-october-2026) · [Isolated regression instructions](./test/AF006.md).
 
+## AF-019 invoicing core — staged development
+
+Migrations `1730000000014` and `1730000000015` add versioned finance configuration, seller/year number counters, immutable invoice/tax snapshots and payment deduplication. They are prepared, not applied to the workshop by this development pass. Before a deployment, run `npm run billing:preflight`; it reads a repeatable snapshot, emits aggregate counts and never repairs or retaxes history. Back up and drain old writers before applying migrations. Legacy bills retain their amounts/numbers and are labelled `LEGACY_BILL`.
+
+`BILLING_V2_ENABLED` defaults to false. Enabling it switches the existing invoice/close commands to explicit preview/issue/exact-invoice payment; unconfigured centers fail closed. A center with any V2 configuration cannot fall back to creating a legacy bill while rollout is disabled. Finance uses the restricted internal configuration API, with a dedicated `IAM_FINANCE_DOMAIN_APPLICATION_ID` and `IAM_FINANCE_DOMAIN_ID`, `finance_operator` / `finance_reviewer`, and separate `billing:configure` / `billing:approve` powers. Draft author cannot approve their own revision. No finance test account or sample GST registration is provisioned into a real center.
+
+The desk's **Invoice and payment** action supports individual/business buyer confirmation, per-line approved classifications, pure preview, immutable numbered issue and full counter payment. V2 issue requires `billing:issue`; payment requires `billing:record-payment` plus `jobs:update`. Both need exactly one `If-Match` and `Idempotency-Key`; writes/audit/receipt commit together. Tax values come only from approved policy, with no universal rate. Policies also require explicit place-of-supply cases (buyer type/state, staff-confirmed service context, approved supply state and evidence basis); unmatched cases are refused. Saved line amount must equal quantity × unit price rounded to a paisa before preview/issue. Legacy charge-kind inference is frozen at issue and never repeated during collection. Payment and PDF readiness are separate: **PDF generation/private delivery, corrections/discounts and IRP integration remain pending**; IRP-required business issue is blocked. Keep real-center activation disabled until these release gates and accountant fixtures pass.
+
+Run `npm test -- --runInBand --testPathPatterns='billing|jwt-finance'` for core tests. Run `AF019_POSTGRES_TEST=true npm run test:e2e -- --runInBand --testPathPatterns=billing-v2` for real transaction tests; it creates/drops only a random `af019_test_*` database using the local PostgreSQL admin connection (override with `AF019_TEST_ADMIN_URL`). It does not migrate or truncate the workshop database. [Delivered behavior, API and remaining work](../development-documents/architecture/af-019-invoicing-core-delivery.md).
+
 ### Stable visit access before registration (AF-006)
 
 Migration **1730000000013** adds explicit per-visit view/decision grants and intake/original-billing-recipient snapshots. New walk-in/check-in transactions write them atomically. Customer jobs, decisions and support use active grants; changing a center contact cannot transfer history or invoice responsibility. Customer approval retries reauthorize within their receipt transaction; the response is projected before releasing grant locks, and the customer app sends a stable key. New bills require the saved recipient and intake phone/plate. Notifications follow the original authorized recipient; IAM signup and external delivery are separate work.
@@ -237,3 +247,33 @@ Run `npm run visit-access:preflight` before migration and again after cutover. S
 After migrations, run `npm run schedule:preflight` before enabling booking traffic in a new environment. This reads existing center schedules and future commitments without changing them. Migration `1730000000012` preserves legacy hours/bookings and defaults to zero advance notice and seven India calendar dates including today. Managers edit **More → Working hours & booking slots** in the desk app.
 
 Backend and customer enforce exact hourly arrival windows, holidays/breaks, notice, horizon and capacity. Schedule commands require a revision and idempotency key; customer booking keys are committed in the same transaction as the reservation. Existing visits are retained when hours/capacity change. Use PostgreSQL for transaction/rollback verification. See [AF-009 test guide](test/AF009.md); `npm run test:scheduling:postgres` targets the isolated test database documented there.
+
+## AF-006 registration and AF-019 invoice completion
+
+Apply migrations through `1730000000018` after backup/preflight and draining old writers.
+`npm run billing:preflight` is read-only and reconciles invoice and financial-note payments separately.
+`npm run test:completion:postgres` creates and drops a disposable database on the local PostgreSQL server; it never uses the workshop database for test fixtures.
+
+Reception requires `jobs:create` **and** `customers:register`. Customer sign-in/registration stays with IAM; a separate signed, session-bound verified-phone assertion and the customer's explicit consent are required before linking. Set the reception environment variables from `.env.example`. The HTTPS broker contract is proposed, not a shipped Frevels integration. Missing identity configuration blocks linking. A contact/plate match never confers historical visit access or verified vehicle ownership.
+
+V2 invoicing stays off by default. Use a real finance-approved center configuration before live issue. Optional `discounts`, `cancellation` and `corrections` policy sections explicitly enable their respective flows; absence blocks the action. Paid originals stay immutable. Staff propose linked credit/debit notes; additional charges require the original recipient's acceptance, then a separate finance reviewer issues a new numbered note. Full debit-note counter payment is a separate ledger entry. A credit note does not record a refund. IRP-required business documents remain blocked pending a verified provider integration.
+
+For internal finance review, with an authenticated `AUTOFLEX_FINANCE_TOKEN` and `AUTOFLEX_API_URL` supplied securely:
+
+```sh
+npm run billing:note -- review <invoice-uuid>
+npm run billing:note -- issue <note-uuid> <reviewed-version> <persistent-command-key> <private-evidence-reference>
+```
+
+Reuse the exact version, key and evidence for an unknown issue result. Review output contains private billing details; do not redirect it into the repository. The finance principal must have `finance_reviewer` and `billing:approve` in the dedicated configured finance domain/application. This CLI does not approve policy or impersonate an accountant.
+
+Issued invoice/note PDFs use a transactional document intent, a two-minute worker lease and bounded retry. Configure private S3 plus `AWS_REGION` and an IAM role for production. Enable the document worker in at least one API process; concurrent workers are safe. Authorized download requests can also trigger rendering. The filesystem driver is development-only and gitignored. Downloads reauthorize and verify SHA-256; there is no public object URL. Staff with `billing:correct` can restart exhausted failed processing; READY documents are never regenerated.
+
+A protected synthetic demonstration (no operating garage or accountant approval claimed):
+
+```sh
+DATABASE_HOST=127.0.0.1 DATABASE_NAME=autoflex_af019_demo npm run migration:run
+DATABASE_HOST=127.0.0.1 DATABASE_NAME=autoflex_af019_demo npm run start:invoice-demo
+```
+
+This entry refuses production/non-loopback/other database names. It uses development IAM proof and private local PDFs, preserves existing demo jobs/payments, and never enables V2 in the normal workshop process. See `development-documents/architecture/af006-af019-completion.md` in the parent workspace for contracts, examples, browser evidence and remaining live acceptance gates.

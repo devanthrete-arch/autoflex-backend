@@ -1,5 +1,10 @@
+import { FinancialNotes1730000000018 } from './migrations/1730000000018-FinancialNotes';
+import { InvoiceDocuments1730000000017 } from './migrations/1730000000017-InvoiceDocuments';
+import { ReceptionRegistration1730000000016 } from './migrations/1730000000016-ReceptionRegistration';
 import { BookingSchedule1730000000012 } from './migrations/1730000000012-BookingSchedule';
 import { VisitCustomerAccess1730000000013 } from './migrations/1730000000013-VisitCustomerAccess';
+import { InvoiceSnapshots1730000000015 } from './migrations/1730000000015-InvoiceSnapshots';
+import { BillingFoundation1730000000014 } from './migrations/1730000000014-BillingFoundation';
 import { ServiceMarketplace1730000000009 } from './migrations/1730000000009-ServiceMarketplace';
 import { CenterDiscoveryMedia1730000000010 } from './migrations/1730000000010-CenterDiscoveryMedia';
 import { ReturningWalkIn1730000000011 } from './migrations/1730000000011-ReturningWalkIn';
@@ -30,4 +35,9 @@ export const MIGRATIONS: (new () => MigrationInterface)[] = [
   ReturningWalkIn1730000000011,
   BookingSchedule1730000000012,
   VisitCustomerAccess1730000000013,
+  BillingFoundation1730000000014,
+  InvoiceSnapshots1730000000015,
+  ReceptionRegistration1730000000016,
+  InvoiceDocuments1730000000017,
+  FinancialNotes1730000000018,
 ];

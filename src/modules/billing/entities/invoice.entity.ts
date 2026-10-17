@@ -22,11 +22,41 @@ export interface InvoiceParty {
   address?: string | null;
   vehicleRegistration?: string | null;
   vehicleLabel?: string | null;
+  type?: 'INDIVIDUAL' | 'BUSINESS';
+  stateCode?: string;
+  pin?: string;
 }
 
 /** The bill for one job. Seller, buyer, and lines are copies made at issue. */
 @Entity('invoices')
 export class Invoice {
+  @Column({ name: 'voided_at', type: 'timestamptz', nullable: true })
+  voidedAt: Date | null;
+  @Column({ name: 'void_reason', type: 'varchar', length: 500, nullable: true })
+  voidReason: string | null;
+  @Column({ name: 'replacement_for_invoice_id', type: 'uuid', nullable: true })
+  replacementForInvoiceId: string | null;
+  @Column({ name: 'schema_version', type: 'integer', default: 1 })
+  schemaVersion: number;
+
+  @Column({
+    name: 'document_kind',
+    type: 'varchar',
+    length: 32,
+    default: 'LEGACY_BILL',
+  })
+  documentKind: string;
+
+  @Column({ name: 'billing_snapshot', type: 'jsonb', nullable: true })
+  billingSnapshot: Record<string, unknown> | null;
+
+  @Column({
+    name: 'snapshot_hash',
+    type: 'varchar',
+    length: 64,
+    nullable: true,
+  })
+  snapshotHash: string | null;
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

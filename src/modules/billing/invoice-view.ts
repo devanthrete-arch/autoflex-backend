@@ -1,5 +1,6 @@
 import { InvoiceStatus } from '../../common/enums/ownership.enum';
 import { inr } from '../../common/money';
+import { fromPaise, toPaise } from '../../common/money';
 import { Invoice, InvoiceParty } from './entities/invoice.entity';
 
 export interface InvoiceLineView {
@@ -11,6 +12,7 @@ export interface InvoiceLineView {
   amountInr: string;
   taxRatePct: string;
   taxInr: string;
+  taxSnapshot: Record<string, unknown> | null;
 }
 
 export interface PaymentView {
@@ -22,6 +24,19 @@ export interface PaymentView {
 }
 
 export interface InvoiceView {
+  corrections?: {
+    pendingDebitCount: number;
+    outstandingDebitInr: string;
+    issuedCreditInr: string;
+  };
+  schemaVersion: number;
+  documentKind: string;
+  documentState: 'AVAILABLE_ON_REQUEST' | 'NOT_CONFIGURED';
+  voidedAt: Date | null;
+  voidReason: string | null;
+  replacementForInvoiceId: string | null;
+  supplyDate: string | null;
+  placeOfSupply: { stateCode: string; context: string } | null;
   id: string;
   invoiceNumber: string;
   jobId: string;
@@ -45,6 +60,24 @@ export interface InvoiceView {
 
 export function toInvoiceView(invoice: Invoice): InvoiceView {
   return {
+    schemaVersion: invoice.schemaVersion ?? 1,
+    documentKind: invoice.documentKind ?? 'LEGACY_BILL',
+    documentState:
+      invoice.schemaVersion === 2 ? 'AVAILABLE_ON_REQUEST' : 'NOT_CONFIGURED',
+    voidedAt: invoice.voidedAt ?? null,
+    voidReason: invoice.voidReason ?? null,
+    replacementForInvoiceId: invoice.replacementForInvoiceId ?? null,
+    supplyDate: (invoice.billingSnapshot?.supplyDate as string) ?? null,
+    placeOfSupply: invoice.billingSnapshot?.placeOfSupply
+      ? {
+          stateCode: (
+            invoice.billingSnapshot.placeOfSupply as { stateCode: string }
+          ).stateCode,
+          context: (
+            invoice.billingSnapshot.placeOfSupply as { context: string }
+          ).context,
+        }
+      : null,
     id: invoice.id,
     invoiceNumber: invoice.invoiceNumber,
     jobId: invoice.jobId,
@@ -54,7 +87,7 @@ export function toInvoiceView(invoice: Invoice): InvoiceView {
     taxInr: inr(invoice.taxInr),
     totalInr: inr(invoice.totalInr),
     paidInr: inr(invoice.paidInr),
-    balanceInr: inr(Number(invoice.totalInr) - Number(invoice.paidInr)),
+    balanceInr: fromPaise(toPaise(invoice.totalInr) - toPaise(invoice.paidInr)),
     seller: invoice.seller,
     buyer: invoice.buyer,
     notes: invoice.notes,
@@ -72,6 +105,7 @@ export function toInvoiceView(invoice: Invoice): InvoiceView {
         amountInr: inr(line.amountInr),
         taxRatePct: inr(line.taxRatePct),
         taxInr: inr(line.taxInr),
+        taxSnapshot: line.taxSnapshot ?? null,
       })),
     payments: (invoice.payments ?? []).map((payment) => ({
       id: payment.id,

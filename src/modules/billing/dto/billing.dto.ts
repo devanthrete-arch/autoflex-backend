@@ -19,8 +19,18 @@ import {
   InvoiceStatus,
   PaymentMethod,
 } from '../../../common/enums/ownership.enum';
+import { InvoiceSelectionDto } from './invoice-selection.dto';
 
 export class IssueInvoiceDto {
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => InvoiceSelectionDto)
+  selection?: InvoiceSelectionDto;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(64)
+  previewFingerprint?: string;
   @ApiPropertyOptional({
     description: 'Billed total; defaults to the approved total',
     example: 2299,
@@ -74,6 +84,9 @@ export class PaymentInputDto {
 }
 
 export class CloseJobDto extends IssueInvoiceDto {
+  @IsOptional()
+  @IsUUID()
+  invoiceId?: string;
   @ApiPropertyOptional({
     type: PaymentInputDto,
     description: 'Required unless the bill total is zero',

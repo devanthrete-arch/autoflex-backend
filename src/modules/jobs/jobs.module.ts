@@ -13,6 +13,7 @@ import { JobApproval } from './entities/job-approval.entity';
 import { JobAssignment } from './entities/job-assignment.entity';
 import { JobLineItem } from './entities/job-line-item.entity';
 import { JobMedia } from './entities/job-media.entity';
+import { JobCustomerAccess } from './entities/job-customer-access.entity';
 import { ServiceJob } from './entities/service-job.entity';
 import { JobEstimateService } from './job-estimate.service';
 import { JobMediaService } from './job-media.service';
@@ -35,6 +36,7 @@ import { IntakeRateLimitGuard } from './intake-rate-limit.guard';
       JobLineItem,
       JobApproval,
       JobMedia,
+      JobCustomerAccess,
       StaffProfile,
     ]),
     CustomersModule,

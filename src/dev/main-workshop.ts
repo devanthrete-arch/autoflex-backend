@@ -1,3 +1,4 @@
+import { createHash } from 'crypto';
 import 'reflect-metadata';
 import { Logger, Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -26,10 +27,21 @@ loadEnv();
  * as the memory runtime, and an idempotent roster. Bookings survive restart.
  * Production starts from `main.ts`, which never loads DevModule.
  */
-async function bootstrap() {
+export async function bootstrapWorkshopApp(
+  prepare?: (app: import('@nestjs/common').INestApplication) => Promise<void>,
+) {
+  if (process.env.NODE_ENV === 'production')
+    throw new Error('The development workshop must never run in production');
   const logger = new Logger('Workshop');
   const signer = await loadWorkshopSigner();
   process.env.LOCAL_JWKS_JSON = signer.jwksJson;
+  if (!process.env.RECEPTION_CHALLENGE_KEY)
+    process.env.RECEPTION_CHALLENGE_KEY = createHash('sha256')
+      .update(signer.privateKey.export({ type: 'pkcs8', format: 'pem' }))
+      .digest('hex');
+  process.env.RECEPTION_IDENTITY_ISSUER = 'autoflex-local-reception';
+  process.env.RECEPTION_IDENTITY_AUDIENCE = 'autoflex-reception';
+  process.env.RECEPTION_IDENTITY_LOCAL_JWKS = signer.jwksJson;
   process.env.IAM_CUSTOMER_DOMAIN_APPLICATION_ID = DEV_CUSTOMER_APP_ID;
   process.env.IAM_SUPPORT_DOMAIN_APPLICATION_ID = DEV_SUPPORT_APP_ID;
   process.env.IAM_SUPPORT_DOMAIN_ID = DEV_SUPPORT_DOMAIN_ID;
@@ -88,6 +100,7 @@ async function bootstrap() {
   const dataSource = app.get(DataSource);
   await assertWorkshopSchema(dataSource);
   const center = await bootstrapWorkshop(dataSource);
+  await prepare?.(app);
 
   const port = Number(process.env.PORT ?? 3001);
   await app.listen(port);
@@ -104,12 +117,13 @@ async function bootstrap() {
   logger.log('Bookings and jobs already in Postgres are left as they are.');
 }
 
-bootstrap().catch((error) => {
-  console.error(error);
-  const message = error instanceof Error ? error.message : String(error);
-  if (/ECONNREFUSED|password authentication|does not exist/i.test(message)) {
-    console.error('Start local Postgres with: docker compose up -d');
-    console.error('Then apply migrations with: npm run migration:run');
-  }
-  process.exit(1);
-});
+if (require.main === module)
+  bootstrapWorkshopApp().catch((error) => {
+    console.error(error);
+    const message = error instanceof Error ? error.message : String(error);
+    if (/ECONNREFUSED|password authentication|does not exist/i.test(message)) {
+      console.error('Start local Postgres with: docker compose up -d');
+      console.error('Then apply migrations with: npm run migration:run');
+    }
+    process.exit(1);
+  });

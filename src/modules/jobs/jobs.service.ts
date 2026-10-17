@@ -374,6 +374,7 @@ export class JobsService {
             kind: JobLineKind.LABOUR,
             description: item.name,
             scope: item.scope ?? [],
+            billingSourceKind: item.servicePackageId ? 'PACKAGE' : 'LABOUR',
             quantity: String(item.quantity),
             unitPriceInr: String(item.priceInr),
             amountInr: lineAmount(item.quantity, item.priceInr),

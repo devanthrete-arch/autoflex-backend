@@ -1,3 +1,6 @@
+import { FinancialNote } from '../modules/billing/entities/financial-note.entity';
+import { InvoiceDocument } from '../modules/billing/entities/invoice-document.entity';
+import { RegistrationSession } from '../modules/reception/entities/registration-session.entity';
 import { ServiceDefinition } from '../modules/offerings/entities/service-definition.entity';
 import { ServicePackage } from '../modules/offerings/entities/service-package.entity';
 import { BookingAttachment } from '../modules/bookings/entities/booking-attachment.entity';
@@ -6,6 +9,8 @@ import { Booking } from '../modules/bookings/entities/booking.entity';
 import { Invoice } from '../modules/billing/entities/invoice.entity';
 import { InvoiceLineItem } from '../modules/billing/entities/invoice-line-item.entity';
 import { Payment } from '../modules/billing/entities/payment.entity';
+import { BillingConfiguration } from '../modules/billing/entities/billing-configuration.entity';
+import { InvoiceSeries } from '../modules/billing/entities/invoice-series.entity';
 import { MaintenanceItem } from '../modules/maintenance/maintenance-item.entity';
 import { CustomerNotification } from '../modules/notifications/entities/customer-notification.entity';
 import { NotificationDelivery } from '../modules/notifications/entities/notification-delivery.entity';
@@ -48,6 +53,8 @@ import {
 
 /** Explicit entity list for data sources that cannot glob (pg-mem, tests). */
 export const ENTITIES = [
+  InvoiceDocument,
+  RegistrationSession,
   ServiceDefinition,
   ServicePackage,
   SupportAgentProfile,
@@ -77,8 +84,11 @@ export const ENTITIES = [
   BookingItem,
   BookingAttachment,
   Invoice,
+  FinancialNote,
   InvoiceLineItem,
   Payment,
+  BillingConfiguration,
+  InvoiceSeries,
   VaultDocument,
   MaintenanceItem,
   CustomerNotification,

@@ -82,6 +82,51 @@ export class JwtAuthGuard implements CanActivate {
     const supportDomainId = this.configService.get<string>(
       'IAM_SUPPORT_DOMAIN_ID',
     );
+    const financeAppId = this.configService.get<string>(
+      'IAM_FINANCE_DOMAIN_APPLICATION_ID',
+    );
+    const financeDomainId = this.configService.get<string>(
+      'IAM_FINANCE_DOMAIN_ID',
+    );
+    if (financeAppId && payload.domainApplicationId === financeAppId) {
+      if (
+        !financeDomainId ||
+        payload.domainId !== financeDomainId ||
+        financeAppId === customerAppId ||
+        financeAppId === supportAppId ||
+        financeDomainId === supportDomainId ||
+        !payload.roles?.some((role) =>
+          ['finance_operator', 'finance_reviewer'].includes(role),
+        )
+      ) {
+        throw new ForbiddenException(
+          'Finance identity configuration, domain, or role is invalid',
+        );
+      }
+      return {
+        actorType: 'finance',
+        userId: payload.sub,
+        domainId: payload.domainId,
+        domainApplicationId: payload.domainApplicationId,
+        roles: payload.roles ?? [],
+        permissions: payload.permissions ?? [],
+        serviceCenterId: null,
+        staffProfileId: null,
+        customerProfileId: null,
+      };
+    }
+    // Central finance identities must never resolve as ordinary staff/customer
+    // when IAM configuration is missing or their application claim is wrong.
+    if (
+      (financeDomainId && payload.domainId === financeDomainId) ||
+      payload.roles?.some((role) =>
+        ['finance_operator', 'finance_reviewer'].includes(role),
+      )
+    ) {
+      throw new ForbiddenException(
+        'Finance application identity is not configured or does not match',
+      );
+    }
     if (supportAppId && payload.domainApplicationId === supportAppId) {
       if (
         supportAppId === customerAppId ||

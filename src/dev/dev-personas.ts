@@ -15,6 +15,7 @@ export const DEV_CENTER_DOMAINS = {
 
 const DESK = [
   'jobs:create',
+  'customers:register',
   'jobs:read',
   'jobs:update',
   'bookings:read',

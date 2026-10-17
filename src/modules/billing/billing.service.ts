@@ -1,3 +1,5 @@
+import { FinancialNote } from './entities/financial-note.entity';
+import { noteMatchesInvoice } from './financial-note-source';
 import {
   ConflictException,
   Injectable,
@@ -41,6 +43,8 @@ import { InvoiceLineItem } from './entities/invoice-line-item.entity';
 import { Invoice } from './entities/invoice.entity';
 import { Payment } from './entities/payment.entity';
 import { InvoiceView, toInvoiceView } from './invoice-view';
+import { BillingConfiguration } from './entities/billing-configuration.entity';
+import { ServiceCenter } from '../tenancy/entities/service-center.entity';
 
 /** Every item must be ticked when inspection or QC was skipped. */
 export const CLOSE_CHECKLIST_KEYS = [
@@ -88,6 +92,7 @@ export class BillingService {
   ): Promise<InvoiceView> {
     const job = await this.loadForBilling(auth, jobId, expectedVersion);
     const invoice = await this.dataSource.transaction(async (manager) => {
+      await this.assertLegacyWriter(manager, job, dto, false);
       const issued = await this.issueWithin(manager, auth, job, dto, false);
       await this.store.commit(
         job,
@@ -106,9 +111,19 @@ export class BillingService {
       relations: INVOICE_RELATIONS,
     });
     if (!invoice) throw new NotFoundException('No bill issued for this job');
-    return toInvoiceView(invoice);
+    return (await this.withCorrections([invoice]))[0];
   }
 
+  async history(auth: AuthContext, jobId: string): Promise<InvoiceView[]> {
+    await this.store.get(auth.serviceCenterId!, jobId);
+    return (
+      await this.invoiceRepository.find({
+        where: { jobId, serviceCenterId: auth.serviceCenterId! },
+        relations: INVOICE_RELATIONS,
+        order: { issuedAt: 'DESC', id: 'DESC' },
+      })
+    ).map(toInvoiceView);
+  }
   /**
    * Records payment and completes the job. The bill is issued here when it
    * was not issued earlier, or reissued when the amount changed.
@@ -124,6 +139,7 @@ export class BillingService {
     const returned = await this.returnedParts(job, dto.returnedPartLineIds);
 
     await this.dataSource.transaction(async (manager) => {
+      await this.assertLegacyWriter(manager, job, dto, true);
       const invoice = await this.issueWithin(manager, auth, job, dto, true);
       const now = new Date();
       const method = await this.recordPayment(
@@ -222,7 +238,7 @@ export class BillingService {
       order: { issuedAt: 'DESC' },
       take: 200,
     });
-    return rows.map(toInvoiceView);
+    return this.withCorrections(rows);
   }
 
   async listForCustomer(auth: AuthContext): Promise<InvoiceView[]> {
@@ -230,12 +246,11 @@ export class BillingService {
     const rows = await this.invoiceRepository.find({
       where: {
         customerProfileId: profile.id,
-        status: Not(InvoiceStatus.VOID),
       },
       relations: INVOICE_RELATIONS,
       order: { issuedAt: 'DESC' },
     });
-    return rows.map(toInvoiceView);
+    return this.withCorrections(rows);
   }
 
   async getForCustomer(auth: AuthContext, id: string): Promise<InvoiceView> {
@@ -244,20 +259,52 @@ export class BillingService {
       where: {
         id,
         customerProfileId: profile.id,
-        status: Not(InvoiceStatus.VOID),
       },
       relations: INVOICE_RELATIONS,
     });
     if (!invoice) throw new NotFoundException();
-    return toInvoiceView(invoice);
+    return (await this.withCorrections([invoice]))[0];
   }
 
+  private async withCorrections(rows: Invoice[]): Promise<InvoiceView[]> {
+    if (!rows.length) return [];
+    const notes = await this.dataSource
+      .getRepository(FinancialNote)
+      .findBy({ invoiceId: In(rows.map((i) => i.id)) });
+    const amount = (v: string) => BigInt(v.replace('.', ''));
+    const format = (n: bigint) =>
+      `${n / 100n}.${String(n % 100n).padStart(2, '0')}`;
+    return rows.map((row) => {
+      const source = notes.filter((n) => noteMatchesInvoice(n, row));
+      return {
+        ...toInvoiceView(row),
+        corrections: {
+          pendingDebitCount: source.filter(
+            (n) =>
+              n.kind === 'DEBIT' && ['PROPOSED', 'ACCEPTED'].includes(n.state),
+          ).length,
+          outstandingDebitInr: format(
+            source
+              .filter(
+                (n) => n.kind === 'DEBIT' && n.state === 'ISSUED' && !n.paidAt,
+              )
+              .reduce((sum, n) => sum + amount(n.totalInr), 0n),
+          ),
+          issuedCreditInr: format(
+            source
+              .filter((n) => n.kind === 'CREDIT' && n.state === 'ISSUED')
+              .reduce((sum, n) => sum + amount(n.totalInr), 0n),
+          ),
+        },
+      };
+    });
+  }
   private async getById(id: string): Promise<InvoiceView> {
     const invoice = await this.invoiceRepository.findOneOrFail({
       where: { id },
       relations: INVOICE_RELATIONS,
     });
-    return toInvoiceView(invoice);
+    return (await this.withCorrections([invoice]))[0];
   }
 
   private async loadForBilling(
@@ -276,6 +323,42 @@ export class BillingService {
     });
     this.store.assertStatus(job, [JobStatus.READY_FOR_PICKUP], 'bill the job');
     return job;
+  }
+
+  private async assertLegacyWriter(
+    manager: EntityManager,
+    job: ServiceJob,
+    dto: IssueInvoiceDto,
+    closing: boolean,
+  ) {
+    await manager.getRepository(ServiceCenter).findOneOrFail({
+      where: { id: job.serviceCenterId },
+      lock: { mode: 'pessimistic_write' },
+    });
+    if (dto.selection || dto.previewFingerprint)
+      throw new UnprocessableEntityException({
+        code: 'BILLING_ROLLOUT_DISABLED',
+        message: 'The new invoicing flow is not enabled',
+      });
+    const configured = await manager
+      .getRepository(BillingConfiguration)
+      .countBy({ serviceCenterId: job.serviceCenterId });
+    const existing = await manager
+      .getRepository(Invoice)
+      .findOne({ where: { jobId: job.id, status: Not(InvoiceStatus.VOID) } });
+    if (
+      existing?.schemaVersion === 2 ||
+      (configured &&
+        (!closing ||
+          !existing ||
+          (dto.finalAmountInr !== undefined &&
+            toPaise(dto.finalAmountInr) !== toPaise(existing.totalInr))))
+    )
+      throw new UnprocessableEntityException({
+        code: 'BILLING_ROLLOUT_DISABLED',
+        message:
+          'This center requires the new invoicing flow; no legacy bill can be issued or replaced',
+      });
   }
 
   /**

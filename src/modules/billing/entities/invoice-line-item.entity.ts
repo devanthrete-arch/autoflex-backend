@@ -11,6 +11,8 @@ import { Invoice } from './invoice.entity';
 /** Billing snapshot; the job's own lines stay operational. */
 @Entity('invoice_line_items')
 export class InvoiceLineItem {
+  @Column({ name: 'tax_snapshot', type: 'jsonb', nullable: true })
+  taxSnapshot: Record<string, unknown> | null;
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

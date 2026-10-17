@@ -13,12 +13,17 @@ import { Invoice } from './invoice.entity';
 /** Money received against an invoice; collection happens at the center. */
 @Entity('payments')
 export class Payment {
+  @Column({ name: 'dedupe_key', type: 'varchar', length: 64, nullable: true })
+  dedupeKey: string | null;
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Index()
-  @Column({ name: 'invoice_id', type: 'uuid' })
-  invoiceId: string;
+  @Column({ name: 'invoice_id', type: 'uuid', nullable: true })
+  invoiceId: string | null;
+  @Column({ name: 'note_id', type: 'uuid', nullable: true }) noteId:
+    | string
+    | null;
 
   @ManyToOne(() => Invoice, (invoice) => invoice.payments, {
     onDelete: 'RESTRICT',

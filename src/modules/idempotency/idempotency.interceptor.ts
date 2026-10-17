@@ -7,6 +7,7 @@ import {
   NestInterceptor,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from, Observable, of, switchMap } from 'rxjs';
 import { Repository } from 'typeorm';
@@ -45,14 +46,18 @@ export class IdempotencyInterceptor implements NestInterceptor {
     @InjectRepository(CommandIdempotency)
     private readonly repository: Repository<CommandIdempotency>,
     private readonly reflector: Reflector,
+    private readonly config: ConfigService,
   ) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
+    const transactional = this.reflector.getAllAndOverride<boolean | string>(
+      TRANSACTIONAL_COMMAND_KEY,
+      [context.getHandler(), context.getClass()],
+    );
     if (
-      this.reflector.getAllAndOverride<boolean>(TRANSACTIONAL_COMMAND_KEY, [
-        context.getHandler(),
-        context.getClass(),
-      ])
+      transactional === true ||
+      (typeof transactional === 'string' &&
+        this.config.get(transactional) === 'true')
     )
       return next.handle();
     const http = context.switchToHttp();

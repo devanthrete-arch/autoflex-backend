@@ -10,6 +10,7 @@ import { StaffActorGuard } from './guards/staff-actor.guard';
 import { JwtAuthService, JwksService } from './services/jwt-auth.service';
 import { SupportIdentityModule } from '../support-identity/support-identity.module';
 import { SupportActorGuard } from './guards/support-actor.guard';
+import { FinanceActorGuard } from './guards/finance-actor.guard';
 
 @Global()
 @Module({
@@ -30,6 +31,7 @@ import { SupportActorGuard } from './guards/support-actor.guard';
       useClass: StaffActorGuard,
     },
     { provide: APP_GUARD, useClass: SupportActorGuard },
+    { provide: APP_GUARD, useClass: FinanceActorGuard },
     {
       provide: APP_GUARD,
       useClass: RolesGuard,

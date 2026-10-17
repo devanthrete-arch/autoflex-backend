@@ -1,3 +1,11 @@
+import { SignJWT } from 'jose';
+import { randomUUID } from 'crypto';
+import { ServiceUnavailableException } from '@nestjs/common';
+import { IsUUID } from 'class-validator';
+import { RequireCustomer } from '../modules/auth/decorators/require-customer.decorator';
+import { CurrentAuth } from '../modules/auth/decorators/current-auth.decorator';
+import type { AuthContext } from '../modules/auth/interfaces/auth-context.interface';
+import { canonicalIntakePhone } from '../modules/jobs/intake-identity';
 import {
   BadRequestException,
   Body,
@@ -34,7 +42,7 @@ import {
 
 export const DEV_SIGNER = Symbol('DEV_SIGNER');
 
-export type DevSigner = Pick<JwtTestFixture, 'signAccessToken'>;
+export type DevSigner = Pick<JwtTestFixture, 'signAccessToken'> & Partial<Pick<JwtTestFixture, 'privateKey'>>;
 
 const SESSION_TTL = '12h';
 
@@ -209,12 +217,25 @@ export class DevController {
   }
 }
 
+class DevReceptionProofDto { @IsUUID() sessionId: string; }
+/** Only registered by local development entry points; never production AppModule. */
+@Controller('v1/dev/reception-proof') @RequireCustomer()
+export class DevReceptionProofController {
+  constructor(@Inject(DEV_SIGNER) private readonly signer:DevSigner) {}
+  @Post() @HttpCode(200)
+  async proof(@CurrentAuth() auth:AuthContext,@Body() body:DevReceptionProofDto) {
+    if(process.env.NODE_ENV==='production'||!this.signer.privateKey||process.env.RECEPTION_IDENTITY_ISSUER!=='autoflex-local-reception') throw new ServiceUnavailableException();
+    const assertion=await new SignJWT({purpose:'reception-registration',sessionId:body.sessionId,phone:canonicalIntakePhone(auth.phone??''),domainId:auth.domainId,domainApplicationId:auth.domainApplicationId,verifiedAt:Math.floor(Date.now()/1000)}).setProtectedHeader({alg:'RS256',kid:'test-primary'}).setIssuer('autoflex-local-reception').setAudience('autoflex-reception').setSubject(auth.userId).setJti(randomUUID()).setIssuedAt().setExpirationTime('5m').sign(this.signer.privateKey);
+    return {assertion,mode:'LOCAL_TEST_ONLY'};
+  }
+}
+
 @Module({})
 export class DevModule {
   static register(signer: DevSigner): DynamicModule {
     return {
       module: DevModule,
-      controllers: [DevController],
+      controllers: [DevController, DevReceptionProofController],
       providers: [{ provide: DEV_SIGNER, useValue: signer }],
     };
   }

@@ -1,0 +1,98 @@
+import type { BillingPolicy } from '../../src/modules/billing/billing-calculator';
+export function syntheticBillingPolicy(): BillingPolicy {
+  return {
+    cancellation: {
+      unpaid: 'ALLOW',
+      maxAgeDays: 365,
+      basisReference: 'SYNTHETIC-ONLY',
+    },
+    discounts: {
+      mode: 'LINE_BEFORE_TAX',
+      maxBps: 5000,
+      basisReference: 'SYNTHETIC-ONLY',
+    },
+    corrections: {
+      creditPrefix: 'TC',
+      debitPrefix: 'TD',
+      initialSequence: 1,
+      maxAgeDays: 365,
+      taxMode: 'ORIGINAL_COMPONENT_PROPORTION',
+      basisReference: 'SYNTHETIC-ONLY',
+    },
+    seller: {
+      name: 'Synthetic Invoice Test Garage',
+      address: 'Synthetic Road, Bengaluru',
+      pin: '560001',
+      stateCode: '29',
+      gstin: '29ABCDE1234F1ZW',
+      registrationStatus: 'REGULAR',
+      signatory: 'Synthetic Reviewer',
+    },
+    placeOfSupplyRules: [
+      {
+        key: 'individual-29',
+        buyerType: 'INDIVIDUAL',
+        buyerStateCode: '29',
+        context: 'AT_CENTER',
+        supplyStateCode: '29',
+        basisReference: 'SYNTHETIC-ONLY',
+      },
+      {
+        key: 'individual-27',
+        buyerType: 'INDIVIDUAL',
+        buyerStateCode: '27',
+        context: 'AT_CENTER',
+        supplyStateCode: '27',
+        basisReference: 'SYNTHETIC-ONLY',
+      },
+      {
+        key: 'business-29',
+        buyerType: 'BUSINESS',
+        buyerStateCode: '29',
+        context: 'AT_CENTER',
+        supplyStateCode: '29',
+        basisReference: 'SYNTHETIC-ONLY',
+      },
+      {
+        key: 'business-27',
+        buyerType: 'BUSINESS',
+        buyerStateCode: '27',
+        context: 'AT_CENTER',
+        supplyStateCode: '27',
+        basisReference: 'SYNTHETIC-ONLY',
+      },
+    ],
+    buyerModes: ['INDIVIDUAL', 'BUSINESS'],
+    irp: { businessMode: 'NOT_APPLICABLE', basisReference: 'SYNTHETIC-ONLY' },
+    effectiveFrom: '2020-04-01',
+    seriesPrefix: 'TEST',
+    initialSequence: 1,
+    financialYearStartMonth: 4,
+    rules: [
+      {
+        key: 'labour',
+        kind: 'LABOUR',
+        classificationCode: '998714',
+        treatment: 'TAXABLE',
+        rateBps: 1800,
+        priceMode: 'EXCLUSIVE',
+      },
+      {
+        key: 'parts',
+        kind: 'PART',
+        classificationCode: '8708',
+        treatment: 'TAXABLE',
+        rateBps: 1800,
+        priceMode: 'INCLUSIVE',
+      },
+      {
+        key: 'package',
+        kind: 'PACKAGE',
+        classificationCode: '998714',
+        treatment: 'TAXABLE',
+        rateBps: 1800,
+        priceMode: 'EXCLUSIVE',
+      },
+    ],
+  };
+}

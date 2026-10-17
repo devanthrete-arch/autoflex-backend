@@ -4,6 +4,9 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "deleteOutDir": true,
-    "assets": ["catalog/**/*.json"]
+    "assets": [
+      "catalog/**/*.json",
+      "modules/billing/documents/fonts/*"
+    ]
   }
 }

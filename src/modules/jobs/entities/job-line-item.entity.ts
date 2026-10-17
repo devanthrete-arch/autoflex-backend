@@ -20,6 +20,14 @@ import { ServiceJob } from './service-job.entity';
 
 @Entity('service_job_line_items')
 export class JobLineItem {
+  /** Charge source is saved at intake, including a package with one activity. */
+  @Column({
+    name: 'billing_source_kind',
+    type: 'varchar',
+    length: 16,
+    nullable: true,
+  })
+  billingSourceKind: 'LABOUR' | 'PART' | 'FEE' | 'PACKAGE' | null;
   @Column({ type: 'jsonb', default: () => "'[]'" })
   scope: ServiceScope[];
 

@@ -1,3 +1,4 @@
+import { ReceptionModule } from './modules/reception/reception.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BillingModule } from './modules/billing/billing.module';
 import { BookingsModule } from './modules/bookings/bookings.module';
@@ -18,6 +19,7 @@ import { VehicleCatalogModule } from './modules/vehicle-catalog/vehicle-catalog.
 /** Every business module; the app, the dev runtime, and e2e tests load the same set. */
 export const FEATURE_MODULES = [
   AuthModule,
+  ReceptionModule,
   TenancyModule,
   VehicleCatalogModule,
   CustomersModule,
